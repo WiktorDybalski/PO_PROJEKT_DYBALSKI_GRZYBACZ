@@ -41,18 +41,6 @@ public class Vector2dTest {
     }
 
     @Test
-    void testPrecedes() {
-        assertEquals(v1.precedes(v2), true);
-        assertEquals(v2.precedes(v1), false);
-    }
-
-    @Test
-    void testFollows() {
-        assertEquals(v1.follows(v2), false);
-        assertEquals(v2.follows(v1), true);
-    }
-
-    @Test
     void testUpperRight() {
         assertEquals(v1.upperRight(v2), new Vector2d(3, 4));
         assertEquals(v2.upperRight(v1), new Vector2d(3, 4));

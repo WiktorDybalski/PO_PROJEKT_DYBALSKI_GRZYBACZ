@@ -206,6 +206,7 @@ public class Animal implements MapElement {
      * Sets the animal's status to dead.
      */
     public void die() {
+        this.energy = 0;
         this.isDead = true;
     }
 

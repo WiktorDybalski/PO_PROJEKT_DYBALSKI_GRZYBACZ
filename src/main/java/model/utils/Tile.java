@@ -48,7 +48,6 @@ public class Tile {
         objects.addPlant(plant);
     }
 
-
     /**
      * Method adding an animal to the list of animals on the tile.
      * @param animal animal to be added
@@ -77,7 +76,7 @@ public class Tile {
      * Method returning the strongest animal on the tile.
      * @return strongest animal on the tile
      */
-    private Animal getStrongestAnimal() {
+    Animal getStrongestAnimal() {
         return objects.getStrongestAnimal();
     }
 
@@ -85,7 +84,7 @@ public class Tile {
      * Method returning the list of the strongest animals on the tile.
      * @return list of the strongest animals on the tile
      */
-    private ArrayList<Animal> getStrongestAnimals() {
+    ArrayList<Animal> getStrongestAnimals() {
         return objects.getStrongestAnimals();
     }
 
@@ -104,8 +103,8 @@ public class Tile {
         Animal strongestAnimal = objects.getStrongestAnimal();
         if (strongestAnimal != null) {
             strongestAnimal.eat(objects.getPlant());
+            objects.removePlant();
         }
-        objects.removePlant();
     }
 
     /**

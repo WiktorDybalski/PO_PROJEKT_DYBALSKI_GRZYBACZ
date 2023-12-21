@@ -69,7 +69,6 @@ class Vector2d {
     + toString(): String
 }
 
-
 class MapObjects{
     - private plant: Plant
     - private animals: PriorityQueue<Animal>
@@ -79,6 +78,9 @@ class MapObjects{
     + getPlant(): Plant
     + getAnimals(): List<Animal>
     + getObjects(): List<MapElement>
+    + getSortedAnimals(): ArrayList<Animal>
+    + getStrongestAnimal(): Animal
+    + getStrongestAnimals(): List<Animal>
 
     + addPlant(Plant): void
     + removePlant(): void
@@ -86,9 +88,6 @@ class MapObjects{
     + removeAnimal(Animal): void
     + removeDeadAnimals(): void
     + isOccupied(): boolean
-    + getSortedAnimals(): PriorityQueue<Animal>
-    + getStrongestAnimal(): Animal
-    + getStrongestAnimals(): List<Animal>
 
     +growPlant(): void
     +growAnimals(): void
@@ -200,8 +199,8 @@ class Tile {
     + addAnimal(Animal): void
     + removeAnimal(Animal): void
     + isOccupied(): boolean
-    + private getStrongestAnimal(): Animal
-    + private getStrongestAnimals(): List<Animal>
+    + protected getStrongestAnimal(): Animal protected do testow
+    + protected getStrongestAnimals(): List<Animal> protected do testow
     + public removeDeadAnimals(): void
     + public eatPlant(): void
     + public reproduceAnimals: void
