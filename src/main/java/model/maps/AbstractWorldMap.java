@@ -58,7 +58,6 @@ public abstract class AbstractWorldMap implements WorldMap{
     }
 
     public abstract boolean canMoveTo(Vector2d position);
-
     public abstract void move(Animal animal);
 
 

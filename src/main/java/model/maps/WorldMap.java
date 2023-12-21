@@ -25,4 +25,5 @@ public interface WorldMap {
     public void generateMap();
     public void updateMap();
     public void drawMap();
+
 }

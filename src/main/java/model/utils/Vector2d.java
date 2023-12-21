@@ -62,25 +62,11 @@ public class Vector2d {
      * @param other The vector to be compared to.
      * @return True if the vector precedes the other vector, false otherwise.
      */
-    public boolean precedes(Vector2d other) {
-        return (this.x <= other.x && this.y <= other.y);
+    public boolean precedesY(Vector2d other) {
+        return (this.y <= other.y);
     }
 
-    /**
-     * The follows method checks if the vector follows another vector.
-     * @param other The vector to be compared to.
-     * @return True if the vector follows the other vector, false otherwise.
-     */
-    public boolean follows(Vector2d other) {
-        return (this.x >= other.x && this.y >= other.y);
-    }
 
-    /**
-     * The upperRight method returns the upper right corner of the rectangle
-     * created by the two vectors.
-     * @param other The vector to be compared to.
-     * @return The upper right corner of the rectangle created by the two vectors.
-     */
     public Vector2d upperRight(Vector2d other) {
         return new Vector2d(Math.max(this.x, other.x), Math.max(this.y, other.y));
     }
