@@ -3,7 +3,7 @@ package model.utils;
 import java.util.ArrayList;
 import java.util.Random;
 
-//done for now. TODO: add comments, test a little bit more
+//done for now.
 /**
  * Represents an animal on a map with characteristics like position, energy, and genotype.
  */
@@ -56,7 +56,7 @@ public class Animal implements MapElement {
         this.energy = energy;
         this.direction = Directions.getRandomDirection();
         this.genotype = genotype;
-        this.children = null;
+        this.children = new ArrayList<Animal>();
         this.eatenPlantCount = 0;
         this.birthDay = birthDay;
         this.age=0;
@@ -128,6 +128,7 @@ public class Animal implements MapElement {
     public void setEnergy(int energy) {
         this.energy = energy;
     }
+
 
     //behavioral methods
     /**
@@ -212,7 +213,7 @@ public class Animal implements MapElement {
      * Increments the age of the animal by one day.
      */
     public void grow() {
-        this.age++;
+        age++;
     }
 
     //overridden methods
@@ -224,7 +225,8 @@ public class Animal implements MapElement {
             return true;
         if(!(other instanceof Animal))
             return false;
-        return this.equals(other);
+        Animal that = (Animal) other;
+        return this.position.equals(that.position) && this.energy == that.energy && this.direction.equals(that.direction) && this.genotype.equals(that.genotype) && this.children.equals(that.children) && this.eatenPlantCount == that.eatenPlantCount && this.birthDay == that.birthDay && this.isDead == that.isDead && this.age == that.age;
     }
     public String toString(){
         StringBuilder sb = new StringBuilder();

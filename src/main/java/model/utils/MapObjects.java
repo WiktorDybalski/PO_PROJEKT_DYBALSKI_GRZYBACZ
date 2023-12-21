@@ -1,9 +1,10 @@
 package model.utils;
 
 
+import java.lang.reflect.Array;
 import java.util.*;
 
-//done for now. TODO: add comments, tests
+//done for now.
 /**
  * Represents the objects which can be placed on a tile.
  */
@@ -12,23 +13,14 @@ public class MapObjects {
     private Plant plant;
 
     // The animals which are on the tile.
-    private PriorityQueue<Animal> animals;
+    private ArrayList<Animal> animals;
 
     /**
      * Constructor to initialize the map objects.
      */
     public MapObjects() {
         this.plant = null;
-        Comparator<Animal> animalComparator = (a1, a2) -> {
-            if (a1.getEnergy() != a2.getEnergy()) {
-                return Integer.compare(a2.getEnergy(), a1.getEnergy());
-            } else if (a1.getAge() != a2.getAge()) {
-                return Integer.compare(a2.getAge(), a1.getAge());
-            } else {
-                return Integer.compare(a2.getChildren().size(), a1.getChildren().size());
-            }
-        };
-        this.animals = new PriorityQueue<>(animalComparator);
+        this.animals = new ArrayList<>();
     }
 
     //getters and setters
@@ -98,12 +90,26 @@ public class MapObjects {
         return plant != null || !animals.isEmpty();
     }
 
+    public ArrayList<Animal> getSortednimals() {
+        ArrayList<Animal> sortedAnimals = new ArrayList<>(animals);
+        sortedAnimals.sort(Comparator.comparingInt(Animal::getEnergy).reversed());
+        sortedAnimals.sort((a1, a2) -> {
+            if (a1.getEnergy() != a2.getEnergy()) {
+                return Integer.compare(a2.getEnergy(), a1.getEnergy());
+            } else if (a1.getAge() != a2.getAge()) {
+                return Integer.compare(a2.getAge(), a1.getAge());
+            } else {
+                return Integer.compare(a2.getChildren().size(), a1.getChildren().size());
+            }
+        });
+        return sortedAnimals;
+    }
     /**
      * Returns the strongest animal on the tile.
      * @return The strongest animal on the tile.
      */
     public Animal getStrongestAnimal() {
-        return animals.peek();
+        return getSortednimals().get(0);
     }
 
     /**
@@ -111,42 +117,37 @@ public class MapObjects {
      * @return The two strongest animals on the tile.
      */
     public ArrayList<Animal> getStrongestAnimals() {
+        ArrayList<Animal> sortedAnimals = this.getSortednimals();
         ArrayList<Animal> strongestAnimals = new ArrayList<>();
-        if (animals.size()<2){
+
+        if (sortedAnimals.size()<2) {
             return null;
         }
-        if (animals.size()==2) {
-            strongestAnimals.addAll(animals);
-            return strongestAnimals;
+        int maxEnergy = sortedAnimals.get(0).getEnergy();
+        for (Animal animal : sortedAnimals) {
+            if (animal.getEnergy() == maxEnergy) {
+                strongestAnimals.add(animal);
+            } else {
+                break;
+            }
         }
-        if (animals.size()>2) {
-            int maxEnergy = animals.peek().getEnergy();
-            int secondMaxEnergy = animals.peek().getEnergy();
-            for (Animal animal : animals) {
-                if (animal.getEnergy() == maxEnergy) {
-                    strongestAnimals.add(animal);
-                } else {
-                    secondMaxEnergy = animal.getEnergy();
-                    break;
-                }
-            }
-            if (strongestAnimals.size() >=2) {
-                Collections.shuffle(strongestAnimals);
-                return new ArrayList<>(strongestAnimals.subList(0, Math.min(2, strongestAnimals.size())));
-            }
-            ArrayList<Animal> secondStrongestAnimals = new ArrayList<>();
-            for (Animal animal : animals) {
+        if (strongestAnimals.size() >=2) {
+            Collections.shuffle(strongestAnimals);
+            return new ArrayList<>(strongestAnimals.subList(0, 2));
+        }
+        else{
+            ArrayList<Animal> strongestAnimals2 = new ArrayList<>();
+            int secondMaxEnergy = sortedAnimals.get(1).getEnergy();
+            for (Animal animal : sortedAnimals) {
                 if (animal.getEnergy() == secondMaxEnergy) {
-                    secondStrongestAnimals.add(animal);
-                } else {
-                    break;
+                    strongestAnimals2.add(animal);
                 }
             }
-            Collections.shuffle(secondStrongestAnimals);
-            strongestAnimals.add(secondStrongestAnimals.get(0));
-            return strongestAnimals;
+            Collections.shuffle(strongestAnimals2);
+            //add the strongest animal to the beginning of the list
+            strongestAnimals2.add(0, strongestAnimals.get(0));
+            return new ArrayList<>(strongestAnimals2.subList(0, 2));
         }
-        return null;
     }
 
     /**

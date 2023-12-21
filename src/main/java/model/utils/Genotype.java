@@ -1,7 +1,7 @@
 package model.utils;
 
 
-//done for now. TODO: add comments, test a little bit more
+//done for now.
 
 import java.util.ArrayList;
 import java.util.List;

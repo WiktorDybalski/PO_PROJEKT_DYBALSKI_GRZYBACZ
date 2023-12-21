@@ -1,6 +1,6 @@
 package model.utils;
 
-
+//done for now.
 public enum Directions {
     NORTH,
     NORTH_EAST,
