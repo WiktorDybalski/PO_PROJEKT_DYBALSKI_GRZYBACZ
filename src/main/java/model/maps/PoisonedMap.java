@@ -6,13 +6,15 @@ import model.utils.MapObjects;
 import model.utils.Plant;
 import model.utils.Vector2d;
 
-public class PoisonedMap extends AbstractWorldMap {
-    private float poisonChance;
-    private Vector2d poisonedAreaLowerLeft;
-    private Vector2d poisonedAreaUpperRight;
+import java.util.List;
 
-    public PoisonedMap(Vector2d lowerLeft, Vector2d upperRight, float poisonChance) {
-        super(lowerLeft, upperRight);
+public class PoisonedMap extends AbstractWorldMap {
+    private final float poisonChance;
+    private final Vector2d poisonedAreaLowerLeft;
+    private final Vector2d poisonedAreaUpperRight;
+
+    public PoisonedMap(Vector2d lowerLeft, Vector2d upperRight, float poisonChance, int initialNumberOfPlants, int initialNumberOfAnimals) {
+        super(lowerLeft, upperRight, initialNumberOfPlants, initialNumberOfAnimals);
         this.poisonChance = poisonChance;
         this.poisonedAreaLowerLeft = generatePoisonedAreaLowerLeft(lowerLeft, upperRight);
         this.poisonedAreaUpperRight = generatePoisonedAreaUpperRight(lowerLeft, upperRight);
@@ -26,48 +28,99 @@ public class PoisonedMap extends AbstractWorldMap {
         return null;
     }
 
-    @Override
+    /**
+     * The canMoveTo method checks if the Animal can move to
+     *
+     * @param position The position the object wants to get to
+     * @return bool value is it possible to move there
+     */
+
+    //needs to be implemented
     public boolean canMoveTo(Vector2d position) {
-        return false;
+        return super.canMoveTo(position);
     }
 
-    @Override
-    public void move(Animal animal) {
+    /**
+     * The objectsAt method
+     *
+     * @param position The position the object wants to get to
+     * @return bool value is it possible to move there
+     */
 
-    }
-
-    @Override
-    public boolean placeAnimal(Animal animal) {
-        return false;
-    }
-
-    @Override
     public MapObjects objectsAt(Vector2d position) {
-        return null;
+        return super.objectsAt(position);
     }
 
-    @Override
+    /**
+     * The isOccupied method checks whether the MapObject is in position
+     *
+     * @return bool value
+     */
+
     public boolean isOccupied(Vector2d position) {
-        return false;
+        return super.isOccupied(position);
     }
 
-    @Override
-    public boolean placePlant(Plant plant) {
-        return false;
+    /**
+     * The placeAnimal method add animal to the Map
+     */
+
+    public void placeAnimal(Animal animal, Vector2d position) {
+        super.placeAnimal(animal, position);
     }
 
-    @Override
-    public void generateMap() {
+    /**
+     * The placeAnimals method create random positions for Animals and using for to add Animal to the Map using placeAnimal
+     */
 
+    public void placeAnimals(List<Animal> animals) {
+        super.placeAnimals(animals);
     }
 
-    @Override
-    public void updateMap() {
+    /**
+     * The placePlant method set Plant on the Map
+     */
 
+    public void placePlant(Plant plant, Vector2d position) {
+        super.placePlant(plant, position);
     }
 
-    @Override
-    public void drawMap() {
+    /**
+     * The placePlants method create random positions for Plants and using for to set Plants on the Map using placePlant
+     */
 
+    public void placePlants(List<Plant> plants) {
+        super.placePlants(plants);
+    }
+
+    /**
+     * The move method is responsible for the movement of all moving objects on the map
+     */
+
+    public void move(List<Animal> animals) {
+        super.move(animals);
+    }
+
+    /**
+     * The generateMap method is using in Map constructor to set all objects on the map
+     */
+
+    public void generateMap(List<Plant> plants, List<Animal> animals) {
+        super.generateMap(plants, animals);
+    }
+
+    /**
+     * The toString method draw the Map using mapVisualizer
+     */
+
+    public String toString() {
+        return super.toString();
+    }
+
+    /**
+     * The generatePoisonedArea method randomly generate the square on the map where plants are poisonous
+     */
+
+    public void generatePoisonedArea() {
     }
 }

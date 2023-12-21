@@ -40,7 +40,7 @@ public class Tile {
         return objects.getPlant();
     }
 
-    public Object getObjects() {
+    public MapObjects getObjects() {
         return objects;
     }
 

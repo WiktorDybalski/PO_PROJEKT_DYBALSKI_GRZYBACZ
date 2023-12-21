@@ -1,36 +1,109 @@
 package model.maps;
 
+import model.RandomPositionsGenerator;
 import model.utils.Animal;
+import model.utils.MapObjects;
+import model.utils.Plant;
 import model.utils.Vector2d;
 
+import java.util.List;
+
 public class GlobeMap extends AbstractWorldMap {
-    public GlobeMap(int width, int height) {
-        super(new Vector2d(0, 0), new Vector2d(width, height));
+
+    /**
+     * Constructor of the Map
+     */
+
+    public GlobeMap(int width, int height, int initialNumberOfPlants, int initialNumberOfAnimals) {
+        super(new Vector2d(0, 0), new Vector2d(width, height), initialNumberOfPlants, initialNumberOfAnimals);
     }
+
+    /**
+     * The canMoveTo method checks if the Animal can move to
+     *
+     * @param position The position the object wants to get to
+     * @return bool value is it possible to move there
+     */
 
     //needs to be implemented
     public boolean canMoveTo(Vector2d position) {
-        // Implements logic
-        return true;
+        return super.canMoveTo(position);
     }
 
-    //needs to be implemented
-    public void move(Animal animal) {
-        // Implements logic
+    /**
+     * The objectsAt method
+     *
+     * @param position The position the object wants to get to
+     * @return bool value is it possible to move there
+     */
+
+    public MapObjects objectsAt(Vector2d position) {
+        return super.objectsAt(position);
     }
 
-    //needs to be implemented
-    public void generateMap() {
-        // Implements logic
+    /**
+     * The isOccupied method checks whether the MapObject is in position
+     *
+     * @return bool value
+     */
+
+    public boolean isOccupied(Vector2d position) {
+        return super.isOccupied(position);
     }
 
-    //needs to be implemented
-    public void updateMap() {
-        // Implements logic
+    /**
+     * The placeAnimal method add animal to the Map
+     */
+
+    public void placeAnimal(Animal animal, Vector2d position) {
+        super.placeAnimal(animal, position);
     }
 
-    //needs to be implemented
-    public void drawMap() {
-        // Implements logic
+    /**
+     * The placeAnimals method create random positions for Animals and using for to add Animal to the Map using placeAnimal
+     */
+
+    public void placeAnimals(List<Animal> animals) {
+        super.placeAnimals(animals);
+    }
+
+    /**
+     * The placePlant method set Plant on the Map
+     */
+
+    public void placePlant(Plant plant, Vector2d position) {
+        super.placePlant(plant, position);
+    }
+
+    /**
+     * The placePlants method create random positions for Plants and using for to set Plants on the Map using placePlant
+     */
+
+    public void placePlants(List<Plant> plants) {
+        super.placePlants(plants);
+    }
+
+    /**
+     * The move method is responsible for the movement of all moving objects on the map
+     */
+
+    public void move(List<Animal> animals) {
+        super.move(animals);
+    }
+
+    /**
+     * The generateMap method is using in Map constructor to set all objects on the map
+     */
+
+    public void generateMap(List<Plant> plants, List<Animal> animals) {
+        super.generateMap(plants, animals);
+    }
+
+    /**
+     * The toString method draw the Map using mapVisualizer
+     */
+
+    public String toString() {
+        return super.toString();
     }
 }

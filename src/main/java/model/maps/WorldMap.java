@@ -16,14 +16,13 @@ public interface WorldMap {
     public List<MapElement> getElements();
 
     public boolean canMoveTo(Vector2d position);
-    public void move(Animal animal);
-    public boolean placeAnimal(Animal animal);
+    public void move(List<Animal> animals);
+    public void placeAnimal(Animal animal, Vector2d position);
     public MapObjects objectsAt(Vector2d position);
     public boolean isOccupied(Vector2d position);
-    public boolean placePlant(Plant plant);
+    public void placePlant(Plant plant, Vector2d position);
 
-    public void generateMap();
-    public void updateMap();
-    public void drawMap();
+    public void generateMap(List<Plant> plants, List<Animal> animals);
+    public String toString();
 
 }
