@@ -4,7 +4,6 @@ package model.utils;
 //done for now. TODO: add comments, tests
 /**
  * Class representing a plant on the map.
- * @see main.java.model.interfaces.MapElement
  */
 public class Plant implements MapElement {
     // position of the plant

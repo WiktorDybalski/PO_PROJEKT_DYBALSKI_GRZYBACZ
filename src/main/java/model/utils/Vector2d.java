@@ -3,7 +3,7 @@ package model.utils;
 
 import java.util.Objects;
 
-//done for now. TODO: add comments, tests
+//done for now.
 /**
  * The Vector2d class represents a vector in 2D space.
  * It is used to represent positions on the map.

@@ -86,8 +86,12 @@ class MapObjects{
     + removeAnimal(Animal): void
     + removeDeadAnimals(): void
     + isOccupied(): boolean
+    + getSortedAnimals(): PriorityQueue<Animal>
     + getStrongestAnimal(): Animal
     + getStrongestAnimals(): List<Animal>
+
+    +growPlant(): void
+    +growAnimals(): void
 
     + toString(): String
 }
