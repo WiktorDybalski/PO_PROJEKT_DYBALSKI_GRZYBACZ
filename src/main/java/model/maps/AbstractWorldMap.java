@@ -1,17 +1,48 @@
 package model.maps;
 
 import model.utils.*;
+import presenters.MapVisualizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public abstract class AbstractWorldMap implements WorldMap{
+    /**
+     * Lower, Left corner of the Map
+     */
     private Vector2d lowerLeft;
+
+    /**
+     * Upper, Right corner of the Map
+     */
     private Vector2d upperRight;
+
+    /**
+     * List of animals on the Map
+     */
     private List<Animal> animals;
+
+    /**
+     * List of plants on the Map
+     */
     private List<Plant> plants;
+
+    /**
+     * Map: key - position of each single tile, value: a tile
+     */
     private HashMap<Vector2d, Tile> mapTiles;
+
+    /**
+     * mapVisualizer to draw a map.
+     * One day it will be replaced by GUI
+     */
+
+    MapVisualizer mapVisualizer = new MapVisualizer((WorldMap) this);
+
+    /**
+     * Constructor of the Map
+     */
 
     public AbstractWorldMap(Vector2d lowerLeft, Vector2d upperRight) {
         this.lowerLeft = lowerLeft;
@@ -21,6 +52,10 @@ public abstract class AbstractWorldMap implements WorldMap{
         this.mapTiles = new HashMap<>();
         generateMap();
     }
+
+    /**
+     * Getters
+     */
 
     public HashMap<Vector2d, Tile> getMapTiles() {
         return mapTiles;
@@ -57,7 +92,15 @@ public abstract class AbstractWorldMap implements WorldMap{
         return elements;
     }
 
-    public abstract boolean canMoveTo(Vector2d position);
+    /**
+     * The canMoveTo method checks if the Animal can move to
+     * @param position The position the object wants to get to
+     * @return bool value is it possible to move there
+     */
+
+    public boolean canMoveTo(Vector2d position) {
+        return lowerLeft.getY() <= position.getY() && upperRight.getY() >= position.getY();
+    }
     public abstract void move(Animal animal);
 
 
@@ -86,7 +129,9 @@ public abstract class AbstractWorldMap implements WorldMap{
 
     public abstract void updateMap();
 
-    public abstract void drawMap();
+    public String toString() {
+        return mapVisualizer.draw(lowerLeft, upperRight);
+    }
 }
 
 //private void moveAnimals() {
