@@ -1,0 +1,79 @@
+package model.utils;
+
+
+//done for now. TODO: add comments, tests
+/**
+ * Class representing a plant on the map.
+ * @see main.java.model.interfaces.MapElement
+ */
+public class Plant implements MapElement {
+    // position of the plant
+    private Vector2d position;
+    // energy of the plant
+    private int energy;
+    // day of growth of the plant
+    private int dayOfGrowth;
+    // is the plant poisoned
+    private boolean isPoisoned;
+    // is the plant eaten
+    private boolean isEaten;
+
+    /**
+     * Constructor of the plant.
+     * @param position position of the plant
+     * @param energy energy of the plant
+     * @param isPoisoned is the plant poisoned
+     * @param dayOfGrowth day of growth of the plant
+     */
+    public Plant(Vector2d position, int energy, boolean isPoisoned, int dayOfGrowth) {
+        this.position = position;
+        this.energy = energy;
+        this.dayOfGrowth = dayOfGrowth;
+        this.isPoisoned = isPoisoned;
+        this.isEaten = false;
+    }
+
+    //getters and setters
+    public int getEnergy() {
+        return energy;
+    }
+    public int getDayOfGrowth() {
+        return dayOfGrowth;
+    }
+    public Vector2d getPosition() {
+        return position;
+    }
+    public boolean getIsPoisoned() {
+        return isPoisoned;
+    }
+    public boolean getIsEaten() {
+        return isEaten;
+    }
+    public void setIsEaten() {
+        isEaten = true;
+    }
+
+    /**
+     * Method simulates growth of plant.
+     */
+    public void grow() {
+        if (!isEaten) {
+            energy++;
+        }
+    }
+
+    /**
+     * Method ovverides toString method.
+     * @return string representation of the plant
+     */
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("Plant: ");
+        s.append("position: ").append(position.toString());
+        s.append(", energy: ").append(energy);
+        s.append(", dayOfGrowth: ").append(dayOfGrowth);
+        s.append(", isPoisoned: ").append(isPoisoned);
+        s.append(", isEaten: ").append(isEaten);
+        return s.toString();
+    }
+}
