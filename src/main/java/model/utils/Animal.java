@@ -129,7 +129,6 @@ public class Animal implements MapElement {
         this.energy = energy;
     }
 
-
     //behavioral methods
     /**
      * Determines if the animal has enough energy to reproduce.

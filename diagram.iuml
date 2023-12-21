@@ -1,0 +1,422 @@
+@startuml
+
+interface MapElement {
+    + getPosition(): Vector2d
+}
+
+interface SimulationControl {
+    + runSimulation(): void
+    + updateDay(): void
+}
+
+interface Displayable {
+    + displayMap(): void
+    + updateStatistics(): void
+}
+
+interface MapElement {
+    + getPosition(): Vector2d
+}
+
+interface WorldMap {
+    + getMapTiles(): HashMap<Vector2d, Tile>
+    + getAnimals(): List<Animal>
+    + getPlants(): List<Plant>
+    + getLowerLeft(): Vector2d
+    + getUpperRight(): Vector2d
+    + getWidth(): int
+    + getHeight(): int
+    + getElements(): List<MapElement>
+
+    + canMoveTo(Vector2d): boolean
+    + move(Animal): void
+    + placeAnimal(Animal): boolean
+    + objectsAt(Vector2d): MapObjects
+    + isOccupied(Vector2d): boolean
+    + placePlant(Plant): boolean
+
+    + generateMap(): void
+    + updateMap(): void
+    + drawMap(): void
+}
+
+enum Direction {
+    NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST
+    + getRandomDirection(): Direction
+    + getDirectionName(int): Direction
+    + getDirectionIndex(Direction): int
+    + toUnitVector(): Vector2d
+}
+
+class Vector2d {
+    - private x: int
+    - private y: int
+
+    + Vector2d(int, int)
+
+    + getX(): int
+    + getY(): int
+
+    + add(Vector2d): Vector2d
+    + subtract(Vector2d): Vector2d
+    + precedes(Vector2d): boolean
+    + follows(Vector2d): boolean
+    + upperRight(Vector2d): Vector2d
+    + lowerLeft(Vector2d): Vector2d
+
+    + hashCode(): int
+    + equals(Object): boolean
+    + toString(): String
+}
+
+
+class MapObjects{
+    - private plant: Plant
+    - private animals: PriorityQueue<Animal>
+
+    + MapObjects()
+
+    + getPlant(): Plant
+    + getAnimals(): List<Animal>
+    + getObjects(): List<MapElement>
+
+    + addPlant(Plant): void
+    + removePlant(): void
+    + addAnimal(Animal): void
+    + removeAnimal(Animal): void
+    + removeDeadAnimals(): void
+    + isOccupied(): boolean
+    + getStrongestAnimal(): Animal
+    + getStrongestAnimals(): List<Animal>
+
+    + toString(): String
+}
+
+class Genotype {
+    - private genes: List<Integer>
+
+    + Genotype(List<Integer>)
+
+    + getGenes(): List<Integer>
+    + getGenomeLength(): int
+    + getGene(int): int
+
+    + mutate(): void
+    + mixGenotypes(): Genotype
+
+    + hashCode(): int
+    + equals(Object): boolean
+    + toString(): String
+}
+
+' Klasa reprezentująca zwierzę'
+class Animal implements MapElement {
+    - private position: Vector2d
+    - private energy: int
+    - private direction: Direction
+    - private genotype: Genotype
+    - private children: List<Animal>
+    - private eatenPlantCount: int
+    - private birthDay: int
+    - private age: int
+    - private isDead: boolean
+    - private actualActiveGenIndex: int
+    - private minimalReproductionEnergy: int
+
+    + Animal(Vector2d, int, Genotype, int, int)
+
+    + getEnergy(): int
+    + getChildrenCount(): int
+    + getGenotype(): Genotype
+    + getPosition(): Vector2d
+    + getDirection(): Direction
+    + getEatenPlantCount(): int
+    + getBirthDay(): int
+    + getIsDead(): boolean
+    + getChildren(): List<Animal>
+    + getDescendantCount(): int
+    + getAge(): int
+    + getActualActiveGenIndex(): int
+    + getMinimalReproductionEnergy(): int
+    + getNextGene(): int
+
+    + setActiveGenIndex(int): void
+    + setEnergy(int): void
+
+    + canReproduce(): boolean
+    + move(Direction, Vector2d): void
+    + eat(Plant): void
+    + addChild(Animal): void
+    + reproduce(Animal, int, int): Animal
+    + die(): void
+    + grow(): void
+
+    + hashCode(): int
+    + equals(Object): boolean
+    + toString(): String
+}
+
+' Klasa reprezentująca roślinę
+class Plant implements MapElement {
+    - private position: Vector2d
+    - private energy: int
+    - private dayOfGrowth: int
+    - private isPoisoned: boolean
+    - private isEaten: boolean
+
+    + Plant(Vector2d,int,boolean)
+
+    + getEnergy(): int
+    + getDayOfGrowth(): int
+    + getPosition(): Vector2d
+    + getIsPoisoned(): boolean
+    + getIsEaten(): boolean
+
+    + setIsEaten(): void
+    + grow(): void
+
+    + toString(): String
+}
+
+' Klasa reprezentująca pojedyncze pole na mapie'
+class Tile {
+    - private position: Vector2d
+    - private objects: MapObjects
+
+    'konstruktor przyjmuje pozycje'
+    + Tile(Vector2d)
+
+    + getPosition(): Vector2d
+    + getAnimals(): List<Animal>
+    + getPlant(): Plant
+    + getObjects(): Object
+
+    + setPlant(Plant): void
+
+    + addAnimal(Animal): void
+    + removeAnimal(Animal): void
+    + isOccupied(): boolean
+    + private getStrongestAnimal(): Animal
+    + private getStrongestAnimals(): List<Animal>
+    + public removeDeadAnimals(): void
+    + public eatPlant(): void
+    + public reproduceAnimals: void
+    + public growPlant(): void
+    + public growAnimals(): void
+
+    + hashCode(): int
+    + equals(Tile): boolean
+    + toString(): String
+}
+
+
+' Klasa abstrakcyjna reprezentująca mapę świata gry
+abstract class AbstractWorldMap implements WorldMap{
+    - private lowerLeft: Vector2d
+    - private upperRight: Vector2d
+    - private animals: List<Animal>
+    - private plants: List<Plant>
+    - private mapTiles: HashMap<Vector2d, Tile>
+
+    'konstruktor przyjmuje pozycje lewego dolnego i prawego górnego rogu mapy'
+    + AbstractWorldMap(Vector2d, Vector2d)
+
+    + getMapTiles(): HashMap<Vector2d, Tile>
+    + getAnimals(): List<Animal>
+    + getPlants(): List<Plant>
+    + getLowerLeft(): Vector2d
+    + getUpperRight(): Vector2d
+    + getWidth(): int
+    + getHeight(): int
+    + getElements(): List<MapElement>
+
+    + canMoveTo(Vector2d): boolean
+    + move(Animal): void
+    + placeAnimal(Animal): boolean
+    + objectsAt(Vector2d): MapObjects
+    + isOccupied(Vector2d): boolean
+    + placePlant(Plant): boolean
+
+    + generateMap(): void
+    + updateMap(): void
+    + drawMap(): void
+}
+
+
+' Klasa reprezentująca mapę świata gry w ksztalcie walca
+class GlobeMap extends AbstractWorldMap {
+    + GlobeMap()
+    + canMoveTo(Vector2d): boolean
+    + move(): void
+    + generateMap(): void
+    + updateMap(): void
+    + drawMap(): void
+}
+
+' Klasa reprezentująca mapę świata gry z zatrutymi owocami
+class PoisonedMap extends AbstractWorldMap {
+    - private poisonChance: float
+    - private poisonedAreaLowerLeft: Vector2d
+    - private poisonedAreaUpperRight: Vector2d
+
+    'konstrukor przyjmuje rozmiar zatrutego fragmentu mapy'
+    + PoisonedMap(int)
+
+    + getPoisonChance(): float
+    + getPoisonedAreaLowerLeft(): Vector2d
+    + getPoisonedAreaUpperRight(): Vector2d
+
+    + setPoisonChance(float): void
+
+    + generatePoisonedAreaLowerLeft(): void
+    + generatePoisonedAreaUpperRight(): void
+    + canMoveTo(Vector2d): boolean
+    + createPoisonedArea(): void
+    + moveAnimal(): void
+    + placePoisonedPlant(): boolean
+    + move(Animal): void
+    + generateMap(): void
+    + updateMap(): void
+    + drawMap(): void
+}
+
+' Klasa do przechowywania statystyk symulacji
+class Statistics{
+    - private animalCount: int
+    - private plantCount: int
+    - private freeTilesCount: int
+    - private averageLifespan: float
+    - private averageEnergyLevel: float
+    - private averageChildrenCount: float
+    - private mostPopularGenotype: Genotype
+
+    + Statistics()
+    + getAnimalCount(): int
+    + getPlantCount(): int
+    + getAverageLifespan(): float
+    + getAverageChildrenCount(): float
+    + getAverageEnergyLevel(): float
+    + getMostPopularGenotype(): Genotype
+    + getFreeTilesCount(): int
+
+    + updateStatistics(List<Animal>, List<Plant>): void
+    + calculateAvrageLifespan(List<Animal>): float
+    + calculateAvrageChildrenCount(List<Animal>): float
+    + calculateAvrageEnergyLevel(List<Animal>): float
+    + calculateMostPopularGenotype(List<Animal>): Genotype
+    + calculateFreeTilesCount(): int
+    + calculateAnimalCount(List<Animal>): int
+    + calculatePlantCount(List<Plant>): int
+
+    + updateStatistics(List<Animal>, List<Plant>): void
+}
+
+
+' Klasa symulatora zarządzająca symulacją
+class Simulator implements SimulationControl {
+    - private worldMap: WorldMap
+    - private statistics: Statistics
+
+    + Simulator(WorldMap)
+
+    + getStatistics(): Statistics
+
+    + runSimulation(): void
+    + updateDay(): void
+    + displayMap(): void
+    + updateStatistics(): void
+}
+
+' Klasa do konfiguracji symulacji
+class SimulationConfigurator {
+    - private mapSizeX: int
+    - private mapSizeY: int
+    - private mapType: String
+    - private initialPlantCount: int
+    - private plantEnergy: int
+    - private numberOfPlantsGrowingPerDay: int
+    - private modeOfPlantGrowing: String
+    - private initialAnimalCount: int
+    - private initialAnimalEnergy: int
+    - private readyToReproduceEnergy: int
+    - private reproduceEnergyLoss: int
+    - private minimumMutationCount: int
+    - private maximumMutationCount: int
+    - private mutationVariant: String
+    - private genomeLength: int
+    - private animalBehaviourType: String
+
+    + SimulationConfigurator()
+
+    + getMapSize(): Vector2d
+    + getMapType(): String
+    + getInitialPlantCount(): int
+    + getPlantEnergy(): int
+    + getNumberOfPlantsGrowingPerDay(): int
+    + getModeOfPlantGrowing(): String
+    + getInitialAnimalCount(): int
+    + getInitialAnimalEnergy(): int
+    + getReadyToReproduceEnergy(): int
+    + getReproduceEnergyLoss(): int
+    + getMinimumMutationCount(): int
+    + getMaximumMutationCount(): int
+    + getMutationVariant(): String
+    + getGenomeLength(): int
+    + getAnimalBehaviourType(): String
+
+    + setMapSize(int,int): void
+    + setMapType(String): void
+    + setInitialPlantCount(int): void
+    + setPlantEnergy(int): void
+    + setNumberOfPlantsGrowingPerDay(int): void
+    + setModeOfPlantGrowing(String): void
+    + setInitialAnimalCount(int): void
+    + setInitialAnimalEnergy(int): void
+    + setReadyToReproduceEnergy(int): void
+    + setReproduceEnergyLoss(int): void
+    + setMinimumMutationCount(int): void
+    + setMaximumMutationCount(int): void
+    + setMutationVariant(String): void
+    + setGenomeLength(int): void
+    + setAnimalBehaviourType(String): void
+
+    + toString(): String
+}
+
+' Kontroler UI TUTAJ NIE UMIEM NIC
+class UIController implements Displayable {
+    - simulator: Simulator
+
+    + UIController(Simulator)
+    + displayMap(): void
+    + updateStatistics(): void
+    + getSimulator(): Simulator
+    + setSimulator(Simulator): void
+}
+
+AbstractWorldMap *-- "many" Tile : contains >
+Tile o-- MapObjects : contains >
+GlobeMap -up-|> AbstractWorldMap
+PoisonedMap -up-|> AbstractWorldMap
+Tile o-- "many" Animal : contains >
+Tile o-- Plant : contains >
+Animal --> Genotype : has >
+Simulator --> WorldMap : controls >
+UIController --> Simulator : uses >
+Statistics --> "many" Animal : tracks >
+Statistics --> "many" Plant : tracks >
+SimulationConfigurator --> Simulator : configures >
+Animal --> Direction : moves in >
+
+Animal -up-|> Movable
+Animal -up-|> Eatable
+Animal -up-|> Reproducible
+Plant -up-|> Growable
+Simulator -up-|> SimulationControl
+UIController -up-|> Displayable
+Statistics -up-|> StatisticUpdate
+Genotype -up-|> GeneticMutation
+AbstractWorldMap -up-|> WorldMap
+AbstractWorldMap -up-|> MapVisualizer
+MapObjects -up-|> MapElement
+@enduml
