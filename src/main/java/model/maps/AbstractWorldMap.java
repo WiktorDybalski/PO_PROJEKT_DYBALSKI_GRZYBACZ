@@ -48,13 +48,11 @@ public abstract class AbstractWorldMap implements WorldMap {
      * mapVisualizer to draw a map.
      * One day it will be replaced by GUI
      */
-
     MapVisualizer mapVisualizer = new MapVisualizer(this);
 
     /**
      * Constructor of the Map
      */
-
     public AbstractWorldMap(Vector2d lowerLeft, Vector2d upperRight, int initialNumberOfPlants, int initialNumberOfAnimals) {
         this.lowerLeft = lowerLeft;
         this.upperRight = upperRight;
@@ -104,13 +102,16 @@ public abstract class AbstractWorldMap implements WorldMap {
         return elements;
     }
 
+    public Tile getTile(Vector2d position) {
+        return mapTiles.get(position);
+    }
+
     /**
      * The canMoveTo method checks if the Animal can move to
      *
      * @param position The position the object wants to get to
      * @return bool value is it possible to move there
      */
-
     public boolean canMoveTo(Vector2d position) {
         return lowerLeft.getY() <= position.getY() && upperRight.getY() >= position.getY();
     }
@@ -126,14 +127,12 @@ public abstract class AbstractWorldMap implements WorldMap {
         return position.getX() == lowerLeft.getX() && canMoveTo(position);
     }
 
-
     /**
      * The newPositionOutOfBound method checks if the Animal's new position is the Right bound of the Map
      *
      * @param position The position the object wants to get to
      * @return bool value is it possible to move there
      */
-
     public boolean newPositionOutOfRightBound(Vector2d position) {
         return position.getX() == upperRight.getX() && canMoveTo(position);
     }
@@ -144,7 +143,6 @@ public abstract class AbstractWorldMap implements WorldMap {
      * @param position The position the object wants to get to
      * @return bool value is it possible to move there
      */
-
     public MapObjects objectsAt(Vector2d position) {
         return mapTiles.get(position).getObjects();
     }
@@ -157,15 +155,17 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public boolean isOccupied(Vector2d position) {
         MapObjects objects = objectsAt(position);
-        return objects != null && objects.isOccupied();
+        if (objects == null) return false;
+        return objects.isOccupied();
     }
-
     /**
      * The placeAnimal method add animal to the Map
      */
 
     public void placeAnimal(Animal animal, Vector2d position) {
         mapTiles.get(position).addAnimal(animal);
+        if (!animals.contains(animal))
+            animals.add(animal);
     }
 
     /**
@@ -177,14 +177,16 @@ public abstract class AbstractWorldMap implements WorldMap {
         for (int i = 0; i < animals.size(); i++) {
             placeAnimal(animals.get(i), positions.get(i));
         }
+        this.animals.addAll(animals);
     }
 
     /**
      * The placePlant method set Plant on the Map
      */
-
     public void placePlant(Plant plant, Vector2d position) {
         mapTiles.get(position).setPlant(plant);
+        if (!plants.contains(plant))
+            plants.add(plant);
     }
 
     /**
@@ -197,24 +199,30 @@ public abstract class AbstractWorldMap implements WorldMap {
         for (int i = 0; i < plants.size(); i++) {
             placePlant(plants.get(i), positions.get(i));
         }
+        this.plants.addAll(plants);
     }
 
     /**
      * The move method is responsible for the movement of all moving objects on the map
      */
     public void move(List<Animal> animals) {
-        for (Animal animal : animals) {
-            Vector2d oldPosition = animal.getPosition();
-            Vector2d newPosition = oldPosition.add(Directions.toUnitVector(animal.getGenotype().getGene((animal.getActualActiveGenIndex()))));
-            if(newPositionOutOfLeftBound(newPosition)) {
-                newPosition = new Vector2d(newPosition.getX(), upperRight.getX());
+        for (Tile tile : mapTiles.values()) {
+            for (Animal animal : tile.getAnimals()) {
+                Vector2d oldPosition = animal.getPosition();
+                Directions oldDirection = animal.getDirection();
+                int oldActualActiveGeneIndex = animal.getActualActiveGenIndex();
+                Vector2d newPosition = oldPosition.add(new Vector2d(Directions.toUnitVector(oldActualActiveGeneIndex).getX(), Directions.toUnitVector(oldActualActiveGeneIndex).getY()%getHeight()));
+                if (newPositionOutOfLeftBound(newPosition)) {
+                    newPosition = new Vector2d(upperRight.getX(), newPosition.getY());
+                }
+                else if (newPositionOutOfRightBound(newPosition)) {
+                    newPosition = new Vector2d(lowerLeft.getX(), newPosition.getY());
+                }
+                mapTiles.get(oldPosition).removeAnimal(animal);
+                animal.move(oldDirection, newPosition);
+                mapTiles.get(newPosition).addAnimal(animal);
+                animal.setActualActiveGenIndex(animal.getNextGene());
             }
-            if (newPositionOutOfRightBound(newPosition)) {
-                newPosition = new Vector2d(newPosition.getX(), lowerLeft.getX());
-            }
-            int oldDirectionIndex = Directions.getDirectionIndex(animal.getDirection());
-            Directions newDirection = Directions.getDirectionName((oldDirectionIndex + animal.getGenotype().getGene(animal.getActualActiveGenIndex())) % 8);
-            animal.move(newDirection, newPosition);
         }
     }
 
@@ -230,6 +238,14 @@ public abstract class AbstractWorldMap implements WorldMap {
         }
         placePlants(plants);
         placeAnimals(animals);
+    }
+
+    public void removeEatenPlants(){
+        for (Plant plant : plants) {
+            if (plant.getIsEaten()) {
+                plants.remove(plant);
+            }
+        }
     }
 
     /**

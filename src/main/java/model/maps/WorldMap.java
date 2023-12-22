@@ -25,4 +25,5 @@ public interface WorldMap {
     public void generateMap(List<Plant> plants, List<Animal> animals);
     public String toString();
 
+    Tile getTile(Vector2d currentPosition);
 }

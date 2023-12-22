@@ -76,7 +76,7 @@ public class Tile {
      * Method returning the strongest animal on the tile.
      * @return strongest animal on the tile
      */
-    Animal getStrongestAnimal() {
+    public Animal getStrongestAnimal() {
         return objects.getStrongestAnimal();
     }
 
@@ -133,6 +133,10 @@ public class Tile {
         objects.growAnimals();
     }
 
+    public void removePlant() {
+        objects.removePlant();
+    }
+
     /**
      * Method returning the hash code of the tile.
      * @return hash code of the tile
@@ -167,4 +171,5 @@ public class Tile {
                 ", objects: " + objects.toString();
         return s;
     }
+
 }

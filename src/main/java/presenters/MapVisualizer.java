@@ -1,21 +1,23 @@
 package presenters;
 
+import model.maps.AbstractWorldMap;
 import model.maps.WorldMap;
 import model.utils.MapObjects;
+import model.utils.Tile;
 import model.utils.Vector2d;
 
 public class MapVisualizer {
     private static final String EMPTY_CELL = " ";
     private static final String FRAME_SEGMENT = "-";
     private static final String CELL_SEGMENT = "|";
-    private final WorldMap map;
+    private final AbstractWorldMap map;
 
     /**
      * Initializes the MapVisualizer with an instance of map to visualize.
      *
      * @param map
      */
-    public MapVisualizer(WorldMap map) {
+    public MapVisualizer(AbstractWorldMap map) {
         this.map = map;
     }
 
@@ -67,12 +69,12 @@ public class MapVisualizer {
         builder.append(System.lineSeparator());
         return builder.toString();
     }
-//  TODO
-//      Conflict with objectsAt!!!!!!!!
+
     private String drawObject(Vector2d currentPosition) {
-        if (this.map.isOccupied(currentPosition)) {
-            if(this.map.objectsAt(currentPosition).getAnimals() != null){
-                return this.map.objectsAt(currentPosition).getStrongestAnimal().getEnergy() + "";
+        Tile tile=this.map.getTile(currentPosition);
+        if (tile.isOccupied()) {
+            if(!tile.getAnimals().isEmpty()){
+                return tile.getStrongestAnimal().getEnergy() + "";
             }
             else{
                 return "*";

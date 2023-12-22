@@ -31,6 +31,7 @@ public class MapVisualizerTest {
 
     }
 
+
     @Test
     void drawTest() {
         System.out.println(map.toString());

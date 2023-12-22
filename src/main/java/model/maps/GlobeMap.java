@@ -25,6 +25,7 @@ public class GlobeMap extends AbstractWorldMap {
      * @return bool value is it possible to move there
      */
 
+
     //needs to be implemented
     public boolean canMoveTo(Vector2d position) {
         return super.canMoveTo(position);
