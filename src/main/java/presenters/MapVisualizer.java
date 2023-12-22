@@ -1,8 +1,6 @@
 package presenters;
 
-import model.maps.AbstractWorldMap;
 import model.maps.WorldMap;
-import model.utils.MapObjects;
 import model.utils.Tile;
 import model.utils.Vector2d;
 
