@@ -71,12 +71,13 @@ public class MapVisualizer {
 //      Conflict with objectsAt!!!!!!!!
     private String drawObject(Vector2d currentPosition) {
         if (this.map.isOccupied(currentPosition)) {
-            MapObjects object = this.map.objectsAt(currentPosition);
-            if (object != null) {
-                return object.toString();
+            if(this.map.objectsAt(currentPosition).getAnimals() != null){
+                return this.map.objectsAt(currentPosition).getStrongestAnimal().getEnergy() + "";
+            }
+            else{
+                return "*";
             }
         }
         return EMPTY_CELL;
     }
-
 }

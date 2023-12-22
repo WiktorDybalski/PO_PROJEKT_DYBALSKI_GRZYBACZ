@@ -49,7 +49,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      * One day it will be replaced by GUI
      */
 
-    MapVisualizer mapVisualizer = new MapVisualizer((WorldMap) this);
+    MapVisualizer mapVisualizer = new MapVisualizer(this);
 
     /**
      * Constructor of the Map
@@ -222,6 +222,12 @@ public abstract class AbstractWorldMap implements WorldMap {
      * The generateMap method is using in Map constructor to set all objects on the map
      */
     public void generateMap(List<Plant> plants, List<Animal> animals) {
+        mapTiles = new HashMap<>();
+        for (int i = lowerLeft.getX(); i <= upperRight.getX(); i++) {
+            for (int j = lowerLeft.getY(); j <= upperRight.getY(); j++) {
+                mapTiles.put(new Vector2d(i, j), new Tile(new Vector2d(i, j)));
+            }
+        }
         placePlants(plants);
         placeAnimals(animals);
     }

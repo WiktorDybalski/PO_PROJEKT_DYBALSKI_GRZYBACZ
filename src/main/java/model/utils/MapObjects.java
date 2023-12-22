@@ -28,6 +28,7 @@ public class MapObjects {
         return plant;
     }
     public List<Animal> getAnimals() {
+        if(animals.isEmpty()) return null;
         return new ArrayList<>(animals);
     }
     public List<MapElement> getObjects() {
