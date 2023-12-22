@@ -116,6 +116,29 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     /**
+     * The newPositionOutOfBound method checks if the Animal's new position is the Left bound of the Map
+     *
+     * @param position The position the object wants to get to
+     * @return bool value is it possible to move there
+     */
+
+    public boolean newPositionOutOfLeftBound(Vector2d position) {
+        return position.getX() == lowerLeft.getX() && canMoveTo(position);
+    }
+
+
+    /**
+     * The newPositionOutOfBound method checks if the Animal's new position is the Right bound of the Map
+     *
+     * @param position The position the object wants to get to
+     * @return bool value is it possible to move there
+     */
+
+    public boolean newPositionOutOfRightBound(Vector2d position) {
+        return position.getX() == upperRight.getX() && canMoveTo(position);
+    }
+
+    /**
      * The objectsAt method
      *
      * @param position The position the object wants to get to
@@ -183,6 +206,12 @@ public abstract class AbstractWorldMap implements WorldMap {
         for (Animal animal : animals) {
             Vector2d oldPosition = animal.getPosition();
             Vector2d newPosition = oldPosition.add(Directions.toUnitVector(animal.getGenotype().getGene((animal.getActualActiveGenIndex()))));
+            if(newPositionOutOfLeftBound(newPosition)) {
+                newPosition = new Vector2d(newPosition.getX(), upperRight.getX());
+            }
+            if (newPositionOutOfRightBound(newPosition)) {
+                newPosition = new Vector2d(newPosition.getX(), lowerLeft.getX());
+            }
             int oldDirectionIndex = Directions.getDirectionIndex(animal.getDirection());
             Directions newDirection = Directions.getDirectionName((oldDirectionIndex + animal.getGenotype().getGene(animal.getActualActiveGenIndex())) % 8);
             animal.move(newDirection, newPosition);
