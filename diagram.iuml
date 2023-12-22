@@ -42,74 +42,74 @@ interface WorldMap {
 
 enum Direction {
     NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST
-    + getRandomDirection(): Direction
-    + getDirectionName(int): Direction
-    + getDirectionIndex(Direction): int
-    + toUnitVector(): Vector2d
+    + public getRandomDirection(): Direction
+    + public getDirectionName(int): Direction
+    + public getDirectionIndex(Direction): int
+    + public toUnitVector(): Vector2d
 }
 
 class Vector2d {
     - private x: int
     - private y: int
 
-    + Vector2d(int, int)
+    + public Vector2d(int, int)
 
-    + getX(): int
-    + getY(): int
+    + public getX(): int
+    + public getY(): int
 
-    + add(Vector2d): Vector2d
-    + subtract(Vector2d): Vector2d
-    + precedes(Vector2d): boolean
-    + follows(Vector2d): boolean
-    + upperRight(Vector2d): Vector2d
-    + lowerLeft(Vector2d): Vector2d
+    + public add(Vector2d): Vector2d
+    + public subtract(Vector2d): Vector2d
+    + public precedesY(Vector2d): boolean
+    + public upperRight(Vector2d): Vector2d
+    + public lowerLeft(Vector2d): Vector2d
 
-    + hashCode(): int
-    + equals(Object): boolean
-    + toString(): String
+    + public hashCode(): int
+    + public equals(Object): boolean
+    + public toString(): String
 }
 
 class MapObjects{
     - private plant: Plant
     - private animals: PriorityQueue<Animal>
 
-    + MapObjects()
+    + public MapObjects()
 
-    + getPlant(): Plant
-    + getAnimals(): List<Animal>
-    + getObjects(): List<MapElement>
-    + getSortedAnimals(): ArrayList<Animal>
-    + getStrongestAnimal(): Animal
-    + getStrongestAnimals(): List<Animal>
+    + public getPlant(): Plant
+    + public getAnimals(): List<Animal>
+    + public getObjects(): List<MapElement>
+    + public getSortedAnimals(): ArrayList<Animal>
+    + public getStrongestAnimal(): Animal
+    + public getStrongestAnimals(): List<Animal>
 
-    + addPlant(Plant): void
-    + removePlant(): void
-    + addAnimal(Animal): void
-    + removeAnimal(Animal): void
-    + removeDeadAnimals(): void
-    + isOccupied(): boolean
+    + public addPlant(Plant): void
+    + public removePlant(): void
+    + public addAnimal(Animal): void
+    + public removeAnimal(Animal): void
+    + public removeDeadAnimals(): void
+    + public isOccupied(): boolean
 
-    +growPlant(): void
-    +growAnimals(): void
+    + public growPlant(): void
+    + public growAnimals(): void
 
-    + toString(): String
+    + public toString(): String
 }
 
 class Genotype {
     - private genes: List<Integer>
 
-    + Genotype(List<Integer>)
+    + public Genotype(List<Integer>)
 
-    + getGenes(): List<Integer>
-    + getGenomeLength(): int
-    + getGene(int): int
+    + public getGenes(): List<Integer>
+    + public getGenomeLength(): int
+    + public getGene(int): int
 
-    + mutate(): void
-    + mixGenotypes(): Genotype
+    + public mutate(): void
+    + public mixGenotypes(): Genotype
 
-    + hashCode(): int
-    + equals(Object): boolean
-    + toString(): String
+    + public hashCode(): int
+    + public equals(Object): boolean
+    + public toString(): String
+    + TODO: DOPISAC getRandomGenotype
 }
 
 ' Klasa reprezentująca zwierzę'
@@ -126,37 +126,37 @@ class Animal implements MapElement {
     - private actualActiveGenIndex: int
     - private minimalReproductionEnergy: int
 
-    + Animal(Vector2d, int, Genotype, int, int)
+    + public Animal(Vector2d, int, Genotype, int, int)
 
-    + getEnergy(): int
-    + getChildrenCount(): int
-    + getGenotype(): Genotype
-    + getPosition(): Vector2d
-    + getDirection(): Direction
-    + getEatenPlantCount(): int
-    + getBirthDay(): int
-    + getIsDead(): boolean
-    + getChildren(): List<Animal>
-    + getDescendantCount(): int
-    + getAge(): int
-    + getActualActiveGenIndex(): int
-    + getMinimalReproductionEnergy(): int
-    + getNextGene(): int
+    + public getEnergy(): int
+    + public getChildrenCount(): int
+    + public getGenotype(): Genotype
+    + public getPosition(): Vector2d
+    + public getDirection(): Direction
+    + public getEatenPlantCount(): int
+    + public getBirthDay(): int
+    + public getIsDead(): boolean
+    + public getChildren(): List<Animal>
+    + public getDescendantCount(): int
+    + public getAge(): int
+    + public getActualActiveGenIndex(): int
+    + public getMinimalReproductionEnergy(): int
+    + public getNextGene(): int
 
-    + setActiveGenIndex(int): void
-    + setEnergy(int): void
+    + public setActiveGenIndex(int): void
+    + public setEnergy(int): void
 
-    + canReproduce(): boolean
-    + move(Direction, Vector2d): void
-    + eat(Plant): void
-    + addChild(Animal): void
-    + reproduce(Animal, int, int): Animal
-    + die(): void
-    + grow(): void
+    + public canReproduce(): boolean
+    + public move(Direction, Vector2d): void
+    + public eat(Plant): void
+    + public addChild(Animal): void
+    + public reproduce(Animal, int, int): Animal
+    + public die(): void
+    + public grow(): void
 
-    + hashCode(): int
-    + equals(Object): boolean
-    + toString(): String
+    + public hashCode(): int
+    + public equals(Object): boolean
+    + public toString(): String
 }
 
 ' Klasa reprezentująca roślinę
@@ -167,18 +167,18 @@ class Plant implements MapElement {
     - private isPoisoned: boolean
     - private isEaten: boolean
 
-    + Plant(Vector2d,int,boolean)
+    + public Plant(Vector2d,int,boolean, int)
 
-    + getEnergy(): int
-    + getDayOfGrowth(): int
-    + getPosition(): Vector2d
-    + getIsPoisoned(): boolean
-    + getIsEaten(): boolean
+    + public getEnergy(): int
+    + public getDayOfGrowth(): int POTRZEBNE?
+    + public getPosition(): Vector2d
+    + public getIsPoisoned(): boolean
+    + public getIsEaten(): boolean
 
-    + setIsEaten(): void
-    + grow(): void
+    + public setIsEaten(): void
+    + public grow(): void
 
-    + toString(): String
+    + public toString(): String
 }
 
 ' Klasa reprezentująca pojedyncze pole na mapie'
@@ -186,30 +186,29 @@ class Tile {
     - private position: Vector2d
     - private objects: MapObjects
 
-    'konstruktor przyjmuje pozycje'
-    + Tile(Vector2d)
+    + public Tile(Vector2d)
 
-    + getPosition(): Vector2d
-    + getAnimals(): List<Animal>
-    + getPlant(): Plant
-    + getObjects(): Object
+    + public getPosition(): Vector2d
+    + public getAnimals(): List<Animal>
+    + public getPlant(): Plant
+    + public getObjects(): MapObject
 
-    + setPlant(Plant): void
+    + public setPlant(Plant): void
 
-    + addAnimal(Animal): void
-    + removeAnimal(Animal): void
-    + isOccupied(): boolean
-    + protected getStrongestAnimal(): Animal protected do testow
-    + protected getStrongestAnimals(): List<Animal> protected do testow
+    + public addAnimal(Animal): void
+    + public removeAnimal(Animal): void
+    + public isOccupied(): boolean  POTRZEBNE GO WGL?
+    + public getStrongestAnimal():
+    + public getStrongestAnimals(): List<Animal>  NIEMA SPECYFIKATORA DOSTEPU
     + public removeDeadAnimals(): void
     + public eatPlant(): void
     + public reproduceAnimals: void
-    + public growPlant(): void
-    + public growAnimals(): void
+    + public grow(): void
+    + public removePlant(): void
 
-    + hashCode(): int
-    + equals(Tile): boolean
-    + toString(): String
+    + public hashCode(): int
+    + public equals(Tile): boolean
+    + public toString(): String
 }
 
 
@@ -221,28 +220,27 @@ abstract class AbstractWorldMap implements WorldMap{
     - private plants: List<Plant>
     - private mapTiles: HashMap<Vector2d, Tile>
 
-    'konstruktor przyjmuje pozycje lewego dolnego i prawego górnego rogu mapy'
-    + AbstractWorldMap(Vector2d, Vector2d)
+    + public AbstractWorldMap(Vector2d, Vector2d)
 
-    + getMapTiles(): HashMap<Vector2d, Tile>
-    + getAnimals(): List<Animal>
-    + getPlants(): List<Plant>
-    + getLowerLeft(): Vector2d
-    + getUpperRight(): Vector2d
-    + getWidth(): int
-    + getHeight(): int
-    + getElements(): List<MapElement>
+    + public getMapTiles(): HashMap<Vector2d, Tile>
+    + public getAnimals(): List<Animal>
+    + public getPlants(): List<Plant>
+    + public getLowerLeft(): Vector2d
+    + public getUpperRight(): Vector2d
+    + public getWidth(): int
+    + public getHeight(): int
+    + public getElements(): List<MapElement>
 
-    + canMoveTo(Vector2d): boolean
-    + move(Animal): void
-    + placeAnimal(Animal): boolean
-    + objectsAt(Vector2d): MapObjects
-    + isOccupied(Vector2d): boolean
-    + placePlant(Plant): boolean
+    + public canMoveTo(Vector2d): boolean
+    + public move(Animal): void
+    + public placeAnimal(Animal): boolean
+    + public objectsAt(Vector2d): MapObjects
+    + public isOccupied(Vector2d): boolean
+    + public placePlant(Plant): boolean
 
-    + generateMap(): void
-    + updateMap(): void
-    + drawMap(): void
+    + public generateMap(): void
+    + public updateMap(): void
+    + public drawMap(): void
 }
 
 
@@ -281,6 +279,34 @@ class PoisonedMap extends AbstractWorldMap {
     + generateMap(): void
     + updateMap(): void
     + drawMap(): void
+}
+
+class MapVisualiser {
+    - private static final String EMPTY_CELL = "  "
+    - private static final String FRAME_SEGMENT = "-"
+    - private static final String CELL_SEGMENT = "|"
+    - private map: AbstractWorldMap
+
+    + public MapVisualiser(AbstractWorldMap)
+
+    + public draw(Vector2d,Vector2d): String
+    + private drawFrame(boolean): String
+    + private drawHeader(Vector2d,Vector2d): String
+    + private drawObject(Vector2d)): String
+}
+
+class RandomPositionsGenerator {
+    - private final maxWidth: int
+    - private final maxHeight: int
+    - private final objectCount: int
+    - private final allPositions: List<Vector2d>
+    - private result: List<Vector2d>
+
+    + public RandomPositionsGenerator(Vector2d, Vector2d)
+
+    + public getResult(): List<Vector2d>
+    + private generateObject(): List<Vector2d>
+    + private generateAllPositions(): List<Vector2d>
 }
 
 ' Klasa do przechowywania statystyk symulacji
