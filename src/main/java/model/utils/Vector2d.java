@@ -57,15 +57,6 @@ public class Vector2d {
         return new Vector2d(this.x - other.x, this.y - other.y);
     }
 
-    /**
-     * The precedes method checks if the vector precedes another vector.
-     * @param other The vector to be compared to.
-     * @return True if the vector precedes the other vector, false otherwise.
-     */
-    public boolean precedesY(Vector2d other) {
-        return (this.y <= other.y);
-    }
-
 
     public Vector2d upperRight(Vector2d other) {
         return new Vector2d(Math.max(this.x, other.x), Math.max(this.y, other.y));

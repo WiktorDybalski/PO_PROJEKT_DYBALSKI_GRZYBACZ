@@ -1,6 +1,8 @@
 package model.maps;
 
-import model.RandomPositionsGenerator;
+import RandomGenerators.RandomAnimalsGenerator;
+import RandomGenerators.RandomPlantsGenerator;
+import RandomGenerators.RandomPositionsGenerator;
 import model.utils.*;
 import presenters.MapVisualizer;
 
@@ -22,13 +24,13 @@ public abstract class AbstractWorldMap implements WorldMap {
      * Initial number of plants
      * Initial parameter of the simulation
      */
-    private final int initialNumberOfPlants;
+    protected final int initialNumberOfPlants;
 
     /**
      * Initial number of Animals
      * Initial parameter of the simulation
      */
-    private final int initialNumberOfAnimals;
+    protected final int initialNumberOfAnimals;
     /**
      * List of animals on the Map
      */
@@ -49,18 +51,20 @@ public abstract class AbstractWorldMap implements WorldMap {
      * One day it will be replaced by GUI
      */
     MapVisualizer mapVisualizer = new MapVisualizer(this);
+    public final int minimalReproductionEnergy;
 
     /**
      * Constructor of the Map
      */
-    public AbstractWorldMap(Vector2d lowerLeft, Vector2d upperRight, int initialNumberOfPlants, int initialNumberOfAnimals) {
+    public AbstractWorldMap(Vector2d lowerLeft, Vector2d upperRight, int initialNumberOfPlants, int initialNumberOfAnimals, int minimalReproductionEnergy) {
         this.lowerLeft = lowerLeft;
         this.upperRight = upperRight;
         this.initialNumberOfPlants = initialNumberOfPlants;
         this.initialNumberOfAnimals = initialNumberOfAnimals;
+        this.minimalReproductionEnergy = minimalReproductionEnergy;
         this.animals = new ArrayList<>();
         this.plants = new ArrayList<>();
-        generateMap(plants, animals);
+        generateMap(initialNumberOfPlants, initialNumberOfAnimals);
     }
 
     /**
@@ -158,6 +162,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         if (objects == null) return false;
         return objects.isOccupied();
     }
+
     /**
      * The placeAnimal method add animal to the Map
      */
@@ -171,11 +176,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     /**
      * The placeAnimals method create random positions for Animals and using for to add Animal to the Map using placeAnimal
      */
-    public void placeAnimals(List<Animal> animals) {
-        RandomPositionsGenerator randomPositionsGenerator = new RandomPositionsGenerator(upperRight.getX(), upperRight.getY(), initialNumberOfAnimals);
-        List<Vector2d> positions = randomPositionsGenerator.getResult();
-        for (int i = 0; i < animals.size(); i++) {
-            placeAnimal(animals.get(i), positions.get(i));
+    public void placeAnimals(int amountOfAnimals) {
+        RandomAnimalsGenerator animalsGenerator = new RandomAnimalsGenerator(amountOfAnimals, minimalReproductionEnergy, this);
+        List<Animal> animals = animalsGenerator.getAnimals();
+        for (Animal animal : animals) {
+            placeAnimal(animal, animal.getPosition());
         }
         this.animals.addAll(animals);
     }
@@ -193,11 +198,11 @@ public abstract class AbstractWorldMap implements WorldMap {
      * The placePlants method create random positions for Plants and using for to set Plants on the Map using placePlant
      */
 
-    public void placePlants(List<Plant> plants) {
-        RandomPositionsGenerator randomPositionsGenerator = new RandomPositionsGenerator(upperRight.getX(), upperRight.getY(), initialNumberOfPlants);
-        List<Vector2d> positions = randomPositionsGenerator.getResult();
-        for (int i = 0; i < plants.size(); i++) {
-            placePlant(plants.get(i), positions.get(i));
+    public void placePlants(int amountOfPlants) {
+        RandomPlantsGenerator plantsGenerator = new RandomPlantsGenerator(amountOfPlants, this);
+        List<Plant> plants = plantsGenerator.getPlants();
+        for (Plant plant : plants) {
+            placePlant(plant, plant.getPosition());
         }
         this.plants.addAll(plants);
     }
@@ -211,11 +216,10 @@ public abstract class AbstractWorldMap implements WorldMap {
                 Vector2d oldPosition = animal.getPosition();
                 Directions oldDirection = animal.getDirection();
                 int oldActualActiveGeneIndex = animal.getActualActiveGenIndex();
-                Vector2d newPosition = oldPosition.add(new Vector2d(Directions.toUnitVector(oldActualActiveGeneIndex).getX(), Directions.toUnitVector(oldActualActiveGeneIndex).getY()%getHeight()));
+                Vector2d newPosition = oldPosition.add(new Vector2d(Directions.toUnitVector(oldActualActiveGeneIndex).getX(), Directions.toUnitVector(oldActualActiveGeneIndex).getY() % getHeight()));
                 if (newPositionOutOfLeftBound(newPosition)) {
                     newPosition = new Vector2d(upperRight.getX(), newPosition.getY());
-                }
-                else if (newPositionOutOfRightBound(newPosition)) {
+                } else if (newPositionOutOfRightBound(newPosition)) {
                     newPosition = new Vector2d(lowerLeft.getX(), newPosition.getY());
                 }
                 mapTiles.get(oldPosition).removeAnimal(animal);
@@ -229,7 +233,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     /**
      * The generateMap method is using in Map constructor to set all objects on the map
      */
-    public void generateMap(List<Plant> plants, List<Animal> animals) {
+    public void generateMap(int plants, int animals) {
         mapTiles = new HashMap<>();
         for (int i = lowerLeft.getX(); i <= upperRight.getX(); i++) {
             for (int j = lowerLeft.getY(); j <= upperRight.getY(); j++) {
@@ -240,17 +244,18 @@ public abstract class AbstractWorldMap implements WorldMap {
         placeAnimals(animals);
     }
 
-    public void removeEatenPlants(){
-        for (Plant plant : plants) {
-            if (plant.getIsEaten()) {
-                plants.remove(plant);
-            }
-        }
+    /**
+     * The removeEatenPlants method delete plants that has been eaten
+     */
+
+    public void removeEatenPlants() {
+        plants.removeIf(Plant::getIsEaten);
     }
 
     /**
      * The toString method draw the Map using mapVisualizer
      */
+
     public String toString() {
         return mapVisualizer.draw(lowerLeft, upperRight);
     }

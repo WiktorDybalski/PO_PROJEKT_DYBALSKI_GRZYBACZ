@@ -74,7 +74,7 @@ public class PoisonedMap extends AbstractWorldMap {
      */
 
     public void placeAnimals(List<Animal> animals) {
-        super.placeAnimals(animals);
+        super.placeAnimals(initialNumberOfAnimals);
     }
 
     /**
@@ -90,7 +90,7 @@ public class PoisonedMap extends AbstractWorldMap {
      */
 
     public void placePlants(List<Plant> plants) {
-        super.placePlants(plants);
+        super.placePlants(initialNumberOfPlants);
     }
 
     /**

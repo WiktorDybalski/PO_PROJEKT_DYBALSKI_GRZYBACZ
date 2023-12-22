@@ -1,6 +1,5 @@
 package model.maps;
 
-import model.RandomPositionsGenerator;
 import model.utils.Animal;
 import model.utils.MapObjects;
 import model.utils.Plant;
@@ -65,7 +64,7 @@ public class GlobeMap extends AbstractWorldMap {
      */
 
     public void placeAnimals(List<Animal> animals) {
-        super.placeAnimals(animals);
+        super.placeAnimals(initialNumberOfAnimals);
     }
 
     /**
@@ -81,7 +80,7 @@ public class GlobeMap extends AbstractWorldMap {
      */
 
     public void placePlants(List<Plant> plants) {
-        super.placePlants(plants);
+        super.placePlants(initialNumberOfPlants);
     }
 
     /**

@@ -131,7 +131,7 @@ public class MapObjectTest {
 
     @Test
     void testRemoveDeadAnimals() {
-        ArrayList<Integer> genes= new ArrayList<>();
+        ArrayList<Integer> genes = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
             genes.add(i);

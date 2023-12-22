@@ -72,8 +72,7 @@ public class AnimalTest {
     }
 
     @Test
-    public void testGetChildren() {
-        assertNull(animal1.getChildren());
+    public void testGetChildren() {assertEquals(new ArrayList<>(), animal1.getChildren());
     }
 
     @Test
