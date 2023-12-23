@@ -285,13 +285,7 @@ class PoisonedMap extends AbstractWorldMap {
 
 ' Klasa do przechowywania statystyk symulacji
 class Statistics{
-    - private animalCount: int
-    - private plantCount: int
-    - private freeTilesCount: int
-    - private averageLifespan: float
-    - private averageEnergyLevel: float
-    - private averageChildrenCount: float
-    - private mostPopularGenotype: Genotype
+    - private map: WorldMap
 
     + Statistics()
     + getAnimalCount(): int
@@ -301,17 +295,6 @@ class Statistics{
     + getAverageEnergyLevel(): float
     + getMostPopularGenotype(): Genotype
     + getFreeTilesCount(): int
-
-    + updateStatistics(List<Animal>, List<Plant>): void
-    + calculateAvrageLifespan(List<Animal>): float
-    + calculateAvrageChildrenCount(List<Animal>): float
-    + calculateAvrageEnergyLevel(List<Animal>): float
-    + calculateMostPopularGenotype(List<Animal>): Genotype
-    + calculateFreeTilesCount(): int
-    + calculateAnimalCount(List<Animal>): int
-    + calculatePlantCount(List<Plant>): int
-
-    + updateStatistics(List<Animal>, List<Plant>): void
 }
 
 
