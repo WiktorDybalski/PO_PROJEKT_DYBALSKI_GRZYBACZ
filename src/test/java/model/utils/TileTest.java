@@ -108,7 +108,7 @@ public class TileTest {
 
     @Test
     void testGetStrongestAnimals() {
-        assertNull(tile.getStrongestAnimals());
+        assertEquals(new ArrayList<Animal>(), tile.getStrongestAnimals());
         ArrayList<Integer> genes = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             genes.add(i);
@@ -136,10 +136,10 @@ public class TileTest {
         Animal animal = new Animal(new Vector2d(0,0), 10, genotype , 10, 10);
         tile.addAnimal(animal);
         assertEquals(tile.getAnimals().size(),1);
-        tile.removeDeadAnimals();
+        tile.removeDeadAnimalsFromTile();
         assertEquals(tile.getAnimals().size(),1);
         animal.die();
-        tile.removeDeadAnimals();
+        tile.removeDeadAnimalsFromTile();
         assertEquals(tile.getAnimals().size(),0);
     }
 

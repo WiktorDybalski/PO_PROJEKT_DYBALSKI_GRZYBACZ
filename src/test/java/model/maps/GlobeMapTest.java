@@ -70,11 +70,33 @@ public class GlobeMapTest {
         System.out.println(map.toString());
         map.move();
         System.out.println(map.toString());
+        map.move();
+        System.out.println(map.toString());
+        map.move();
+        System.out.println(map.toString());
+        map.move();
+        System.out.println(map.toString());
+        map.move();
+        System.out.println(map.toString());
+        map.move();
+        System.out.println(map.toString());
     }
     @Test
     void testGenerateMap() {
         assertEquals(10, map.getAnimals().size());
         assertEquals(20, map.getPlants().size());
+    }
+
+    @Test
+    void testDailyUpdate(){
+        map.dailyUpdate(2);
+        System.out.println(map.toString());
+        map.dailyUpdate(2);
+        System.out.println(map.toString());
+        map.dailyUpdate(2);
+        System.out.println(map.toString());
+        map.dailyUpdate(2);
+        System.out.println(map.toString());
     }
 
     @Test

@@ -28,4 +28,6 @@ public interface WorldMap {
     public String toString();
 
     Tile getTile(Vector2d currentPosition);
+
+    public void dailyUpdate(int dailyPlantCountIncrease);
 }

@@ -84,7 +84,7 @@ public class Tile {
      * Method returning the list of the strongest animals on the tile.
      * @return list of the strongest animals on the tile
      */
-    ArrayList<Animal> getStrongestAnimals() {
+    public ArrayList<Animal> getStrongestAnimals() {
         return objects.getStrongestAnimals();
     }
 
@@ -92,8 +92,8 @@ public class Tile {
      * Method removes dead animals from the list of animals on the tile.
      * It is called in the simulation of a single day.
      */
-    public void removeDeadAnimals() {
-        objects.removeDeadAnimals();
+    public void removeDeadAnimalsFromTile() {
+        objects.removeDeadAnimalsFromMapObjects();
     }
 
     /**

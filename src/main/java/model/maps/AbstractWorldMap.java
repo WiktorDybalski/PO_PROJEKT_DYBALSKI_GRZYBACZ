@@ -2,7 +2,6 @@ package model.maps;
 
 import RandomGenerators.RandomAnimalsGenerator;
 import RandomGenerators.RandomPlantsGenerator;
-import RandomGenerators.RandomPositionsGenerator;
 import model.utils.*;
 import presenters.MapVisualizer;
 
@@ -11,6 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public abstract class AbstractWorldMap implements WorldMap {
+
+    private static final int energyToTransfer = 4;
+
+    private int currentDay;
     /**
      * Lower, Left corner of the Map
      */
@@ -57,6 +60,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      * Constructor of the Map
      */
     public AbstractWorldMap(Vector2d lowerLeft, Vector2d upperRight, int initialNumberOfPlants, int initialNumberOfAnimals, int minimalReproductionEnergy) {
+        this.currentDay = 0;
         this.lowerLeft = lowerLeft;
         this.upperRight = upperRight;
         this.initialNumberOfPlants = initialNumberOfPlants;
@@ -70,6 +74,13 @@ public abstract class AbstractWorldMap implements WorldMap {
     /**
      * Getters
      */
+
+    public int getEnergyToTransfer() {
+        return energyToTransfer;
+    }
+    public int getCurrentDay() {
+        return currentDay;
+    }
 
     public HashMap<Vector2d, Tile> getMapTiles() {
         return mapTiles;
@@ -224,6 +235,12 @@ public abstract class AbstractWorldMap implements WorldMap {
         this.removeEatenPlants();
     }
 
+    public void removeDeadAnimals() {
+        for (Tile tile : mapTiles.values()) {
+            tile.removeDeadAnimalsFromTile();
+        }
+    }
+
     /**
      * The move method is responsible for the movement of all moving objects on the map
      * TODO: FIX
@@ -271,10 +288,37 @@ public abstract class AbstractWorldMap implements WorldMap {
         plants.removeIf(Plant::getIsEaten);
     }
 
+    public void reproduce() {
+        for (Tile tile : mapTiles.values()) {
+            ArrayList<Animal> strongestAnimals = tile.getStrongestAnimals();
+            if (strongestAnimals.size() == 2) {
+
+                Animal parent1 = strongestAnimals.get(0);
+                Animal parent2 = strongestAnimals.get(1);
+                if (parent1.canReproduce() && parent2.canReproduce()) {
+                    Animal child = parent1.reproduce(parent2, currentDay, energyToTransfer);
+                }
+            }
+        }
+    }
+    /**
+     * The dailyUpdate method is responsible for the daily update of the map
+     */
+    public void dailyUpdate(int dailyPlantCountIncrease) {
+        this.removeDeadAnimals();
+        this.removeEatenPlants();
+        this.move();
+        this.eat();
+        this.reproduce();
+        this.placePlants(dailyPlantCountIncrease);
+        this.removeDeadAnimals();
+        System.out.println(this);
+        currentDay++;
+    }
+
     /**
      * The toString method draw the Map using mapVisualizer
      */
-
     public String toString() {
         return mapVisualizer.draw(lowerLeft, upperRight);
     }

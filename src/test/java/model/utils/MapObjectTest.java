@@ -139,9 +139,17 @@ public class MapObjectTest {
         Genotype genotype = new Genotype(genes);
         Animal animal = new Animal(new Vector2d(1, 1), 0, genotype, 1,2);
         mapObjects.addAnimal(animal);
+        mapObjects.addAnimal(animal);
+        mapObjects.addAnimal(animal);
+        Animal animal2 = new Animal(new Vector2d(1, 1), 2, genotype, 1,2);
+        mapObjects.addAnimal(animal2);
+        mapObjects.addAnimal(animal);
+        System.out.println(mapObjects.toString());
+        assertEquals(mapObjects.getAnimals().size(), 5);
+        mapObjects.removeDeadAnimalsFromMapObjects();
+        System.out.println(mapObjects.toString());
         assertEquals(mapObjects.getAnimals().size(), 1);
-        mapObjects.removeDeadAnimals();
-        assertEquals(mapObjects.getAnimals().size(), 0);
+        assertTrue(mapObjects.isOccupied());
     }
 
     @Test

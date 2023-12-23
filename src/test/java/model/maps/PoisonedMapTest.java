@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PoisonedMapTest {
-    GlobeMap map;
+    PoisonedMap map;
     @BeforeEach
     void setUp() {
         map = new PoisonedMap(10, 10, 0.3, 20, 10);

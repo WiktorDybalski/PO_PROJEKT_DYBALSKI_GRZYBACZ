@@ -41,6 +41,9 @@ public class MapObjects {
      * Returns the list of animals sorted by their energy, age, and number of children.
      */
     public ArrayList<Animal> getSortedAnimals() {
+        if (animals.isEmpty()) {
+            return new ArrayList<Animal>();
+        }
         ArrayList<Animal> sortedAnimals = new ArrayList<>(animals);
         sortedAnimals.sort(Comparator.comparingInt(Animal::getEnergy).reversed());
         sortedAnimals.sort((a1, a2) -> {
@@ -70,12 +73,12 @@ public class MapObjects {
      * @return The two strongest animals on the tile.
      */
     public ArrayList<Animal> getStrongestAnimals() {
+        if (animals.size()<2) {
+            return new ArrayList<Animal>();
+        }
         ArrayList<Animal> sortedAnimals = this.getSortedAnimals();
         ArrayList<Animal> strongestAnimals = new ArrayList<>();
 
-        if (sortedAnimals.size()<2) {
-            return null;
-        }
         int maxEnergy = sortedAnimals.get(0).getEnergy();
         for (Animal animal : sortedAnimals) {
             if (animal.getEnergy() == maxEnergy) {
@@ -137,8 +140,15 @@ public class MapObjects {
     /**
      * Removes all dead animals from the tile.
      */
-    public void removeDeadAnimals() {
-        if (!animals.isEmpty()) animals.removeIf(Animal::getIsDead);
+    public void removeDeadAnimalsFromMapObjects() {
+        Iterator<Animal> iterator = animals.iterator();
+        while (iterator.hasNext()) {
+            Animal animal = iterator.next();
+            if (animal.getIsDead() || animal.getEnergy() <= 0) {
+                animal.die();
+                iterator.remove(); // Use iterator deletes the current element safely
+            }
+        }
     }
 
     /**

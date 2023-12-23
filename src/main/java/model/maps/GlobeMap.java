@@ -9,6 +9,7 @@ import java.util.List;
 
 public class GlobeMap extends AbstractWorldMap {
 
+
     public static final int MINIMAL_REPRODUCTION_ENERGY= 50; //TODO check if it's ok
     /**
      * Constructor of the Map
@@ -83,6 +84,12 @@ public class GlobeMap extends AbstractWorldMap {
     }
 
     /**
+     * This method removes all dead animals from the map
+     */
+    public void removeDeadAnimals() {
+        super.removeDeadAnimals();
+    }
+    /**
      * The move method is responsible for the movement of all moving objects on the map
      */
 
@@ -101,6 +108,13 @@ public class GlobeMap extends AbstractWorldMap {
      */
     public void generateMap(List<Plant> plants, List<Animal> animals) {
         super.generateMap(plants, animals);
+    }
+
+    /**
+     * The dailyUpdate method is responsible for the daily update of the map     */
+
+    public void dailyUpdate() {
+        super.dailyUpdate(super.getEnergyToTransfer());
     }
 
     /**
