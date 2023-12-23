@@ -71,6 +71,14 @@ public class Vector2d {
     public Vector2d lowerLeft(Vector2d other) {
         return new Vector2d(Math.min(this.x, other.x), Math.min(this.y, other.y));
     }
+    public boolean precedes(Vector2d position) {
+        return this.x <= position.x && this.y <= position.y;
+    }
+
+    public boolean follows(Vector2d position) {
+        return this.x >= position.x && this.y >= position.y;
+    }
+
 
     /**
      * The ovverrided hashCode method.
@@ -98,4 +106,5 @@ public class Vector2d {
     public String toString() {
         return "(" + this.x + "," + this.y + ")";
     }
+
 }

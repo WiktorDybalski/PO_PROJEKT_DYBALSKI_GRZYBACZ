@@ -22,7 +22,9 @@ public interface WorldMap {
     public boolean isOccupied(Vector2d position);
     public void placePlant(Plant plant, Vector2d position);
 
-    public void generateMap(List<Plant> plants, List<Animal> animals);
+    public default void generateMap(List<Plant> plants, List<Animal> animals) {
+    }
+
     public String toString();
 
     Tile getTile(Vector2d currentPosition);

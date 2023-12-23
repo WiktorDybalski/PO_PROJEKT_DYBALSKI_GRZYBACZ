@@ -12,7 +12,7 @@ public class RandomPlantsGenerator {
     /**
      * The energy value each plant starts with.
      */
-    private static final int PLANT_ENERGY = 50;
+    private static final int PLANT_ENERGY = 1;
 
     /**
      * The day on which the plant starts growing.

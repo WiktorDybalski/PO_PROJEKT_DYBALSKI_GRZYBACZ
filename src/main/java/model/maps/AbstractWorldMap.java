@@ -158,6 +158,9 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
 
     public boolean isOccupied(Vector2d position) {
+        if (this.lowerLeft.follows(position) || this.upperRight.precedes(position) ){
+            return false;
+        }
         MapObjects objects = objectsAt(position);
         if (objects == null) return false;
         return objects.isOccupied();
@@ -169,7 +172,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public void placeAnimal(Animal animal, Vector2d position) {
         mapTiles.get(position).addAnimal(animal);
-        if (!animals.contains(animal))
+        if (!animals.contains(animal)) //TODO: check if it is necessary
             animals.add(animal);
     }
 
@@ -182,7 +185,6 @@ public abstract class AbstractWorldMap implements WorldMap {
         for (Animal animal : animals) {
             placeAnimal(animal, animal.getPosition());
         }
-        this.animals.addAll(animals);
     }
 
     /**
@@ -204,13 +206,28 @@ public abstract class AbstractWorldMap implements WorldMap {
         for (Plant plant : plants) {
             placePlant(plant, plant.getPosition());
         }
-        this.plants.addAll(plants);
     }
 
     /**
-     * The move method is responsible for the movement of all moving objects on the map
+     * The eat method is responsible for the eating of all animals on the map
+     * TODO: Update for poisoned map
      */
-    public void move(List<Animal> animals) {
+    public void eat() {
+        for (Tile tile : mapTiles.values()) {
+            if (tile.getPlant()!=null){
+                if(!tile.getAnimals().isEmpty()){
+                    tile.getStrongestAnimal().eat(tile.getPlant());
+                    tile.removePlant();
+                }
+            }
+        }
+        this.removeEatenPlants();
+    }
+    /**
+     * The move method is responsible for the movement of all moving objects on the map
+     * TODO: FIX
+     */
+    public void move() {
         for (Tile tile : mapTiles.values()) {
             for (Animal animal : tile.getAnimals()) {
                 Vector2d oldPosition = animal.getPosition();

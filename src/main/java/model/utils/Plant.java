@@ -60,6 +60,23 @@ public class Plant implements MapElement {
             energy++;
         }
     }
+    public int hashCode() {
+        return position.hashCode() + energy + dayOfGrowth + (isPoisoned ? 1 : 0) + (isEaten ? 1 : 0);
+    }
+
+    /**
+     * Method checks if two plants are equal.
+     * @param other other plant
+     * @return true if plants are equal, false otherwise
+     */
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (!(other instanceof Plant))
+            return false;
+        Plant that = (Plant) other;
+        return this.position.equals(that.position) && this.energy == that.energy && this.dayOfGrowth == that.dayOfGrowth && this.isPoisoned == that.isPoisoned && this.isEaten == that.isEaten;
+    }
 
     /**
      * Method ovverides toString method.

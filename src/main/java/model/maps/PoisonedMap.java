@@ -10,11 +10,13 @@ import java.util.List;
 
 public class PoisonedMap extends AbstractWorldMap {
     private final float poisonChance;
+
+    public static final int MINIMAL_REPRODUCTION_ENERGY= 50; //TODO: check if it's ok
     private final Vector2d poisonedAreaLowerLeft;
     private final Vector2d poisonedAreaUpperRight;
 
     public PoisonedMap(Vector2d lowerLeft, Vector2d upperRight, float poisonChance, int initialNumberOfPlants, int initialNumberOfAnimals) {
-        super(lowerLeft, upperRight, initialNumberOfPlants, initialNumberOfAnimals);
+        super(lowerLeft, upperRight, initialNumberOfPlants, initialNumberOfAnimals, MINIMAL_REPRODUCTION_ENERGY);
         this.poisonChance = poisonChance;
         this.poisonedAreaLowerLeft = generatePoisonedAreaLowerLeft(lowerLeft, upperRight);
         this.poisonedAreaUpperRight = generatePoisonedAreaUpperRight(lowerLeft, upperRight);
@@ -98,7 +100,7 @@ public class PoisonedMap extends AbstractWorldMap {
      */
 
     public void move(List<Animal> animals) {
-        super.move(animals);
+        super.move();
     }
 
     /**

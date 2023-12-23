@@ -23,7 +23,7 @@ public class RandomAnimalsGenerator {
     /**
      * The energy value each animal starts with.
      */
-    private static final int ENERGY = 100;
+    private static final int ENERGY = 5;
 
     /**
      * The birthday of each animal, set to a constant value.

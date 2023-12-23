@@ -9,12 +9,13 @@ import java.util.List;
 
 public class GlobeMap extends AbstractWorldMap {
 
+    public static final int MINIMAL_REPRODUCTION_ENERGY= 50; //TODO: check if it's ok
     /**
      * Constructor of the Map
      */
 
     public GlobeMap(int width, int height, int initialNumberOfPlants, int initialNumberOfAnimals) {
-        super(new Vector2d(0, 0), new Vector2d(width, height), initialNumberOfPlants, initialNumberOfAnimals);
+        super(new Vector2d(0, 0), new Vector2d(width, height), initialNumberOfPlants, initialNumberOfAnimals, MINIMAL_REPRODUCTION_ENERGY);
     }
 
     /**
@@ -88,13 +89,18 @@ public class GlobeMap extends AbstractWorldMap {
      */
 
     public void move(List<Animal> animals) {
-        super.move(animals);
+        super.move();
     }
 
     /**
+     * The eat method is responsible for the eating of all animals on the map
+     */
+    public void eat() {
+        super.eat();
+    }
+    /**
      * The generateMap method is using in Map constructor to set all objects on the map
      */
-
     public void generateMap(List<Plant> plants, List<Animal> animals) {
         super.generateMap(plants, animals);
     }
@@ -102,7 +108,6 @@ public class GlobeMap extends AbstractWorldMap {
     /**
      * The toString method draw the Map using mapVisualizer
      */
-
     public String toString() {
         return super.toString();
     }
