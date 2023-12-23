@@ -1,13 +1,9 @@
 package model.maps;
 
-import RandomGenerators.RandomAnimalsGenerator;
-import RandomGenerators.RandomPlantsGenerator;
 import model.utils.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,6 +22,9 @@ public class GlobeMapTest {
         assertTrue(map.canMoveTo(new Vector2d(9, 9)));
         assertTrue(map.canMoveTo(new Vector2d(10, 10)));
         assertFalse(map.canMoveTo(new Vector2d(-1, -1)));
+        assertFalse(map.canMoveTo(new Vector2d(0, 11)));
+        assertTrue(map.canMoveTo(new Vector2d(11, 1)));
+        assertFalse(map.canMoveTo(new Vector2d(11, 12)));
     }
 
     @Test
@@ -37,6 +36,27 @@ public class GlobeMapTest {
         assertFalse(map.isOccupied(new Vector2d(-1, -1)));
     }
 
+    @Test
+    void testNewPositionOutOfLeftBound() {
+        assertFalse(map.newPositionOutOfLeftBound(new Vector2d(0, 0)));
+        assertFalse(map.newPositionOutOfLeftBound(new Vector2d(1, 1)));
+        assertFalse(map.newPositionOutOfLeftBound(new Vector2d(9, 9)));
+        assertFalse(map.newPositionOutOfLeftBound(new Vector2d(10, 10)));
+        assertFalse(map.newPositionOutOfLeftBound(new Vector2d(-1, -1)));
+        assertTrue(map.newPositionOutOfLeftBound(new Vector2d(-1, 0)));
+        assertFalse(map.newPositionOutOfLeftBound(new Vector2d(0, 0)));
+    }
+
+    @Test
+    void testNewPositionOutOfRightBound() {
+        assertFalse(map.newPositionOutOfRightBound(new Vector2d(0, 0)));
+        assertFalse(map.newPositionOutOfRightBound(new Vector2d(1, 1)));
+        assertFalse(map.newPositionOutOfRightBound(new Vector2d(9, 9)));
+        assertFalse(map.newPositionOutOfRightBound(new Vector2d(10, 10)));
+        assertTrue(map.newPositionOutOfRightBound(new Vector2d(11, 9)));
+        assertFalse(map.newPositionOutOfRightBound(new Vector2d(0, 11)));
+        assertFalse(map.newPositionOutOfRightBound(new Vector2d(-1, -1)));
+    }
     void testObjectsAt() {
         assertNull(map.objectsAt(new Vector2d(0, 0)));
         assertNull(map.objectsAt(new Vector2d(1, 1)));

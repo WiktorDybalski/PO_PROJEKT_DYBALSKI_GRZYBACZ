@@ -128,7 +128,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
 
     public boolean newPositionOutOfLeftBound(Vector2d position) {
-        return position.getX() == lowerLeft.getX() && canMoveTo(position);
+        return position.getX() < lowerLeft.getX() && canMoveTo(position);
     }
 
     /**
@@ -138,7 +138,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      * @return bool value is it possible to move there
      */
     public boolean newPositionOutOfRightBound(Vector2d position) {
-        return position.getX() == upperRight.getX() && canMoveTo(position);
+        return position.getX() > upperRight.getX() && canMoveTo(position);
     }
 
     /**
