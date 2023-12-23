@@ -115,9 +115,10 @@ public class AnimalTest {
     @Test
     public void testCanReproduce() {
         assertTrue(animal1.canReproduce());
-        animal1.setEnergy(4);
+        for (int i = 0; i < 6; i++) {
+            animal1.decreaseEnergy();
+        }
         assertFalse(animal1.canReproduce());
-        animal1.setEnergy(5);
     }
 
     @Test

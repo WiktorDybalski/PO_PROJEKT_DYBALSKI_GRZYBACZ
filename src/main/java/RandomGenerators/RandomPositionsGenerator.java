@@ -64,7 +64,7 @@ public class RandomPositionsGenerator {
      * @return A list of Vector2d objects representing the random positions.
      */
     private List<Vector2d> generateObject() {
-        Random random = new Random(1111);
+        Random random = new Random();
         for (int i = 0; i < objectCount; i++) {
             int randomIndex = random.nextInt(allPositions.size());
             result.add(allPositions.get(randomIndex));

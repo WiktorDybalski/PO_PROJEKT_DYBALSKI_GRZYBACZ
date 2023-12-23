@@ -141,8 +141,9 @@ public class Animal implements MapElement {
         this.actualActiveGenIndex = actualActiveGenIndex;
     }
 
-    public void setEnergy(int energy) {
-        this.energy = energy;
+    public void decreaseEnergy() {
+        if (!this.isDead)
+            this.energy--;
     }
 
 
@@ -167,7 +168,6 @@ public class Animal implements MapElement {
     public void move(Directions newDirection, Vector2d newPosition) {
         this.direction = newDirection;
         this.position = newPosition;
-        this.energy--;
     }
 
     /**

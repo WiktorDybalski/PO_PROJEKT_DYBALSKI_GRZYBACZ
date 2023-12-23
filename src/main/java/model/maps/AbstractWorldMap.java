@@ -263,6 +263,7 @@ public abstract class AbstractWorldMap implements WorldMap {
                 mapTiles.get(newPosition).addAnimal(animal);
             }
             animal.setActualActiveGenIndex(animal.getNextGene());
+            animal.decreaseEnergy();
         }
     }
 
@@ -305,7 +306,6 @@ public abstract class AbstractWorldMap implements WorldMap {
      * The dailyUpdate method is responsible for the daily update of the map
      */
     public void dailyUpdate(int dailyPlantCountIncrease) {
-        this.removeDeadAnimals();
         this.removeEatenPlants();
         this.move();
         this.eat();
