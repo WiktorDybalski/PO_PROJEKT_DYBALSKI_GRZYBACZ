@@ -1,3 +1,5 @@
+package model.simulation;
+
 import model.maps.GlobeMap;
 import model.simulation.Simulation;
 import org.junit.jupiter.api.Test;
