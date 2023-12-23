@@ -65,7 +65,7 @@ public class GlobeMapTest {
         assertNull(map.objectsAt(new Vector2d(-1, -1)));
     }
 
-    @Test //TODO: check if it's ok after FIX in AbstractWorldMap
+    @Test
     void testMove() {
         System.out.println(map.toString());
         map.move();

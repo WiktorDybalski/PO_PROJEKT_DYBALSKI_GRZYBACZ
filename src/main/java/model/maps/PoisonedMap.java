@@ -9,17 +9,13 @@ import model.utils.Vector2d;
 import java.util.List;
 
 public class PoisonedMap extends AbstractWorldMap {
-    private final float poisonChance;
+    private final double poisonChance;
 
-    public static final int MINIMAL_REPRODUCTION_ENERGY= 50; //TODO: check if it's ok
-    private final Vector2d poisonedAreaLowerLeft;
-    private final Vector2d poisonedAreaUpperRight;
+    public static final int MINIMAL_REPRODUCTION_ENERGY = 50; //TODO: check if it's ok
 
-    public PoisonedMap(Vector2d lowerLeft, Vector2d upperRight, float poisonChance, int initialNumberOfPlants, int initialNumberOfAnimals) {
-        super(lowerLeft, upperRight, initialNumberOfPlants, initialNumberOfAnimals, MINIMAL_REPRODUCTION_ENERGY);
+    public PoisonedMap(int width, int height, double poisonChance, int initialNumberOfPlants, int initialNumberOfAnimals) {
+        super(new Vector2d(0, 0), new Vector2d(width, height), initialNumberOfPlants, initialNumberOfAnimals, MINIMAL_REPRODUCTION_ENERGY);
         this.poisonChance = poisonChance;
-        this.poisonedAreaLowerLeft = generatePoisonedAreaLowerLeft(lowerLeft, upperRight);
-        this.poisonedAreaUpperRight = generatePoisonedAreaUpperRight(lowerLeft, upperRight);
     }
 
     private Vector2d generatePoisonedAreaUpperRight(Vector2d lowerLeft, Vector2d upperRight) {
@@ -37,7 +33,6 @@ public class PoisonedMap extends AbstractWorldMap {
      * @return bool value is it possible to move there
      */
 
-    //needs to be implemented
     public boolean canMoveTo(Vector2d position) {
         return super.canMoveTo(position);
     }
@@ -104,9 +99,14 @@ public class PoisonedMap extends AbstractWorldMap {
     }
 
     /**
+     * The eat method is responsible for the eating of all animals on the map
+     */
+    public void eat() {
+        super.eat();
+    }
+    /**
      * The generateMap method is using in Map constructor to set all objects on the map
      */
-
     public void generateMap(List<Plant> plants, List<Animal> animals) {
         super.generateMap(plants, animals);
     }
@@ -114,15 +114,7 @@ public class PoisonedMap extends AbstractWorldMap {
     /**
      * The toString method draw the Map using mapVisualizer
      */
-
     public String toString() {
         return super.toString();
-    }
-
-    /**
-     * The generatePoisonedArea method randomly generate the square on the map where plants are poisonous
-     */
-
-    public void generatePoisonedArea() {
     }
 }

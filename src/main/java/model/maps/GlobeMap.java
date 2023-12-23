@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GlobeMap extends AbstractWorldMap {
 
-    public static final int MINIMAL_REPRODUCTION_ENERGY= 50; //TODO: check if it's ok
+    public static final int MINIMAL_REPRODUCTION_ENERGY= 50; //TODO check if it's ok
     /**
      * Constructor of the Map
      */
@@ -25,8 +25,6 @@ public class GlobeMap extends AbstractWorldMap {
      * @return bool value is it possible to move there
      */
 
-
-    //needs to be implemented
     public boolean canMoveTo(Vector2d position) {
         return super.canMoveTo(position);
     }

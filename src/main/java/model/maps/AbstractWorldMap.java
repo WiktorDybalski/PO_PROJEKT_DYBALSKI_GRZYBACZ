@@ -158,7 +158,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
 
     public boolean isOccupied(Vector2d position) {
-        if (this.lowerLeft.follows(position) || this.upperRight.precedes(position) ){
+        if (this.lowerLeft.follows(position) || this.upperRight.precedes(position)) {
             return false;
         }
         MapObjects objects = objectsAt(position);
@@ -214,8 +214,8 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
     public void eat() {
         for (Tile tile : mapTiles.values()) {
-            if (tile.getPlant()!=null){
-                if(!tile.getAnimals().isEmpty()){
+            if (tile.getPlant() != null) {
+                if (!tile.getAnimals().isEmpty()) {
                     tile.getStrongestAnimal().eat(tile.getPlant());
                     tile.removePlant();
                 }
@@ -223,27 +223,29 @@ public abstract class AbstractWorldMap implements WorldMap {
         }
         this.removeEatenPlants();
     }
+
     /**
      * The move method is responsible for the movement of all moving objects on the map
      * TODO: FIX
      */
     public void move() {
-        for (Tile tile : mapTiles.values()) {
-            for (Animal animal : tile.getAnimals()) {
-                Vector2d oldPosition = animal.getPosition();
-                Directions oldDirection = animal.getDirection();
-                int oldActualActiveGeneIndex = animal.getActualActiveGenIndex();
-                Vector2d newPosition = oldPosition.add(new Vector2d(Directions.toUnitVector(oldActualActiveGeneIndex).getX(), Directions.toUnitVector(oldActualActiveGeneIndex).getY() % getHeight()));
-                if (newPositionOutOfLeftBound(newPosition)) {
-                    newPosition = new Vector2d(upperRight.getX(), newPosition.getY());
-                } else if (newPositionOutOfRightBound(newPosition)) {
-                    newPosition = new Vector2d(lowerLeft.getX(), newPosition.getY());
-                }
+        for (Animal animal : animals) {
+            Vector2d oldPosition = animal.getPosition();
+            Directions oldDirection = animal.getDirection();
+            int oldActualActiveGeneIndex = animal.getActualActiveGenIndex();
+            Vector2d vector = new Vector2d(Directions.toUnitVector(oldActualActiveGeneIndex).getX(), Directions.toUnitVector(oldActualActiveGeneIndex).getY());
+            Vector2d newPosition = oldPosition.add(vector);
+            if (newPositionOutOfLeftBound(newPosition)) {
+                newPosition = new Vector2d(upperRight.getX(), newPosition.getY());
+            } else if (newPositionOutOfRightBound(newPosition)) {
+                newPosition = new Vector2d(lowerLeft.getX(), newPosition.getY());
+            }
+            if(canMoveTo(newPosition)) {
                 mapTiles.get(oldPosition).removeAnimal(animal);
                 animal.move(oldDirection, newPosition);
                 mapTiles.get(newPosition).addAnimal(animal);
-                animal.setActualActiveGenIndex(animal.getNextGene());
             }
+            animal.setActualActiveGenIndex(animal.getNextGene());
         }
     }
 
