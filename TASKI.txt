@@ -4,3 +4,5 @@
 - add simulationConfigurator to the simulation
 - check if the simulation is running properly(maybe some more tests?)
 - fix adding new plants
+- update UML file
+- update documentation
