@@ -12,7 +12,7 @@ public class RandomPlantsGenerator {
     /**
      * The energy value each plant starts with.
      */
-    private static final int PLANT_ENERGY = 1;
+    private int plantEnergy;
 
     /**
      * The day on which the plant starts growing.
@@ -39,12 +39,14 @@ public class RandomPlantsGenerator {
      * Generates an initial number of plants on the given map.
      *
      * @param initialAmount The number of plants to generate initially.
-     * @param map The map where the plants are to be placed.
+     * @param plantEnergy
+     * @param map           The map where the plants are to be placed.
      */
-    public RandomPlantsGenerator(int initialAmount, WorldMap map) {
+    public RandomPlantsGenerator(int initialAmount, int plantEnergy, WorldMap map) {
         plants = new ArrayList<>();
         random = new Random(1112);
         this.map = map;
+        this.plantEnergy = plantEnergy;
         generatePlants(initialAmount);
     }
 
@@ -66,7 +68,7 @@ public class RandomPlantsGenerator {
      * @return A new Plant object.
      */
     private Plant generateRandomPlant(Vector2d position) {
-        return new Plant(position, PLANT_ENERGY, false, DAY_OF_GROWTH);
+        return new Plant(position, plantEnergy, false, DAY_OF_GROWTH);
     }
 
     /**

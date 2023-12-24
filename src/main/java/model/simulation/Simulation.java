@@ -9,12 +9,15 @@ public class Simulation {
 
     private WorldMap worldMap;
 
+    private SimulationConfigurator config;
+
     public Simulation(WorldMap worldmap) {
         this.worldMap = worldmap;
+        this.config = new SimulationConfigurator();
     }
-    public void run(int days, int dailyPlantCountIncrease) {
+    public void run(int days) {
         for (int i = 0; i < days; i++) {
-            this.worldMap.dailyUpdate(dailyPlantCountIncrease);
+            this.worldMap.dailyUpdate();
             try {
                 Thread.sleep(1000); // Wait 1 second
             } catch (InterruptedException e) {

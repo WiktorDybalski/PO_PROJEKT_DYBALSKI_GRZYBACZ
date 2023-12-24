@@ -1,5 +1,6 @@
 package model.maps;
 
+import model.simulation.SimulationConfigurator;
 import model.utils.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,8 @@ public class GlobeMapTest {
     GlobeMap map;
     @BeforeEach
     void setUp() {
-        map = new GlobeMap(10, 10, 20, 10);
+
+        map = new GlobeMap(new SimulationConfigurator());
     }
 
     @Test
@@ -89,13 +91,13 @@ public class GlobeMapTest {
 
     @Test
     void testDailyUpdate(){
-        map.dailyUpdate(2);
+        map.dailyUpdate();
         System.out.println(map.toString());
-        map.dailyUpdate(2);
+        map.dailyUpdate();
         System.out.println(map.toString());
-        map.dailyUpdate(2);
+        map.dailyUpdate();
         System.out.println(map.toString());
-        map.dailyUpdate(2);
+        map.dailyUpdate();
         System.out.println(map.toString());
     }
 

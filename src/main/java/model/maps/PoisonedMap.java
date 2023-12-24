@@ -1,6 +1,7 @@
 package model.maps;
 
 
+import model.simulation.SimulationConfigurator;
 import model.utils.Animal;
 import model.utils.MapObjects;
 import model.utils.Plant;
@@ -13,8 +14,8 @@ public class PoisonedMap extends AbstractWorldMap {
 
     public static final int MINIMAL_REPRODUCTION_ENERGY = 50; //TODO: check if it's ok
 
-    public PoisonedMap(int width, int height, double poisonChance, int initialNumberOfPlants, int initialNumberOfAnimals) {
-        super(new Vector2d(0, 0), new Vector2d(width, height), initialNumberOfPlants, initialNumberOfAnimals, MINIMAL_REPRODUCTION_ENERGY);
+    public PoisonedMap(SimulationConfigurator config, double poisonChance) {
+        super(config);
         this.poisonChance = poisonChance;
     }
 
@@ -71,7 +72,7 @@ public class PoisonedMap extends AbstractWorldMap {
      */
 
     public void placeAnimals(List<Animal> animals) {
-        super.placeAnimals(initialNumberOfAnimals);
+        super.placeAnimals(getConfig().getInitialAnimalCount());
     }
 
     /**
@@ -86,8 +87,8 @@ public class PoisonedMap extends AbstractWorldMap {
      * The placePlants method create random positions for Plants and using for to set Plants on the Map using placePlant
      */
 
-    public void placePlants(List<Plant> plants) {
-        super.placePlants(initialNumberOfPlants);
+    public void placePlants(int amountOfPlants){
+        super.placePlants(amountOfPlants);
     }
 
     /**
@@ -107,8 +108,8 @@ public class PoisonedMap extends AbstractWorldMap {
     /**
      * The generateMap method is using in Map constructor to set all objects on the map
      */
-    public void generateMap(List<Plant> plants, List<Animal> animals) {
-        super.generateMap(plants, animals);
+    public void generateMap() {
+        super.generateMap();
     }
 
     /**

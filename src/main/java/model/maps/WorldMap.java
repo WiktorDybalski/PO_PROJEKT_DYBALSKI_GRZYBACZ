@@ -29,5 +29,5 @@ public interface WorldMap {
 
     Tile getTile(Vector2d currentPosition);
 
-    public void dailyUpdate(int dailyPlantCountIncrease);
+    public void dailyUpdate();
 }

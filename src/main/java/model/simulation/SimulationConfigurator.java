@@ -23,23 +23,25 @@ public class SimulationConfigurator {
     private String animalBehaviourType;
 
     public SimulationConfigurator() {
-        this.mapSizeX = 20;
-        this.mapSizeY = 20;
+        this.mapSizeX = 10;
+        this.mapSizeY = 10;
         this.mapType = "GlobeMap";
-        this.initialPlantCount = 20;
-        this.plantEnergy = 10;
-        this.numberOfPlantsGrowingPerDay = 5;
+        this.initialPlantCount = 30;
+        this.plantEnergy = 1;
+        this.numberOfPlantsGrowingPerDay = 20;
         this.modeOfPlantGrowing = "Random";
         this.initialAnimalCount = 10;
-        this.initialAnimalEnergy = 100;
-        this.readyToReproduceEnergy = 200;
-        this.reproduceEnergyLoss = 100;
+        this.initialAnimalEnergy = 2;
+        this.readyToReproduceEnergy = 10;
+        this.reproduceEnergyLoss = 10;
         this.minimumMutationCount = 1;
         this.maximumMutationCount = 3;
         this.mutationVariant = "Random";
-        this.genomeLength = 32;
+        this.genomeLength = 8;
         this.animalBehaviourType = "Random";
     }
+
+    //doesn't work yet
 
     public void SimulationConfiguratorFromInput() throws IOException {
         System.out.println("SimulationConfiguratorFromInput");

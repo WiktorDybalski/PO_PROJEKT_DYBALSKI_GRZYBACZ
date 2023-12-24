@@ -2,6 +2,7 @@ package model.maps;
 
 import RandomGenerators.RandomAnimalsGenerator;
 import RandomGenerators.RandomPlantsGenerator;
+import model.simulation.SimulationConfigurator;
 import model.utils.*;
 import presenters.MapVisualizer;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 public abstract class AbstractWorldMap implements WorldMap {
 
-    private static final int energyToTransfer = 4;
+    private SimulationConfigurator config;
 
     private int currentDay;
     /**
@@ -23,20 +24,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      * Upper, Right corner of the Map
      */
     private final Vector2d upperRight;
-    /**
-     * Initial number of plants
-     * Initial parameter of the simulation
-     */
-    protected final int initialNumberOfPlants;
 
-    /**
-     * Initial number of Animals
-     * Initial parameter of the simulation
-     */
-    protected final int initialNumberOfAnimals;
-    /**
-     * List of animals on the Map
-     */
     private List<Animal> animals;
 
     /**
@@ -54,29 +42,27 @@ public abstract class AbstractWorldMap implements WorldMap {
      * One day it will be replaced by GUI
      */
     MapVisualizer mapVisualizer = new MapVisualizer(this);
-    public final int minimalReproductionEnergy;
 
     /**
      * Constructor of the Map
      */
-    public AbstractWorldMap(Vector2d lowerLeft, Vector2d upperRight, int initialNumberOfPlants, int initialNumberOfAnimals, int minimalReproductionEnergy) {
+    public AbstractWorldMap(SimulationConfigurator config) {
+        this.config = config;
         this.currentDay = 0;
-        this.lowerLeft = lowerLeft;
-        this.upperRight = upperRight;
-        this.initialNumberOfPlants = initialNumberOfPlants;
-        this.initialNumberOfAnimals = initialNumberOfAnimals;
-        this.minimalReproductionEnergy = minimalReproductionEnergy;
+        this.lowerLeft = new Vector2d(0, 0);
+        this.upperRight = config.getMapSize();
         this.animals = new ArrayList<>();
         this.plants = new ArrayList<>();
-        generateMap(initialNumberOfPlants, initialNumberOfAnimals);
+        this.mapTiles = new HashMap<>();
+        this.generateMap();
     }
 
     /**
      * Getters
      */
 
-    public int getEnergyToTransfer() {
-        return energyToTransfer;
+    public SimulationConfigurator getConfig() {
+        return config;
     }
     public int getCurrentDay() {
         return currentDay;
@@ -191,7 +177,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      * The placeAnimals method create random positions for Animals and using for to add Animal to the Map using placeAnimal
      */
     public void placeAnimals(int amountOfAnimals) {
-        RandomAnimalsGenerator animalsGenerator = new RandomAnimalsGenerator(amountOfAnimals, minimalReproductionEnergy, this);
+        RandomAnimalsGenerator animalsGenerator = new RandomAnimalsGenerator(amountOfAnimals, config.getInitialAnimalEnergy(), config.getReproduceEnergyLoss(), this);
         List<Animal> animals = animalsGenerator.getAnimals();
         for (Animal animal : animals) {
             placeAnimal(animal, animal.getPosition());
@@ -212,7 +198,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
 
     public void placePlants(int amountOfPlants) {
-        RandomPlantsGenerator plantsGenerator = new RandomPlantsGenerator(amountOfPlants, this);
+        RandomPlantsGenerator plantsGenerator = new RandomPlantsGenerator(amountOfPlants, this.config.getPlantEnergy(), this);
         List<Plant> plants = plantsGenerator.getPlants();
         for (Plant plant : plants) {
             placePlant(plant, plant.getPosition());
@@ -270,15 +256,14 @@ public abstract class AbstractWorldMap implements WorldMap {
     /**
      * The generateMap method is using in Map constructor to set all objects on the map
      */
-    public void generateMap(int plants, int animals) {
-        mapTiles = new HashMap<>();
+    public void generateMap() {
         for (int i = lowerLeft.getX(); i <= upperRight.getX(); i++) {
             for (int j = lowerLeft.getY(); j <= upperRight.getY(); j++) {
                 mapTiles.put(new Vector2d(i, j), new Tile(new Vector2d(i, j)));
             }
         }
-        placePlants(plants);
-        placeAnimals(animals);
+        placePlants(config.getInitialPlantCount());
+        placeAnimals(config.getInitialAnimalCount());
     }
 
     /**
@@ -297,7 +282,7 @@ public abstract class AbstractWorldMap implements WorldMap {
                 Animal parent1 = strongestAnimals.get(0);
                 Animal parent2 = strongestAnimals.get(1);
                 if (parent1.canReproduce() && parent2.canReproduce()) {
-                    Animal child = parent1.reproduce(parent2, currentDay, energyToTransfer);
+                    Animal child = parent1.reproduce(parent2, currentDay, config.getReproduceEnergyLoss());
                 }
             }
         }
@@ -305,15 +290,15 @@ public abstract class AbstractWorldMap implements WorldMap {
     /**
      * The dailyUpdate method is responsible for the daily update of the map
      */
-    public void dailyUpdate(int dailyPlantCountIncrease) {
+    public void dailyUpdate() {
+        System.out.println(this);
         this.removeEatenPlants();
         this.move();
         this.eat();
         this.reproduce();
-        this.placePlants(dailyPlantCountIncrease);
+        this.placePlants(config.getNumberOfPlantsGrowingPerDay());
         this.removeDeadAnimals();
-        System.out.println(this);
-        currentDay++;
+        this.currentDay++;
     }
 
     /**

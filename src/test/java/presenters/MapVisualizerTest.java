@@ -1,6 +1,7 @@
 package presenters;
 
 import model.maps.GlobeMap;
+import model.simulation.SimulationConfigurator;
 import model.utils.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ public class MapVisualizerTest {
 
     @BeforeEach
     void setUp() {
-        map = new GlobeMap(10, 10, 10, 0);
+        map = new GlobeMap(new SimulationConfigurator());
         ArrayList<Integer> genes = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             genes.add(i);

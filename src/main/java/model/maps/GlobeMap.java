@@ -1,5 +1,6 @@
 package model.maps;
 
+import model.simulation.SimulationConfigurator;
 import model.utils.Animal;
 import model.utils.MapObjects;
 import model.utils.Plant;
@@ -8,15 +9,12 @@ import model.utils.Vector2d;
 import java.util.List;
 
 public class GlobeMap extends AbstractWorldMap {
-
-
-    public static final int MINIMAL_REPRODUCTION_ENERGY= 50; //TODO check if it's ok
     /**
      * Constructor of the Map
      */
 
-    public GlobeMap(int width, int height, int initialNumberOfPlants, int initialNumberOfAnimals) {
-        super(new Vector2d(0, 0), new Vector2d(width, height), initialNumberOfPlants, initialNumberOfAnimals, MINIMAL_REPRODUCTION_ENERGY);
+    public GlobeMap(SimulationConfigurator config) {
+        super(config);
     }
 
     /**
@@ -64,7 +62,7 @@ public class GlobeMap extends AbstractWorldMap {
      */
 
     public void placeAnimals(List<Animal> animals) {
-        super.placeAnimals(initialNumberOfAnimals);
+        super.placeAnimals(getConfig().getInitialAnimalCount());
     }
 
     /**
@@ -80,7 +78,7 @@ public class GlobeMap extends AbstractWorldMap {
      */
 
     public void placePlants(List<Plant> plants) {
-        super.placePlants(initialNumberOfPlants);
+        super.placePlants(getConfig().getInitialPlantCount());
     }
 
     /**
@@ -106,15 +104,15 @@ public class GlobeMap extends AbstractWorldMap {
     /**
      * The generateMap method is using in Map constructor to set all objects on the map
      */
-    public void generateMap(List<Plant> plants, List<Animal> animals) {
-        super.generateMap(plants, animals);
+    public void generateMap() {
+        super.generateMap();
     }
 
     /**
      * The dailyUpdate method is responsible for the daily update of the map     */
 
     public void dailyUpdate() {
-        super.dailyUpdate(super.getEnergyToTransfer());
+        super.dailyUpdate();
     }
 
     /**

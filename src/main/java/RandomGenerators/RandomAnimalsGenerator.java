@@ -23,7 +23,7 @@ public class RandomAnimalsGenerator {
     /**
      * The energy value each animal starts with.
      */
-    private static final int ENERGY = 5;
+    private int animalEnergy;
 
     /**
      * The birthday of each animal, set to a constant value.
@@ -48,10 +48,11 @@ public class RandomAnimalsGenerator {
      * @param minimalReproductionEnergy The minimal energy required for animals to reproduce.
      * @param map The map where the animals are to be placed.
      */
-    public RandomAnimalsGenerator(int initialAmount, int minimalReproductionEnergy, WorldMap map) {
+    public RandomAnimalsGenerator(int initialAmount, int initialAnimalEnergy, int minimalReproductionEnergy, WorldMap map) {
         animals = new ArrayList<>();
         random = new Random(1111);
         this.minimalReproductionEnergy = minimalReproductionEnergy;
+        this.animalEnergy = initialAnimalEnergy;
         this.map = map;
         generateAnimals(initialAmount);
     }
@@ -73,7 +74,7 @@ public class RandomAnimalsGenerator {
      * @return A new Animal object.
      */
     private Animal generateRandomAnimal(Vector2d position, Genotype genotype) {
-        return new Animal(position, ENERGY, genotype, BIRTHDAY, minimalReproductionEnergy);
+        return new Animal(position, animalEnergy, genotype, BIRTHDAY, minimalReproductionEnergy);
     }
 
     /**

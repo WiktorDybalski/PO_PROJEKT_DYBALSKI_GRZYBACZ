@@ -1,5 +1,6 @@
 package model.maps;
 
+import model.simulation.SimulationConfigurator;
 import model.utils.Vector2d;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ public class PoisonedMapTest {
     PoisonedMap map;
     @BeforeEach
     void setUp() {
-        map = new PoisonedMap(10, 10, 0.3, 20, 10);
+        map = new PoisonedMap(new SimulationConfigurator(),0.8);
     }
 
     @Test
