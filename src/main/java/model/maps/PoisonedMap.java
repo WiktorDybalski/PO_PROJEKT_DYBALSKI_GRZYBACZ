@@ -17,17 +17,13 @@ public class PoisonedMap extends AbstractWorldMap {
 
     public static final int MINIMAL_REPRODUCTION_ENERGY = 50; //TODO: check if it's ok
 
+    private Vector2d lowerLeftCorner;
+
+    private Vector2d upperRightCorner;
+
     public PoisonedMap(SimulationConfigurator config, double poisonChance) {
         super(config);
         this.poisonChance = poisonChance;
-    }
-
-    private Vector2d generatePoisonedAreaUpperRight(Vector2d lowerLeft, Vector2d upperRight) {
-        return null;
-    }
-
-    private Vector2d generatePoisonedAreaLowerLeft(Vector2d lowerLeft, Vector2d upperRight) {
-        return null;
     }
 
     /**

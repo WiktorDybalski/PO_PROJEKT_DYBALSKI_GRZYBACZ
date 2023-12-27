@@ -12,8 +12,9 @@ public class WorldGUI {
     public WorldGUI() {
         simulation = new Simulation(new GlobeMap(new SimulationConfigurator()));
     }
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
+        new WorldGUI(); // This will initialize the simulation.
         simulation.run(10);
     }
 }
