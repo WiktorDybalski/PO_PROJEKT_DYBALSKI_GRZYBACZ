@@ -70,6 +70,14 @@ public class RandomPlantsInPoisonedGenerator {
         return plants;
     }
 
+    /**
+     * Generates a random position within a specified area of the map to define a poisoned square.
+     * This square is a region where plants are likely to be poisoned.
+     * The area of this square is 20% of the map's width and height.
+     *
+     * @return A Vector2d object representing the lower-left corner of the poisoned square.
+     */
+
     private Vector2d generatePoisonedSquare() {
         Random random = new Random(1115);
         int x = random.nextInt((int) (0.8 * maxWidth));
@@ -77,11 +85,28 @@ public class RandomPlantsInPoisonedGenerator {
         return new Vector2d(x, y);
     }
 
+    /**
+     * Determines if a plant should be poisoned based on a random probability.
+     * There is a 1 in 5 chance that this method will return true, indicating the plant is poisoned.
+     *
+     * @return true if the plant is poisoned, false otherwise.
+     */
+
     private boolean isPoisoned() {
         Random random = new Random(1115);
         int randomInt = random.nextInt(10);
         return randomInt % 5 == 0;
     }
+
+    /**
+     * Generates a plant with a random energy level. The plant is determined to be poisoned or not
+     * based on its position relative to the poisoned square and a random chance.
+     *
+     * @param position               The position of the plant on the map.
+     * @param lowerDownCornerSquare  The lower-left corner of the poisoned square.
+     * @param rightUpperCornerSquare The upper-right corner of the poisoned square.
+     * @return A Plant object with specified properties, including its poisoned status.
+     */
 
     private Plant generateRandomPlant(Vector2d position, Vector2d lowerDownCornerSquare, Vector2d rightUpperCornerSquare) {
         if (lowerDownCornerSquare.precedes(position) && rightUpperCornerSquare.follows(position) && isPoisoned())
@@ -99,7 +124,7 @@ public class RandomPlantsInPoisonedGenerator {
         RandomPositionsGenerator positionsGenerator = new RandomPositionsGenerator(map, amount);
         List<Vector2d> positions = positionsGenerator.getPlantInPoisonedResult();
         Vector2d lowerDownCornerSquare = generatePoisonedSquare();
-        Vector2d rightUpperCornerSquare = new Vector2d(lowerDownCornerSquare.getX() +  (int) (0.2 * maxWidth), lowerDownCornerSquare.getY() +  (int) (0.2 * maxHeight));
+        Vector2d rightUpperCornerSquare = new Vector2d(lowerDownCornerSquare.getX() + (int) (0.2 * maxWidth), lowerDownCornerSquare.getY() + (int) (0.2 * maxHeight));
         for (int i = 0; i < amount; i++) {
             plants.add(generateRandomPlant(positions.get(i), lowerDownCornerSquare, rightUpperCornerSquare));
         }
