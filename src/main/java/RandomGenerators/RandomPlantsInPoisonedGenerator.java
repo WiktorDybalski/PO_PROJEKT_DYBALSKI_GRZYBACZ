@@ -8,7 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RandomPlantsGenerator {
+public class RandomPlantsInPoisonedGenerator {
+    /**
+     * The maximum width of the map.
+     */
+    private final int maxWidth;
+
+    /**
+     * The maximum height of the map.
+     */
+    private final int maxHeight;
     /**
      * The energy value each plant starts with.
      */
@@ -42,7 +51,9 @@ public class RandomPlantsGenerator {
      * @param plantEnergy
      * @param map           The map where the plants are to be placed.
      */
-    public RandomPlantsGenerator(int initialAmount, int plantEnergy, WorldMap map) {
+    public RandomPlantsInPoisonedGenerator(int initialAmount, int plantEnergy, WorldMap map) {
+        this.maxWidth = map.getWidth();
+        this.maxHeight = map.getHeight();
         plants = new ArrayList<>();
         random = new Random(1112);
         this.map = map;
@@ -59,16 +70,23 @@ public class RandomPlantsGenerator {
         return plants;
     }
 
-    /**
-     * Generates a random plant at a specified position.
-     * Currently, poison attribute is set to false by default.
-     * TODO: Implement a method to decide about the plant's poisonous attribute.
-     *
-     * @param position The position where the plant will be placed.
-     * @return A new Plant object.
-     */
-    private Plant generateRandomPlant(Vector2d position) {
-        return new Plant(position, plantEnergy, false, DAY_OF_GROWTH);
+    private Vector2d generatePoisonedSquare() {
+        Random random = new Random(1115);
+        int x = random.nextInt((int) (0.8 * maxWidth));
+        int y = random.nextInt((int) (0.8 * maxWidth));
+        return new Vector2d(x, y);
+    }
+
+    private boolean isPoisoned() {
+        Random random = new Random(1115);
+        int randomInt = random.nextInt(10);
+        return randomInt % 5 == 0;
+    }
+
+    private Plant generateRandomPlant(Vector2d position, Vector2d lowerDownCornerSquare, Vector2d rightUpperCornerSquare) {
+        if (lowerDownCornerSquare.precedes(position) && rightUpperCornerSquare.follows(position) && isPoisoned())
+            return new Plant(position, plantEnergy, true, DAY_OF_GROWTH);
+        return new Plant(position, plantEnergy, true, DAY_OF_GROWTH);
     }
 
     /**
@@ -79,11 +97,11 @@ public class RandomPlantsGenerator {
      */
     private void generatePlants(int amount) {
         RandomPositionsGenerator positionsGenerator = new RandomPositionsGenerator(map, amount);
-        List<Vector2d> positions = positionsGenerator.getPlantResult();
-
+        List<Vector2d> positions = positionsGenerator.getPlantInPoisonedResult();
+        Vector2d lowerDownCornerSquare = generatePoisonedSquare();
+        Vector2d rightUpperCornerSquare = new Vector2d(lowerDownCornerSquare.getX() +  (int) (0.2 * maxWidth), lowerDownCornerSquare.getY() +  (int) (0.2 * maxHeight));
         for (int i = 0; i < amount; i++) {
-            plants.add(generateRandomPlant(positions.get(i)));
+            plants.add(generateRandomPlant(positions.get(i), lowerDownCornerSquare, rightUpperCornerSquare));
         }
     }
 }
-

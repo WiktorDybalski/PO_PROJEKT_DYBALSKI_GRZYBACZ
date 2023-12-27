@@ -1,8 +1,5 @@
 package model.utils;
 
-
-//done for now. TODO: add comments, tests
-
 import java.util.ArrayList;
 import java.util.List;
 

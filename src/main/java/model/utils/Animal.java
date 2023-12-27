@@ -182,6 +182,11 @@ public class Animal implements MapElement {
         plant.setIsEaten();
     }
 
+    public void eatPoisoned(Plant plant) {
+        this.energy -= plant.getEnergy();
+        this.eatenPlantCount++;
+        plant.setIsEaten();
+    }
     /**
      * Adds a new child to the animal's list of offspring.
      * Initializes the children list if it's null.

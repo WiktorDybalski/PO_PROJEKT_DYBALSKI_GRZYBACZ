@@ -74,7 +74,7 @@ public class MapObjects {
      */
     public ArrayList<Animal> getStrongestAnimals() {
         if (animals.size()<2) {
-            return new ArrayList<Animal>();
+            return new ArrayList<>();
         }
         ArrayList<Animal> sortedAnimals = this.getSortedAnimals();
         ArrayList<Animal> strongestAnimals = new ArrayList<>();

@@ -1,6 +1,8 @@
 package model.maps;
 
 
+import RandomGenerators.RandomPlantsGenerator;
+import RandomGenerators.RandomPlantsInPoisonedGenerator;
 import model.simulation.SimulationConfigurator;
 import model.utils.Animal;
 import model.utils.MapObjects;
@@ -11,6 +13,7 @@ import java.util.List;
 
 public class PoisonedMap extends AbstractWorldMap {
     private final double poisonChance;
+    private SimulationConfigurator config;
 
     public static final int MINIMAL_REPRODUCTION_ENERGY = 50; //TODO: check if it's ok
 
@@ -86,9 +89,13 @@ public class PoisonedMap extends AbstractWorldMap {
     /**
      * The placePlants method create random positions for Plants and using for to set Plants on the Map using placePlant
      */
-
-    public void placePlants(int amountOfPlants){
-        super.placePlants(amountOfPlants);
+    @Override
+    public void placePlants(int amountOfPlants) {
+        RandomPlantsInPoisonedGenerator plantsGenerator = new RandomPlantsInPoisonedGenerator(amountOfPlants, this.config.getPlantEnergy(), this);
+        List<Plant> plants = plantsGenerator.getPlants();
+        for (Plant plant : plants) {
+            placePlant(plant, plant.getPosition());
+        }
     }
 
     /**
@@ -105,6 +112,7 @@ public class PoisonedMap extends AbstractWorldMap {
     public void eat() {
         super.eat();
     }
+
     /**
      * The generateMap method is using in Map constructor to set all objects on the map
      */

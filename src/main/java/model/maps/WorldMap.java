@@ -29,5 +29,6 @@ public interface WorldMap {
 
     Tile getTile(Vector2d currentPosition);
 
+    public void firstDay();
     public void dailyUpdate();
 }

@@ -85,7 +85,7 @@ public class RandomAnimalsGenerator {
      */
     private void generateAnimals(int amount) {
         RandomPositionsGenerator positionsGenerator = new RandomPositionsGenerator(map, amount);
-        List<Vector2d> positions = positionsGenerator.getResult();
+        List<Vector2d> positions = positionsGenerator.getAnimalResult();
         RandomGensGenerator gensGenerator = new RandomGensGenerator(amount);
         List<Genotype> genotypes = gensGenerator.getGens();
 

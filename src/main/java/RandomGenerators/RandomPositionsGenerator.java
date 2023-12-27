@@ -1,11 +1,13 @@
 package RandomGenerators;
 
 import model.maps.WorldMap;
+import model.simulation.SimulationConfigurator;
 import model.utils.Vector2d;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class RandomPositionsGenerator {
     /**
@@ -29,15 +31,25 @@ public class RandomPositionsGenerator {
     private final List<Vector2d> allPositions;
 
     /**
-     * A list of the generated positions for objects.
+     * A list of the generated positions for anima;s.
      */
-    private List<Vector2d> result = new ArrayList<>();
+    private List<Vector2d> Animalresult = new ArrayList<>();
+
+    /**
+     * A list of the generated positions for plants in GlobeMap.
+     */
+    private List<Vector2d> Plantresult = new ArrayList<>();
+
+    /**
+     * A list of the generated positions for plants in PoisonedMap.
+     */
+    private List<Vector2d> plantInPoisonedResult = new ArrayList<>();
 
     /**
      * Constructor for RandomPositionsGenerator.
      * Initializes the object with the map's dimensions and the desired number of objects.
      *
-     * @param map The map on which the objects are to be placed.
+     * @param map         The map on which the objects are to be placed.
      * @param objectCount The number of objects to generate positions for.
      */
     public RandomPositionsGenerator(WorldMap map, int objectCount) {
@@ -45,16 +57,37 @@ public class RandomPositionsGenerator {
         this.maxHeight = map.getHeight();
         this.objectCount = objectCount;
         this.allPositions = generateAllPositions();
-        this.result = generateObject();
+        this.Animalresult = generateAnimals();
+        this.Plantresult = generatePlants();
+        this.plantInPoisonedResult = generatePlantsInPoisoned();
     }
 
     /**
      * Returns the list of generated positions.
      *
-     * @return A list of Vector2d objects representing the generated positions.
+     * @return A list of Vector2d animals representing the generated positions.
      */
-    public List<Vector2d> getResult() {
-        return result;
+    public List<Vector2d> getAnimalResult() {
+        return Animalresult;
+    }
+
+    /**
+     * Returns the list of generated positions.
+     *
+     * @return A list of Vector2d plants representing the generated positions.
+     */
+
+    public List<Vector2d> getPlantResult() {
+        return Plantresult;
+    }
+
+    /**
+     * Returns the list of generated positions.
+     *
+     * @return A list of Vector2d plants in poisoned Map representing the generated positions.
+     */
+    public List<Vector2d> getPlantInPoisonedResult() {
+        return plantInPoisonedResult;
     }
 
     /**
@@ -63,14 +96,55 @@ public class RandomPositionsGenerator {
      *
      * @return A list of Vector2d objects representing the random positions.
      */
-    private List<Vector2d> generateObject() {
-        Random random = new Random();
+    private List<Vector2d> generateAnimals() {
+        Random random = new Random(1111);
         for (int i = 0; i < objectCount; i++) {
             int randomIndex = random.nextInt(allPositions.size());
-            result.add(allPositions.get(randomIndex));
+            Animalresult.add(allPositions.get(randomIndex));
+        }
+        return Animalresult;
+    }
+
+    private List<Vector2d> generatePlantsInPoisoned() {
+        List<Vector2d> tempAllPosition = new ArrayList<>(allPositions);
+        Random random = new Random(1111);
+        for (int i = 0; i < objectCount; i++) {
+            int randomIndex = random.nextInt(tempAllPosition.size());
+            Animalresult.add(tempAllPosition.get(randomIndex));
+            tempAllPosition.remove(randomIndex);
+        }
+        return Animalresult;
+    }
+
+    private List<Vector2d> generatePlants() {
+        List<Vector2d> tempAllPosition = new ArrayList<>(allPositions);
+        Random random = new Random(1111);
+        // Start of the equatorial band
+        int equatorStart = maxHeight / 3;
+        // End of the equatorial band
+        int equatorEnd = 2 * maxHeight / 3;
+
+        for (int i = 0; i < objectCount; i++) {
+            int randomIndex;
+            // Decide whether to place the plant in the equatorial band
+            // 50% chance to be in the equatorial band
+            if (random.nextBoolean()) {
+                List<Vector2d> equatorialPositions = tempAllPosition.stream()
+                        .filter(p -> p.getY() >= equatorStart && p.getY() <= equatorEnd)
+                        .toList();
+                if (!equatorialPositions.isEmpty()) {
+                    randomIndex = random.nextInt(equatorialPositions.size());
+                    Plantresult.add(equatorialPositions.get(randomIndex));
+                    tempAllPosition.remove(equatorialPositions.get(randomIndex));
+                    continue;
+                }
+            }
+            // Else, select from any available position
+            randomIndex = random.nextInt(allPositions.size());
+            Plantresult.add(allPositions.get(randomIndex));
             allPositions.remove(randomIndex);
         }
-        return result;
+        return Plantresult;
     }
 
     /**

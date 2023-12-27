@@ -64,6 +64,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public SimulationConfigurator getConfig() {
         return config;
     }
+
     public int getCurrentDay() {
         return currentDay;
     }
@@ -169,7 +170,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public void placeAnimal(Animal animal, Vector2d position) {
         mapTiles.get(position).addAnimal(animal);
-        if (!animals.contains(animal)) //TODO: check if it is necessary
+        if (!animals.contains(animal))
             animals.add(animal);
     }
 
@@ -207,13 +208,16 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     /**
      * The eat method is responsible for the eating of all animals on the map
-     * TODO: Update for poisoned map
      */
     public void eat() {
         for (Tile tile : mapTiles.values()) {
             if (tile.getPlant() != null) {
                 if (!tile.getAnimals().isEmpty()) {
-                    tile.getStrongestAnimal().eat(tile.getPlant());
+                    if (tile.getPlant().getIsPoisoned()) {
+                        tile.getStrongestAnimal().eatPoisoned(tile.getPlant());
+                    } else{
+                        tile.getStrongestAnimal().eat(tile.getPlant());
+                    }
                     tile.removePlant();
                 }
             }
@@ -229,7 +233,6 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     /**
      * The move method is responsible for the movement of all moving objects on the map
-     * TODO: FIX
      */
     public void move() {
         for (Animal animal : animals) {
@@ -243,7 +246,7 @@ public abstract class AbstractWorldMap implements WorldMap {
             } else if (newPositionOutOfRightBound(newPosition)) {
                 newPosition = new Vector2d(lowerLeft.getX(), newPosition.getY());
             }
-            if(canMoveTo(newPosition)) {
+            if (canMoveTo(newPosition)) {
                 mapTiles.get(oldPosition).removeAnimal(animal);
                 animal.move(oldDirection, newPosition);
                 mapTiles.get(newPosition).addAnimal(animal);
@@ -287,6 +290,20 @@ public abstract class AbstractWorldMap implements WorldMap {
             }
         }
     }
+
+    /**
+     * The firstDay method is responsible for the first day of the World
+     */
+    public void firstDay() {
+        this.move();
+        this.eat();
+        this.reproduce();
+        this.placePlants(config.getNumberOfPlantsGrowingPerDay());
+        this.removeDeadAnimals();
+        this.currentDay++;
+        System.out.println(this);
+    }
+
     /**
      * The dailyUpdate method is responsible for the daily update of the map
      */

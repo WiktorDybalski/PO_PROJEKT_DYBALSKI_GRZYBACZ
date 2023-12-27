@@ -15,8 +15,15 @@ public class Simulation {
         this.worldMap = worldmap;
         this.config = new SimulationConfigurator();
     }
+
     public void run(int days) {
-        for (int i = 0; i < days; i++) {
+        this.worldMap.firstDay();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i = 1; i < days; i++) {
             this.worldMap.dailyUpdate();
             try {
                 Thread.sleep(1000); // Wait 1 second
