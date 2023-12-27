@@ -1,7 +1,5 @@
 package model.maps;
 
-
-import RandomGenerators.RandomPlantsGenerator;
 import RandomGenerators.RandomPlantsInPoisonedGenerator;
 import model.simulation.SimulationConfigurator;
 import model.utils.Animal;
@@ -17,8 +15,14 @@ public class PoisonedMap extends AbstractWorldMap {
 
     public static final int MINIMAL_REPRODUCTION_ENERGY = 50; //TODO: check if it's ok
 
+    /**
+     * lower left corner of poisoned square
+     */
     private Vector2d lowerLeftCorner;
 
+    /**
+     * upper right corner of poisoned square
+     */
     private Vector2d upperRightCorner;
 
     public PoisonedMap(SimulationConfigurator config, double poisonChance) {
@@ -88,6 +92,8 @@ public class PoisonedMap extends AbstractWorldMap {
     @Override
     public void placePlants(int amountOfPlants) {
         RandomPlantsInPoisonedGenerator plantsGenerator = new RandomPlantsInPoisonedGenerator(amountOfPlants, this.config.getPlantEnergy(), this);
+        lowerLeftCorner = plantsGenerator.getLowerDownCornerSquare();
+        upperRightCorner = plantsGenerator.getRightUpperCornerSquare();
         List<Plant> plants = plantsGenerator.getPlants();
         for (Plant plant : plants) {
             placePlant(plant, plant.getPosition());

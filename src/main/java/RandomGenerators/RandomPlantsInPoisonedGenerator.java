@@ -43,6 +43,9 @@ public class RandomPlantsInPoisonedGenerator {
      */
     private final WorldMap map;
 
+    private final Vector2d lowerDownCornerSquare;
+    private final Vector2d rightUpperCornerSquare;
+
     /**
      * Constructor for RandomPlantsGenerator.
      * Generates an initial number of plants on the given map.
@@ -58,7 +61,17 @@ public class RandomPlantsInPoisonedGenerator {
         random = new Random(1112);
         this.map = map;
         this.plantEnergy = plantEnergy;
+        lowerDownCornerSquare = generatePoisonedSquare();
+        rightUpperCornerSquare = new Vector2d(lowerDownCornerSquare.getX() + (int) (0.2 * maxWidth), lowerDownCornerSquare.getY() + (int) (0.2 * maxHeight));
         generatePlants(initialAmount);
+    }
+
+    public Vector2d getLowerDownCornerSquare() {
+        return lowerDownCornerSquare;
+    }
+
+    public Vector2d getRightUpperCornerSquare() {
+        return rightUpperCornerSquare;
     }
 
     /**
@@ -123,8 +136,6 @@ public class RandomPlantsInPoisonedGenerator {
     private void generatePlants(int amount) {
         RandomPositionsGenerator positionsGenerator = new RandomPositionsGenerator(map, amount);
         List<Vector2d> positions = positionsGenerator.getPlantInPoisonedResult();
-        Vector2d lowerDownCornerSquare = generatePoisonedSquare();
-        Vector2d rightUpperCornerSquare = new Vector2d(lowerDownCornerSquare.getX() + (int) (0.2 * maxWidth), lowerDownCornerSquare.getY() + (int) (0.2 * maxHeight));
         for (int i = 0; i < amount; i++) {
             plants.add(generateRandomPlant(positions.get(i), lowerDownCornerSquare, rightUpperCornerSquare));
         }
