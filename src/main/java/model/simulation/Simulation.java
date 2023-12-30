@@ -3,20 +3,18 @@ package model.simulation;
 import model.maps.WorldMap;
 
 
-public class Simulation {
-    //    TODO
-//      Configure simulation class
-
+public class Simulation extends Thread {
     private WorldMap worldMap;
 
     private SimulationConfigurator config;
+    int days = 10;
 
     public Simulation(WorldMap worldmap, SimulationConfigurator config) {
         this.worldMap = worldmap;
         this.config = config;
     }
 
-    public void run(int days) {
+    public void run() {
         this.worldMap.firstDay();
         try {
             Thread.sleep(1000);

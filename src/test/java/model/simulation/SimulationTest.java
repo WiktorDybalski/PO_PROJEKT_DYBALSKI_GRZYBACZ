@@ -9,6 +9,6 @@ public class SimulationTest {
     @Test
     public void testSimulation() {
         Simulation simulation = new Simulation(new GlobeMap(config), config);
-        simulation.run(20);
+        simulation.run();
     }
 }

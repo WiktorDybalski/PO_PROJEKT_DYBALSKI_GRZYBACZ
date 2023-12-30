@@ -5,8 +5,6 @@ import model.maps.PoisonedMap;
 import model.simulation.Simulation;
 import model.simulation.SimulationConfigurator;
 
-// In the future
-// The starting class which start with the entire simulation
 public class WorldGUI {
     private final Simulation simulation1;
     private final Simulation simulation2;
@@ -19,10 +17,8 @@ public class WorldGUI {
     }
 
     public void runSimulation(int steps) {
-        System.out.println("GlobeMap");
-        simulation1.run(steps);
-        System.out.println("PoisonedMap");
-        simulation2.run(steps);
+        simulation1.start();
+        simulation2.start();
     }
 
     public static void main(String[] args) {

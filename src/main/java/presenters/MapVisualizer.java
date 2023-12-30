@@ -1,5 +1,7 @@
 package presenters;
 
+import model.maps.GlobeMap;
+import model.maps.PoisonedMap;
 import model.maps.WorldMap;
 import model.utils.Tile;
 import model.utils.Vector2d;
@@ -29,6 +31,13 @@ public class MapVisualizer {
      * @return String representation of the selected region of the map.
      */
     public String draw(Vector2d lowerLeft, Vector2d upperRight) {
+        if (map instanceof GlobeMap) {
+            System.out.println("GlobeMap.");
+        } else if (map instanceof PoisonedMap) {
+            System.out.println("PoisonedMap.");
+        } else {
+            System.out.println("To jest inny rodzaj WorldMap.");
+        }
         StringBuilder builder = new StringBuilder();
         for (int i = upperRight.getY() + 1; i >= lowerLeft.getY() - 1; i--) {
             if (i == upperRight.getY() + 1) {
