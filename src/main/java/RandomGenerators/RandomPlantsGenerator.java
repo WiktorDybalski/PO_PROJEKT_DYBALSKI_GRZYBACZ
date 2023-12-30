@@ -2,6 +2,7 @@ package RandomGenerators;
 
 import model.maps.WorldMap;
 import model.utils.Plant;
+import model.utils.Tile;
 import model.utils.Vector2d;
 
 import java.util.ArrayList;
@@ -38,16 +39,14 @@ public class RandomPlantsGenerator {
      * Constructor for RandomPlantsGenerator.
      * Generates an initial number of plants on the given map.
      *
-     * @param initialAmount The number of plants to generate initially.
      * @param plantEnergy
      * @param map           The map where the plants are to be placed.
      */
-    public RandomPlantsGenerator(int initialAmount, int plantEnergy, WorldMap map) {
+    public RandomPlantsGenerator(int plantEnergy, WorldMap map) {
         plants = new ArrayList<>();
         random = new Random(1112);
         this.map = map;
         this.plantEnergy = plantEnergy;
-        generatePlants(initialAmount);
     }
 
     /**
@@ -62,7 +61,6 @@ public class RandomPlantsGenerator {
     /**
      * Generates a random plant at a specified position.
      * Currently, poison attribute is set to false by default.
-     * TODO: Implement a method to decide about the plant's poisonous attribute.
      *
      * @param position The position where the plant will be placed.
      * @return A new Plant object.
@@ -77,10 +75,9 @@ public class RandomPlantsGenerator {
      *
      * @param amount The number of plants to generate.
      */
-    private void generatePlants(int amount) {
+    public void generatePlants(int amount, List<Vector2d> freePositions) {
         RandomPositionsGenerator positionsGenerator = new RandomPositionsGenerator(map, amount);
-        List<Vector2d> positions = positionsGenerator.getPlantResult();
-
+        List<Vector2d> positions = positionsGenerator.generatePlants(freePositions);
         for (int i = 0; i < amount; i++) {
             plants.add(generateRandomPlant(positions.get(i)));
         }

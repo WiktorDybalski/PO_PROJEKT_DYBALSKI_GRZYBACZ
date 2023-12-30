@@ -44,17 +44,15 @@ public class RandomAnimalsGenerator {
      * Constructor for RandomAnimalsGenerator.
      * Initializes the generator and creates an initial set of animals.
      *
-     * @param initialAmount The number of animals to generate initially.
      * @param minimalReproductionEnergy The minimal energy required for animals to reproduce.
      * @param map The map where the animals are to be placed.
      */
-    public RandomAnimalsGenerator(int initialAmount, int initialAnimalEnergy, int minimalReproductionEnergy, WorldMap map) {
+    public RandomAnimalsGenerator(int initialAnimalEnergy, int minimalReproductionEnergy, WorldMap map) {
         animals = new ArrayList<>();
         random = new Random(1111);
         this.minimalReproductionEnergy = minimalReproductionEnergy;
         this.animalEnergy = initialAnimalEnergy;
         this.map = map;
-        generateAnimals(initialAmount);
     }
 
     /**
@@ -85,7 +83,7 @@ public class RandomAnimalsGenerator {
      */
     private void generateAnimals(int amount) {
         RandomPositionsGenerator positionsGenerator = new RandomPositionsGenerator(map, amount);
-        List<Vector2d> positions = positionsGenerator.getAnimalResult();
+        List<Vector2d> positions = positionsGenerator.generateAnimals();
         RandomGensGenerator gensGenerator = new RandomGensGenerator(amount);
         List<Genotype> genotypes = gensGenerator.getGens();
 

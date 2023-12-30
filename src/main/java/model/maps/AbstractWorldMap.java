@@ -36,6 +36,11 @@ public abstract class AbstractWorldMap implements WorldMap {
      * Map: key - position of each single tile, value: a tile
      */
     private HashMap<Vector2d, Tile> mapTiles;
+    /**
+     * List of Tiles without plant
+     */
+
+    private List<Vector2d> freePositions;
 
     /**
      * mapVisualizer to draw a map.
@@ -54,7 +59,6 @@ public abstract class AbstractWorldMap implements WorldMap {
         this.animals = new ArrayList<>();
         this.plants = new ArrayList<>();
         this.mapTiles = new HashMap<>();
-        this.generateMap();
     }
 
     /**
@@ -199,7 +203,8 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
 
     public void placePlants(int amountOfPlants) {
-        RandomPlantsGenerator plantsGenerator = new RandomPlantsGenerator(amountOfPlants, this.config.getPlantEnergy(), this);
+        RandomPlantsGenerator plantsGenerator = new RandomPlantsGenerator(this.config.getPlantEnergy(), this);
+        plantsGenerator.generatePlants(amountOfPlants, freePositions);
         List<Plant> plants = plantsGenerator.getPlants();
         for (Plant plant : plants) {
             placePlant(plant, plant.getPosition());
@@ -258,7 +263,9 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void generateMap() {
         for (int i = lowerLeft.getX(); i <= upperRight.getX(); i++) {
             for (int j = lowerLeft.getY(); j <= upperRight.getY(); j++) {
-                mapTiles.put(new Vector2d(i, j), new Tile(new Vector2d(i, j)));
+               Tile tile = new Tile(new Vector2d(i, j));
+                mapTiles.put(new Vector2d(i, j), tile);
+                freePositions.add(tile.getPosition());
             }
         }
         placePlants(config.getInitialPlantCount());
@@ -292,6 +299,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
     public void firstDay() {
         System.out.println(this);
+        generateMap();
         this.eat();
         this.reproduce();
         this.placePlants(config.getNumberOfPlantsGrowingPerDay());

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-
-//TODO: it generates two times more positions than expected
 public class RandomPositionsGenerator {
     /**
      * The maximum width of the map.
@@ -58,9 +56,6 @@ public class RandomPositionsGenerator {
         this.maxHeight = map.getHeight();
         this.objectCount = objectCount;
         this.allPositions = generateAllPositions();
-        this.animalResult = generateAnimals();
-        this.plantResult = generatePlants();
-        this.plantInPoisonedResult = generatePlantsInPoisoned();
     }
 
     /**
@@ -91,13 +86,23 @@ public class RandomPositionsGenerator {
         return plantInPoisonedResult;
     }
 
+
+    private List<Vector2d> generateAllPositions() {
+        List<Vector2d> positions = new ArrayList<>();
+        for (int x = 0; x < maxWidth; x++) {
+            for (int y = 0; y < maxHeight; y++) {
+                positions.add(new Vector2d(x, y));
+            }
+        }
+        return positions;
+    }
     /**
      * Generates random positions for the specified number of objects.
      * Ensures that each position is unique by removing it from the list of all positions.
      *
      * @return A list of Vector2d objects representing the random positions.
      */
-    private List<Vector2d> generateAnimals() {
+    public List<Vector2d> generateAnimals() {
         Random random = new Random(1111);
         for (int i = 0; i < objectCount; i++) {
             int randomIndex = random.nextInt(allPositions.size());
@@ -106,8 +111,8 @@ public class RandomPositionsGenerator {
         return animalResult;
     }
 
-    private List<Vector2d> generatePlantsInPoisoned() {
-        List<Vector2d> tempAllPosition = new ArrayList<>(allPositions);
+    public List<Vector2d> generatePlantsInPoisoned(List<Vector2d> freePositions) {
+        List<Vector2d> tempAllPosition = new ArrayList<>(freePositions);
         Random random = new Random(1111);
         for (int i = 0; i < objectCount; i++) {
             int randomIndex = random.nextInt(tempAllPosition.size());
@@ -117,8 +122,8 @@ public class RandomPositionsGenerator {
         return animalResult;
     }
 
-    private List<Vector2d> generatePlants() {
-        List<Vector2d> tempAllPosition = new ArrayList<>(allPositions);
+    public List<Vector2d> generatePlants(List<Vector2d> freePositions) {
+        List<Vector2d> tempAllPosition = new ArrayList<>(freePositions);
         Random random = new Random(1111);
         // Start of the equatorial band
         int equatorStart = maxHeight / 3;
@@ -146,20 +151,5 @@ public class RandomPositionsGenerator {
             allPositions.remove(randomIndex);
         }
         return plantResult;
-    }
-
-    /**
-     * Generates a list of all possible positions on the map.
-     *
-     * @return A list of Vector2d objects representing all possible positions.
-     */
-    private List<Vector2d> generateAllPositions() {
-        List<Vector2d> positions = new ArrayList<>();
-        for (int x = 0; x < maxWidth; x++) {
-            for (int y = 0; y < maxHeight; y++) {
-                positions.add(new Vector2d(x, y));
-            }
-        }
-        return positions;
     }
 }

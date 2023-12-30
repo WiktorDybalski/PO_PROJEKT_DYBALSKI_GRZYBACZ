@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomPlantsInPoisonedGenerator {
+    private List<Vector2d> freePositions;
     /**
      * The maximum width of the map.
      */
@@ -63,7 +64,6 @@ public class RandomPlantsInPoisonedGenerator {
         this.plantEnergy = plantEnergy;
         lowerDownCornerSquare = generatePoisonedSquare();
         rightUpperCornerSquare = new Vector2d(lowerDownCornerSquare.getX() + (int) (0.14 * maxWidth), lowerDownCornerSquare.getY() + (int) (0.14 * maxHeight));
-        generatePlants(initialAmount);
     }
 
     public Vector2d getLowerDownCornerSquare() {
@@ -134,7 +134,7 @@ public class RandomPlantsInPoisonedGenerator {
      */
     private void generatePlants(int amount) {
         RandomPositionsGenerator positionsGenerator = new RandomPositionsGenerator(map, amount);
-        List<Vector2d> positions = positionsGenerator.getPlantInPoisonedResult();
+        List<Vector2d> positions = positionsGenerator.generatePlantsInPoisoned(freePositions);;
         for (int i = 0; i < amount; i++) {
             plants.add(generateRandomPlant(positions.get(i)));
         }
