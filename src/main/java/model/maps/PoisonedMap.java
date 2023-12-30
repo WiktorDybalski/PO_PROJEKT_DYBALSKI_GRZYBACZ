@@ -13,13 +13,11 @@ public class PoisonedMap extends AbstractWorldMap {
     /**
      * Constructor of the Map
      */
-    private final Vector2d leftDownPoisonedCorner;
-    private final Vector2d rightUpperPoisonedCorner;
+    private Vector2d leftDownPoisonedCorner;
+    private Vector2d rightUpperPoisonedCorner;
 
     public PoisonedMap(SimulationConfigurator config) {
         super(config);
-        this.leftDownPoisonedCorner = generateLeftDownCornerPoisonedSquare();
-        this.rightUpperPoisonedCorner = new Vector2d(leftDownPoisonedCorner.getX() + (int) (0.14 * this.getWidth()), leftDownPoisonedCorner.getY() + (int) (0.14 * this.getHeight()));
     }
 
     /**
@@ -146,6 +144,8 @@ public class PoisonedMap extends AbstractWorldMap {
      */
     @Override
     public void generateMap() {
+        this.leftDownPoisonedCorner = generateLeftDownCornerPoisonedSquare();
+        this.rightUpperPoisonedCorner = new Vector2d(leftDownPoisonedCorner.getX() + (int) (0.14 * this.getWidth()), leftDownPoisonedCorner.getY() + (int) (0.14 * this.getHeight()));
         super.generateMap();
     }
 

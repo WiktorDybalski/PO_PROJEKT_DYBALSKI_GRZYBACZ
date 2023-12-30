@@ -25,11 +25,11 @@ public class SimulationConfigurator {
     public SimulationConfigurator() {
         this.mapSizeX = 10;
         this.mapSizeY = 10;
-        this.mapType = "GlobeMap";
+        this.mapType = "PoisonedMap";
         this.initialAnimalCount = 10;
         this.initialPlantCount = 30;
         this.plantEnergy = 1;
-        this.numberOfPlantsGrowingPerDay = 20;
+        this.numberOfPlantsGrowingPerDay = 3;
         this.modeOfPlantGrowing = "Random";
         this.initialAnimalEnergy = 5;
         this.readyToReproduceEnergy = 10;

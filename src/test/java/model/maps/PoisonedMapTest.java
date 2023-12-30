@@ -10,15 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PoisonedMapTest {
     PoisonedMap map;
+
     @BeforeEach
     void setUp() {
-
-
+        map = new PoisonedMap(new SimulationConfigurator());
     }
 
     @Test
     void testCanMoveTo() {
-        map = new PoisonedMap(new SimulationConfigurator());
         assertTrue(map.canMoveTo(new Vector2d(0, 0)));
         assertTrue(map.canMoveTo(new Vector2d(1, 1)));
         assertTrue(map.canMoveTo(new Vector2d(9, 9)));
@@ -59,6 +58,7 @@ public class PoisonedMapTest {
         assertFalse(map.newPositionOutOfRightBound(new Vector2d(0, 11)));
         assertFalse(map.newPositionOutOfRightBound(new Vector2d(-1, -1)));
     }
+
     void testObjectsAt() {
         assertNull(map.objectsAt(new Vector2d(0, 0)));
         assertNull(map.objectsAt(new Vector2d(1, 1)));
@@ -69,19 +69,20 @@ public class PoisonedMapTest {
 
     @Test
     void testMove() {
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             System.out.println(map.toString());
             map.move();
         }
     }
+
     @Test
     void testGenerateMap() {
         assertEquals(10, map.getAnimals().size());
     }
 
     @Test
-    void testDailyUpdate(){
-        for(int i = 0; i < 10; i++) {
+    void testDailyUpdate() {
+        for (int i = 0; i < 10; i++) {
             map.dailyUpdate();
             System.out.println(map.toString());
         }
