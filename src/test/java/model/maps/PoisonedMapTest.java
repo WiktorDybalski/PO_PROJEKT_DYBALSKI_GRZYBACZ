@@ -12,11 +12,13 @@ public class PoisonedMapTest {
     PoisonedMap map;
     @BeforeEach
     void setUp() {
-        map = new PoisonedMap(new SimulationConfigurator());
+
+
     }
 
     @Test
     void testCanMoveTo() {
+        map = new PoisonedMap(new SimulationConfigurator());
         assertTrue(map.canMoveTo(new Vector2d(0, 0)));
         assertTrue(map.canMoveTo(new Vector2d(1, 1)));
         assertTrue(map.canMoveTo(new Vector2d(9, 9)));
@@ -67,26 +69,35 @@ public class PoisonedMapTest {
 
     @Test
     void testMove() {
-        System.out.println(map.toString());
-        map.move();
-        System.out.println(map.toString());
+        for(int i = 0; i < 10; i++) {
+            System.out.println(map.toString());
+            map.move();
+        }
     }
     @Test
     void testGenerateMap() {
         assertEquals(10, map.getAnimals().size());
-        assertEquals(29, map.getPlants().size());
     }
 
     @Test
-    void testEat() {
-        map.eat();
-        assertEquals(10, map.getAnimals().size());
-        assertEquals(25, map.getPlants().size());
-        System.out.println(map.toString());
-        map.eat();
-        assertEquals(10, map.getAnimals().size());
-        assertEquals(25, map.getPlants().size());
-        System.out.println(map.toString());
+    void testDailyUpdate(){
+        for(int i = 0; i < 10; i++) {
+            map.dailyUpdate();
+            System.out.println(map.toString());
+        }
     }
 
+    @Test
+    void eatTest() {
+        assertEquals(10, map.getAnimals().size());
+        assertEquals(30, map.getPlants().size());
+        map.eat();
+        assertEquals(10, map.getAnimals().size());
+        assertEquals(28, map.getPlants().size());
+        System.out.println(map.toString());
+        map.eat();
+        assertEquals(10, map.getAnimals().size());
+        assertEquals(28, map.getPlants().size());
+        System.out.println(map.toString());
+    }
 }

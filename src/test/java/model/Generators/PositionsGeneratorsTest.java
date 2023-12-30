@@ -31,7 +31,7 @@ public class PositionsGeneratorsTest {
         List<Vector2d> allPositions = generateAllPositions(poisonedMap);
         for (int i = 10; i < 30; i++) {
             RandomPositionsGenerator generator = new RandomPositionsGenerator(poisonedMap, i);
-            assertEquals(i, generator.generatePlantsInPoisoned(allPositions).size());
+            assertEquals(i, generator.generatePlants(allPositions).size());
         }
     }
 

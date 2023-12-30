@@ -77,24 +77,10 @@ public class PoisonedMap extends AbstractWorldMap {
      * @return true if the plant is poisoned, false otherwise.
      */
 
-    private boolean givePoison() {
+    private boolean isPoisonous() {
         Random random = new Random(1115);
         int randomInt = random.nextInt(10);
         return randomInt % 5 == 0;
-    }
-
-    private void makePlantsPoisonous() {
-        for (int i = leftDownPoisonedCorner.getX(); i < rightUpperPoisonedCorner.getX(); i++) {
-            for (int j = leftDownPoisonedCorner.getY(); j < rightUpperPoisonedCorner.getY(); j++) {
-                if (givePoison()) {
-                    Plant plant = super.mapTiles.get(new Vector2d(i, j)).getPlant();
-                    if (plant != null) {
-                        plant.setPoison();
-                        plant.setEnergy(-plant.getEnergy());
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -115,9 +101,14 @@ public class PoisonedMap extends AbstractWorldMap {
     /**
      * The placePlant method set Plant on the Map
      */
-
+    @Override
     public void placePlant(Plant plant, Vector2d position) {
-        super.placePlant(plant, position);
+        if (leftDownPoisonedCorner.precedes(position) && rightUpperPoisonedCorner.follows(position) && isPoisonous()) {
+            plant.setPoison();
+            plant.setEnergy(-plant.getEnergy());
+        }
+        mapTiles.get(position).setPlant(plant);
+        plants.add(plant);
     }
 
     /**
@@ -156,20 +147,18 @@ public class PoisonedMap extends AbstractWorldMap {
     @Override
     public void generateMap() {
         super.generateMap();
-        makePlantsPoisonous();
     }
 
     public void firstDay() {
         super.firstDay();
-        makePlantsPoisonous();
     }
+
     /**
      * The dailyUpdate method is responsible for the daily update of the map
      */
 
     public void dailyUpdate() {
         super.dailyUpdate();
-        makePlantsPoisonous();
     }
 
     /**

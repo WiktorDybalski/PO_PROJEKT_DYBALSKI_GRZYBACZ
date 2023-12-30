@@ -77,7 +77,6 @@ public class GlobeMapTest {
     @Test
     void testGenerateMap() {
         assertEquals(10, map.getAnimals().size());
-        assertEquals(20, map.getPlants().size());
     }
 
     @Test
@@ -89,14 +88,16 @@ public class GlobeMapTest {
     }
 
     @Test
-    void testEat() {
+    void eatTest() {
+        assertEquals(10, map.getAnimals().size());
+        assertEquals(30, map.getPlants().size());
         map.eat();
         assertEquals(10, map.getAnimals().size());
-        assertEquals(10, map.getPlants().size());
+        assertEquals(28, map.getPlants().size());
         System.out.println(map.toString());
         map.eat();
         assertEquals(10, map.getAnimals().size());
-        assertEquals(10, map.getPlants().size());
+        assertEquals(28, map.getPlants().size());
         System.out.println(map.toString());
     }
 }

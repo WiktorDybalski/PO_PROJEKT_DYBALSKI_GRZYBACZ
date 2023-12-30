@@ -77,15 +77,6 @@ public class RandomPositionsGenerator {
         return plantResult;
     }
 
-    /**
-     * Returns the list of generated positions.
-     *
-     * @return A list of Vector2d plants in poisoned Map representing the generated positions.
-     */
-    public List<Vector2d> getPlantInPoisonedResult() {
-        return plantInPoisonedResult;
-    }
-
 
     private List<Vector2d> generateAllPositions() {
         List<Vector2d> positions = new ArrayList<>();
@@ -102,22 +93,12 @@ public class RandomPositionsGenerator {
      *
      * @return A list of Vector2d objects representing the random positions.
      */
+
     public List<Vector2d> generateAnimals() {
         Random random = new Random(1111);
         for (int i = 0; i < objectCount; i++) {
             int randomIndex = random.nextInt(allPositions.size());
             animalResult.add(allPositions.get(randomIndex));
-        }
-        return animalResult;
-    }
-
-    public List<Vector2d> generatePlantsInPoisoned(List<Vector2d> freePositions) {
-        List<Vector2d> tempAllPosition = new ArrayList<>(freePositions);
-        Random random = new Random(1111);
-        for (int i = 0; i < objectCount; i++) {
-            int randomIndex = random.nextInt(tempAllPosition.size());
-            animalResult.add(tempAllPosition.get(randomIndex));
-            tempAllPosition.remove(randomIndex);
         }
         return animalResult;
     }
@@ -146,9 +127,9 @@ public class RandomPositionsGenerator {
                 }
             }
             // Else, select from any available position
-            randomIndex = random.nextInt(allPositions.size());
-            plantResult.add(allPositions.get(randomIndex));
-            allPositions.remove(randomIndex);
+            randomIndex = random.nextInt(tempAllPosition.size());
+            plantResult.add(tempAllPosition.get(randomIndex));
+            tempAllPosition.remove(randomIndex);
         }
         return plantResult;
     }

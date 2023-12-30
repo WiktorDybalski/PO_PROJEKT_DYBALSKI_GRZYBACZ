@@ -12,7 +12,7 @@ import java.util.List;
 
 public abstract class AbstractWorldMap implements WorldMap {
 
-    private SimulationConfigurator config;
+    protected SimulationConfigurator config;
 
     private int currentDay;
     /**
@@ -25,12 +25,12 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
     private final Vector2d upperRight;
 
-    private List<Animal> animals;
+    protected List<Animal> animals;
 
     /**
      * List of plants on the Map
      */
-    private List<Plant> plants;
+    protected List<Plant> plants;
 
     /**
      * Map: key - position of each single tile, value: a tile
@@ -40,13 +40,13 @@ public abstract class AbstractWorldMap implements WorldMap {
      * List of Tiles without plant
      */
 
-    private List<Vector2d> freePositions;
+    protected List<Vector2d> freePositions;
 
     /**
      * mapVisualizer to draw a map.
      * One day it will be replaced by GUI
      */
-    MapVisualizer mapVisualizer = new MapVisualizer(this);
+    protected MapVisualizer mapVisualizer = new MapVisualizer(this);
 
     /**
      * Constructor of the Map
@@ -59,6 +59,8 @@ public abstract class AbstractWorldMap implements WorldMap {
         this.animals = new ArrayList<>();
         this.plants = new ArrayList<>();
         this.mapTiles = new HashMap<>();
+        this.freePositions = new ArrayList<>();
+        generateMap();
     }
 
     /**
@@ -150,7 +152,10 @@ public abstract class AbstractWorldMap implements WorldMap {
      * @return bool value is it possible to move there
      */
     public MapObjects objectsAt(Vector2d position) {
-        return mapTiles.get(position).getObjects();
+        if (mapTiles.get(position) != null) {
+            return mapTiles.get(position).getObjects();
+        }
+        return null;
     }
 
     /**
@@ -174,8 +179,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public void placeAnimal(Animal animal, Vector2d position) {
         mapTiles.get(position).addAnimal(animal);
-        if (!animals.contains(animal))
-            animals.add(animal);
+        animals.add(animal);
     }
 
     /**
@@ -183,6 +187,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
     public void placeAnimals(int amountOfAnimals) {
         RandomAnimalsGenerator animalsGenerator = new RandomAnimalsGenerator(amountOfAnimals, config.getInitialAnimalEnergy(), this);
+        animalsGenerator.generateAnimals(amountOfAnimals);
         List<Animal> animals = animalsGenerator.getAnimals();
         for (Animal animal : animals) {
             placeAnimal(animal, animal.getPosition());
@@ -301,7 +306,6 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
     public void firstDay() {
         System.out.println(this);
-        generateMap();
         this.eat();
         this.reproduce();
         this.placePlants(config.getNumberOfPlantsGrowingPerDay());
