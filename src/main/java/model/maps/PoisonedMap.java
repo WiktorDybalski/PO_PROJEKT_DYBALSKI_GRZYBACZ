@@ -10,24 +10,12 @@ import model.utils.Vector2d;
 import java.util.List;
 
 public class PoisonedMap extends AbstractWorldMap {
-    private final double poisonChance;
-    private SimulationConfigurator config;
-
-    public static final int MINIMAL_REPRODUCTION_ENERGY = 50; //TODO: check if it's ok
-
     /**
-     * lower left corner of poisoned square
+     * Constructor of the Map
      */
-    private Vector2d lowerLeftCorner;
 
-    /**
-     * upper right corner of poisoned square
-     */
-    private Vector2d upperRightCorner;
-
-    public PoisonedMap(SimulationConfigurator config, double poisonChance) {
+    public PoisonedMap(SimulationConfigurator config) {
         super(config);
-        this.poisonChance = poisonChance;
     }
 
     /**
@@ -89,17 +77,17 @@ public class PoisonedMap extends AbstractWorldMap {
     /**
      * The placePlants method create random positions for Plants and using for to set Plants on the Map using placePlant
      */
-    @Override
-    public void placePlants(int amountOfPlants) {
-        RandomPlantsInPoisonedGenerator plantsGenerator = new RandomPlantsInPoisonedGenerator(amountOfPlants, this.config.getPlantEnergy(), this);
-        lowerLeftCorner = plantsGenerator.getLowerDownCornerSquare();
-        upperRightCorner = plantsGenerator.getRightUpperCornerSquare();
-        List<Plant> plants = plantsGenerator.getPlants();
-        for (Plant plant : plants) {
-            placePlant(plant, plant.getPosition());
-        }
+
+    public void placePlants(List<Plant> plants) {
+        super.placePlants(getConfig().getInitialPlantCount());
     }
 
+    /**
+     * This method removes all dead animals from the map
+     */
+    public void removeDeadAnimals() {
+        super.removeDeadAnimals();
+    }
     /**
      * The move method is responsible for the movement of all moving objects on the map
      */
@@ -114,12 +102,18 @@ public class PoisonedMap extends AbstractWorldMap {
     public void eat() {
         super.eat();
     }
-
     /**
      * The generateMap method is using in Map constructor to set all objects on the map
      */
     public void generateMap() {
         super.generateMap();
+    }
+
+    /**
+     * The dailyUpdate method is responsible for the daily update of the map     */
+
+    public void dailyUpdate() {
+        super.dailyUpdate();
     }
 
     /**

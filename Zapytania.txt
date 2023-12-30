@@ -1,0 +1,6 @@
+1. Czy firstday zostawić czy usunąć?
+2. Czy wszystzy wszystkie rośliny w PoisonedSquare mają być zatrute?
+3. PoisonedSquare jaka wielkosc?
+4. Czy super.methoda musi być nadpisywane np. w GlobeMap mamy updateMap?
+5. Czy równik ma być w każdej mapie
+6. Czy stream w positionGenerator jest git?

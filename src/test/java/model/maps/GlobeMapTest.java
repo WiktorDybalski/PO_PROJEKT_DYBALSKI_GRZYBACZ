@@ -69,19 +69,10 @@ public class GlobeMapTest {
 
     @Test
     void testMove() {
-        System.out.println(map.toString());
-        map.move();
-        System.out.println(map.toString());
-        map.move();
-        System.out.println(map.toString());
-        map.move();
-        System.out.println(map.toString());
-        map.move();
-        System.out.println(map.toString());
-        map.move();
-        System.out.println(map.toString());
-        map.move();
-        System.out.println(map.toString());
+        for(int i = 0; i < 10; i++) {
+            System.out.println(map.toString());
+            map.move();
+        }
     }
     @Test
     void testGenerateMap() {
@@ -91,14 +82,10 @@ public class GlobeMapTest {
 
     @Test
     void testDailyUpdate(){
-        map.dailyUpdate();
-        System.out.println(map.toString());
-        map.dailyUpdate();
-        System.out.println(map.toString());
-        map.dailyUpdate();
-        System.out.println(map.toString());
-        map.dailyUpdate();
-        System.out.println(map.toString());
+        for(int i = 0; i < 10; i++) {
+            map.dailyUpdate();
+            System.out.println(map.toString());
+        }
     }
 
     @Test
@@ -112,6 +99,4 @@ public class GlobeMapTest {
         assertEquals(10, map.getPlants().size());
         System.out.println(map.toString());
     }
-
-
 }

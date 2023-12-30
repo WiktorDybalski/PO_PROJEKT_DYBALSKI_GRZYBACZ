@@ -62,7 +62,7 @@ public class RandomPlantsInPoisonedGenerator {
         this.map = map;
         this.plantEnergy = plantEnergy;
         lowerDownCornerSquare = generatePoisonedSquare();
-        rightUpperCornerSquare = new Vector2d(lowerDownCornerSquare.getX() + (int) (0.2 * maxWidth), lowerDownCornerSquare.getY() + (int) (0.2 * maxHeight));
+        rightUpperCornerSquare = new Vector2d(lowerDownCornerSquare.getX() + (int) (0.14 * maxWidth), lowerDownCornerSquare.getY() + (int) (0.14 * maxHeight));
         generatePlants(initialAmount);
     }
 
@@ -105,26 +105,25 @@ public class RandomPlantsInPoisonedGenerator {
      * @return true if the plant is poisoned, false otherwise.
      */
 
-    private boolean isPoisoned() {
+    private boolean isPoisoned(Vector2d position) {
         Random random = new Random(1115);
         int randomInt = random.nextInt(10);
-        return randomInt % 5 == 0;
+        return lowerDownCornerSquare.precedes(position) && rightUpperCornerSquare.follows(position) && randomInt % 5 == 0;
     }
 
     /**
      * Generates a plant with a random energy level. The plant is determined to be poisoned or not
      * based on its position relative to the poisoned square and a random chance.
      *
-     * @param position               The position of the plant on the map.
-     * @param lowerDownCornerSquare  The lower-left corner of the poisoned square.
-     * @param rightUpperCornerSquare The upper-right corner of the poisoned square.
+     * @param position The position of the plant on the map.
      * @return A Plant object with specified properties, including its poisoned status.
      */
 
-    private Plant generateRandomPlant(Vector2d position, Vector2d lowerDownCornerSquare, Vector2d rightUpperCornerSquare) {
-        if (lowerDownCornerSquare.precedes(position) && rightUpperCornerSquare.follows(position) && isPoisoned())
-            return new Plant(position, plantEnergy, true, DAY_OF_GROWTH);
-        return new Plant(position, plantEnergy, true, DAY_OF_GROWTH);
+    private Plant generateRandomPlant(Vector2d position) {
+        if (isPoisoned(position)) {
+            return new Plant(position, -plantEnergy, true, DAY_OF_GROWTH);
+        }
+        return new Plant(position, plantEnergy, false, DAY_OF_GROWTH);
     }
 
     /**
@@ -137,7 +136,7 @@ public class RandomPlantsInPoisonedGenerator {
         RandomPositionsGenerator positionsGenerator = new RandomPositionsGenerator(map, amount);
         List<Vector2d> positions = positionsGenerator.getPlantInPoisonedResult();
         for (int i = 0; i < amount; i++) {
-            plants.add(generateRandomPlant(positions.get(i), lowerDownCornerSquare, rightUpperCornerSquare));
+            plants.add(generateRandomPlant(positions.get(i)));
         }
     }
 }

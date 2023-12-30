@@ -12,7 +12,7 @@ public class PoisonedMapTest {
     PoisonedMap map;
     @BeforeEach
     void setUp() {
-        map = new PoisonedMap(new SimulationConfigurator(),0.8);
+        map = new PoisonedMap(new SimulationConfigurator());
     }
 
     @Test
@@ -74,18 +74,18 @@ public class PoisonedMapTest {
     @Test
     void testGenerateMap() {
         assertEquals(10, map.getAnimals().size());
-        assertEquals(20, map.getPlants().size());
+        assertEquals(29, map.getPlants().size());
     }
 
     @Test
     void testEat() {
         map.eat();
         assertEquals(10, map.getAnimals().size());
-        assertEquals(10, map.getPlants().size());
+        assertEquals(25, map.getPlants().size());
         System.out.println(map.toString());
         map.eat();
         assertEquals(10, map.getAnimals().size());
-        assertEquals(10, map.getPlants().size());
+        assertEquals(25, map.getPlants().size());
         System.out.println(map.toString());
     }
 

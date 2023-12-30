@@ -11,9 +11,9 @@ public class Simulation {
 
     private SimulationConfigurator config;
 
-    public Simulation(WorldMap worldmap) {
+    public Simulation(WorldMap worldmap, SimulationConfigurator config) {
         this.worldMap = worldmap;
-        this.config = new SimulationConfigurator();
+        this.config = config;
     }
 
     public void run(int days) {

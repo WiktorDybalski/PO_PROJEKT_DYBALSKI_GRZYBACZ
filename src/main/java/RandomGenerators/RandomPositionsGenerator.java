@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+//TODO: it generates two times more positions than expected
 public class RandomPositionsGenerator {
     /**
      * The maximum width of the map.
@@ -33,12 +34,12 @@ public class RandomPositionsGenerator {
     /**
      * A list of the generated positions for anima;s.
      */
-    private List<Vector2d> Animalresult = new ArrayList<>();
+    private List<Vector2d> animalResult = new ArrayList<>();
 
     /**
      * A list of the generated positions for plants in GlobeMap.
      */
-    private List<Vector2d> Plantresult = new ArrayList<>();
+    private List<Vector2d> plantResult = new ArrayList<>();
 
     /**
      * A list of the generated positions for plants in PoisonedMap.
@@ -57,8 +58,8 @@ public class RandomPositionsGenerator {
         this.maxHeight = map.getHeight();
         this.objectCount = objectCount;
         this.allPositions = generateAllPositions();
-        this.Animalresult = generateAnimals();
-        this.Plantresult = generatePlants();
+        this.animalResult = generateAnimals();
+        this.plantResult = generatePlants();
         this.plantInPoisonedResult = generatePlantsInPoisoned();
     }
 
@@ -68,7 +69,7 @@ public class RandomPositionsGenerator {
      * @return A list of Vector2d animals representing the generated positions.
      */
     public List<Vector2d> getAnimalResult() {
-        return Animalresult;
+        return animalResult;
     }
 
     /**
@@ -78,7 +79,7 @@ public class RandomPositionsGenerator {
      */
 
     public List<Vector2d> getPlantResult() {
-        return Plantresult;
+        return plantResult;
     }
 
     /**
@@ -100,9 +101,9 @@ public class RandomPositionsGenerator {
         Random random = new Random(1111);
         for (int i = 0; i < objectCount; i++) {
             int randomIndex = random.nextInt(allPositions.size());
-            Animalresult.add(allPositions.get(randomIndex));
+            animalResult.add(allPositions.get(randomIndex));
         }
-        return Animalresult;
+        return animalResult;
     }
 
     private List<Vector2d> generatePlantsInPoisoned() {
@@ -110,10 +111,10 @@ public class RandomPositionsGenerator {
         Random random = new Random(1111);
         for (int i = 0; i < objectCount; i++) {
             int randomIndex = random.nextInt(tempAllPosition.size());
-            Animalresult.add(tempAllPosition.get(randomIndex));
+            animalResult.add(tempAllPosition.get(randomIndex));
             tempAllPosition.remove(randomIndex);
         }
-        return Animalresult;
+        return animalResult;
     }
 
     private List<Vector2d> generatePlants() {
@@ -134,17 +135,17 @@ public class RandomPositionsGenerator {
                         .toList();
                 if (!equatorialPositions.isEmpty()) {
                     randomIndex = random.nextInt(equatorialPositions.size());
-                    Plantresult.add(equatorialPositions.get(randomIndex));
+                    plantResult.add(equatorialPositions.get(randomIndex));
                     tempAllPosition.remove(equatorialPositions.get(randomIndex));
                     continue;
                 }
             }
             // Else, select from any available position
             randomIndex = random.nextInt(allPositions.size());
-            Plantresult.add(allPositions.get(randomIndex));
+            plantResult.add(allPositions.get(randomIndex));
             allPositions.remove(randomIndex);
         }
-        return Plantresult;
+        return plantResult;
     }
 
     /**

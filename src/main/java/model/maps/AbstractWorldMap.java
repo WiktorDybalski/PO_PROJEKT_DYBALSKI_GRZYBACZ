@@ -213,11 +213,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         for (Tile tile : mapTiles.values()) {
             if (tile.getPlant() != null) {
                 if (!tile.getAnimals().isEmpty()) {
-                    if (tile.getPlant().getIsPoisoned()) {
-                        tile.getStrongestAnimal().eatPoisoned(tile.getPlant());
-                    } else{
-                        tile.getStrongestAnimal().eat(tile.getPlant());
-                    }
+                    tile.getStrongestAnimal().eat(tile.getPlant());
                     tile.removePlant();
                 }
             }
@@ -295,13 +291,13 @@ public abstract class AbstractWorldMap implements WorldMap {
      * The firstDay method is responsible for the first day of the World
      */
     public void firstDay() {
-        this.move();
+        System.out.println(this);
         this.eat();
         this.reproduce();
         this.placePlants(config.getNumberOfPlantsGrowingPerDay());
         this.removeDeadAnimals();
         this.currentDay++;
-        System.out.println(this);
+        this.move();
     }
 
     /**

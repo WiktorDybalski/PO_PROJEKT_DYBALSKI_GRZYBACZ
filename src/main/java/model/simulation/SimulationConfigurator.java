@@ -31,7 +31,7 @@ public class SimulationConfigurator {
         this.numberOfPlantsGrowingPerDay = 20;
         this.modeOfPlantGrowing = "Random";
         this.initialAnimalCount = 10;
-        this.initialAnimalEnergy = 2;
+        this.initialAnimalEnergy = 5;
         this.readyToReproduceEnergy = 10;
         this.reproduceEnergyLoss = 10;
         this.minimumMutationCount = 1;
