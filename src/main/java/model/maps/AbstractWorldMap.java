@@ -35,7 +35,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     /**
      * Map: key - position of each single tile, value: a tile
      */
-    private HashMap<Vector2d, Tile> mapTiles;
+    protected HashMap<Vector2d, Tile> mapTiles;
     /**
      * List of Tiles without plant
      */
@@ -182,7 +182,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      * The placeAnimals method create random positions for Animals and using for to add Animal to the Map using placeAnimal
      */
     public void placeAnimals(int amountOfAnimals) {
-        RandomAnimalsGenerator animalsGenerator = new RandomAnimalsGenerator(amountOfAnimals, config.getInitialAnimalEnergy(), config.getReproduceEnergyLoss(), this);
+        RandomAnimalsGenerator animalsGenerator = new RandomAnimalsGenerator(amountOfAnimals, config.getInitialAnimalEnergy(), this);
         List<Animal> animals = animalsGenerator.getAnimals();
         for (Animal animal : animals) {
             placeAnimal(animal, animal.getPosition());
@@ -208,6 +208,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         List<Plant> plants = plantsGenerator.getPlants();
         for (Plant plant : plants) {
             placePlant(plant, plant.getPosition());
+            freePositions.remove(plant.getPosition());
         }
     }
 
@@ -220,6 +221,7 @@ public abstract class AbstractWorldMap implements WorldMap {
                 if (!tile.getAnimals().isEmpty()) {
                     tile.getStrongestAnimal().eat(tile.getPlant());
                     tile.removePlant();
+                    freePositions.add(tile.getPosition());
                 }
             }
         }
@@ -263,7 +265,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void generateMap() {
         for (int i = lowerLeft.getX(); i <= upperRight.getX(); i++) {
             for (int j = lowerLeft.getY(); j <= upperRight.getY(); j++) {
-               Tile tile = new Tile(new Vector2d(i, j));
+                Tile tile = new Tile(new Vector2d(i, j));
                 mapTiles.put(new Vector2d(i, j), tile);
                 freePositions.add(tile.getPosition());
             }

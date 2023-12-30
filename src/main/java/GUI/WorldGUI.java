@@ -1,5 +1,6 @@
 package GUI;
 
+import model.maps.GlobeMap;
 import model.maps.PoisonedMap;
 import model.simulation.Simulation;
 import model.simulation.SimulationConfigurator;
@@ -12,7 +13,7 @@ public class WorldGUI {
 
     public WorldGUI(SimulationConfigurator config) {
         this.config = config;
-        this.simulation = new Simulation(new PoisonedMap(config), config);
+        this.simulation = new Simulation(new GlobeMap(config), config);
     }
 
     public void runSimulation(int steps) {

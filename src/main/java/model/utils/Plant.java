@@ -52,6 +52,13 @@ public class Plant implements MapElement {
         isEaten = true;
     }
 
+    public void setPoison() {
+        isPoisoned = true;
+    }
+    public void setEnergy(int newEnergy) {
+        this.energy = newEnergy;
+    }
+
     /**
      * Method simulates growth of plant.
      */

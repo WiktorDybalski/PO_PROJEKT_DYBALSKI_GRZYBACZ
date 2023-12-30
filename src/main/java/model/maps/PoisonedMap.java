@@ -1,6 +1,5 @@
 package model.maps;
 
-import RandomGenerators.RandomPlantsInPoisonedGenerator;
 import model.simulation.SimulationConfigurator;
 import model.utils.Animal;
 import model.utils.MapObjects;
@@ -8,14 +7,19 @@ import model.utils.Plant;
 import model.utils.Vector2d;
 
 import java.util.List;
+import java.util.Random;
 
 public class PoisonedMap extends AbstractWorldMap {
     /**
      * Constructor of the Map
      */
+    private final Vector2d leftDownPoisonedCorner;
+    private final Vector2d rightUpperPoisonedCorner;
 
     public PoisonedMap(SimulationConfigurator config) {
         super(config);
+        this.leftDownPoisonedCorner = generateLeftDownCornerPoisonedSquare();
+        this.rightUpperPoisonedCorner = new Vector2d(leftDownPoisonedCorner.getX() + (int) (0.14 * this.getWidth()), leftDownPoisonedCorner.getY() + (int) (0.14 * this.getHeight()));
     }
 
     /**
@@ -50,10 +54,52 @@ public class PoisonedMap extends AbstractWorldMap {
         return super.isOccupied(position);
     }
 
+
+    /**
+     * Generates a random position within a specified area of the map to define a poisoned square.
+     * This square is a region where plants are likely to be poisoned.
+     * The area of this square is 20% of the map's width and height.
+     *
+     * @return A Vector2d object representing the lower-left corner of the poisoned square.
+     */
+
+    private Vector2d generateLeftDownCornerPoisonedSquare() {
+        Random random = new Random(1115);
+        int x = random.nextInt((int) (0.8 * this.getWidth()));
+        int y = random.nextInt((int) (0.8 * this.getHeight()));
+        return new Vector2d(x, y);
+    }
+
+    /**
+     * Determines if a plant should be poisoned based on a random probability.
+     * There is a 1 in 5 chance that this method will return true, indicating the plant is poisoned.
+     *
+     * @return true if the plant is poisoned, false otherwise.
+     */
+
+    private boolean givePoison() {
+        Random random = new Random(1115);
+        int randomInt = random.nextInt(10);
+        return randomInt % 5 == 0;
+    }
+
+    private void makePlantsPoisonous() {
+        for (int i = leftDownPoisonedCorner.getX(); i < rightUpperPoisonedCorner.getX(); i++) {
+            for (int j = leftDownPoisonedCorner.getY(); j < rightUpperPoisonedCorner.getY(); j++) {
+                if (givePoison()) {
+                    Plant plant = super.mapTiles.get(new Vector2d(i, j)).getPlant();
+                    if (plant != null) {
+                        plant.setPoison();
+                        plant.setEnergy(-plant.getEnergy());
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * The placeAnimal method add animal to the Map
      */
-
     public void placeAnimal(Animal animal, Vector2d position) {
         super.placeAnimal(animal, position);
     }
@@ -62,8 +108,8 @@ public class PoisonedMap extends AbstractWorldMap {
      * The placeAnimals method create random positions for Animals and using for to add Animal to the Map using placeAnimal
      */
 
-    public void placeAnimals(List<Animal> animals) {
-        super.placeAnimals(getConfig().getInitialAnimalCount());
+    public void placeAnimals(int amountOfAnimals) {
+        super.placeAnimals(amountOfAnimals);
     }
 
     /**
@@ -78,8 +124,8 @@ public class PoisonedMap extends AbstractWorldMap {
      * The placePlants method create random positions for Plants and using for to set Plants on the Map using placePlant
      */
 
-    public void placePlants(List<Plant> plants) {
-        super.placePlants(getConfig().getInitialPlantCount());
+    public void placePlants(int amountOfPlants) {
+        super.placePlants(amountOfPlants);
     }
 
     /**
@@ -88,6 +134,7 @@ public class PoisonedMap extends AbstractWorldMap {
     public void removeDeadAnimals() {
         super.removeDeadAnimals();
     }
+
     /**
      * The move method is responsible for the movement of all moving objects on the map
      */
@@ -102,18 +149,27 @@ public class PoisonedMap extends AbstractWorldMap {
     public void eat() {
         super.eat();
     }
+
     /**
      * The generateMap method is using in Map constructor to set all objects on the map
      */
+    @Override
     public void generateMap() {
         super.generateMap();
+        makePlantsPoisonous();
     }
 
+    public void firstDay() {
+        super.firstDay();
+        makePlantsPoisonous();
+    }
     /**
-     * The dailyUpdate method is responsible for the daily update of the map     */
+     * The dailyUpdate method is responsible for the daily update of the map
+     */
 
     public void dailyUpdate() {
         super.dailyUpdate();
+        makePlantsPoisonous();
     }
 
     /**

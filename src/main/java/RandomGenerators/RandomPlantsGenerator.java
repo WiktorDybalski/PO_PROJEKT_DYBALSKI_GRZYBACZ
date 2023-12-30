@@ -80,6 +80,7 @@ public class RandomPlantsGenerator {
         List<Vector2d> positions = positionsGenerator.generatePlants(freePositions);
         for (int i = 0; i < amount; i++) {
             plants.add(generateRandomPlant(positions.get(i)));
+
         }
     }
 }
