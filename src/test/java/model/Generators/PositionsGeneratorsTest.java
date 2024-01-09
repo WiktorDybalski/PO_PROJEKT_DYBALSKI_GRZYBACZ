@@ -1,6 +1,6 @@
 package model.Generators;
 
-import RandomGenerators.RandomPositionsGenerator;
+import model.utils.RandomGenerators.RandomPositionsGenerator;
 import model.maps.GlobeMap;
 import model.maps.PoisonedMap;
 import model.maps.WorldMap;

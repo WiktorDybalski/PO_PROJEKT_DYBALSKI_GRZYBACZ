@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import static java.lang.Math.abs;
+
 /**
  * Represents the genetic makeup of an animal. This class provides functionalities to manipulate
  * and combine genotypes, simulating genetic inheritance and mutation.
@@ -44,7 +46,7 @@ public class Genotype {
         int mutationCount = random.nextInt(genes.size()) + 1;
         for (int i = 0; i < mutationCount; i++) {
             int geneIndex = random.nextInt(genes.size());
-            int geneValue = (genes.get(geneIndex) + random.nextInt()) % 7+1; // to avoid mutation to the same value
+            int geneValue = (genes.get(geneIndex) + abs(random.nextInt())) % 7+1; // to avoid mutation to the same value
             genes.set(geneIndex, geneValue);
         }
     }

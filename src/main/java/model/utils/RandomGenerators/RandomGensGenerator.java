@@ -1,4 +1,4 @@
-package RandomGenerators;
+package model.utils.RandomGenerators;
 
 import model.utils.Genotype;
 

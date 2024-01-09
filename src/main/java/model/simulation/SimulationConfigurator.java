@@ -2,9 +2,8 @@ package model.simulation;
 
 import model.utils.Vector2d;
 
-import java.io.IOException;
-
 public class SimulationConfigurator {
+    private final int numberOfDays;
     private int mapSizeX;
     private int mapSizeY;
     private String mapType;
@@ -25,10 +24,10 @@ public class SimulationConfigurator {
     public SimulationConfigurator() {
         this.mapSizeX = 10;
         this.mapSizeY = 10;
-        this.mapType = "PoisonedMap";
+        this.mapType = "WorldMap";
         this.initialAnimalCount = 10;
-        this.initialPlantCount = 30;
-        this.plantEnergy = 1;
+        this.initialPlantCount = 50;
+        this.plantEnergy = 2;
         this.numberOfPlantsGrowingPerDay = 3;
         this.modeOfPlantGrowing = "Random";
         this.initialAnimalEnergy = 5;
@@ -39,50 +38,9 @@ public class SimulationConfigurator {
         this.mutationVariant = "Random";
         this.genomeLength = 8;
         this.animalBehaviourType = "Random";
+        this.numberOfDays = 100;
     }
 
-    //doesn't work yet
-
-    public void SimulationConfiguratorFromInput() throws IOException {
-        System.out.println("SimulationConfiguratorFromInput");
-        System.out.println("If you wanna use default values enter y: ");
-        String input = System.in.toString();
-        if (input.equals("y")) {
-            return;
-        }
-        System.out.println("mapSizeX: ");
-        mapSizeX=(int)System.in.read();
-        System.out.println("mapSizeY: ");
-        mapSizeY=(int)System.in.read();
-        System.out.println("mapType: ");
-        mapType=System.in.toString();
-        System.out.println("initialPlantCount: ");
-        initialPlantCount=(int)System.in.read();
-        System.out.println("plantEnergy: ");
-        plantEnergy=(int)System.in.read();
-        System.out.println("numberOfPlantsGrowingPerDay: ");
-        numberOfPlantsGrowingPerDay=(int)System.in.read();
-        System.out.println("modeOfPlantGrowing: ");
-        modeOfPlantGrowing=System.in.toString();
-        System.out.println("initialAnimalCount: ");
-        initialAnimalCount=(int)System.in.read();
-        System.out.println("initialAnimalEnergy: ");
-        initialAnimalEnergy=(int)System.in.read();
-        System.out.println("readyToReproduceEnergy: ");
-        readyToReproduceEnergy=(int)System.in.read();
-        System.out.println("reproduceEnergyLoss: ");
-        reproduceEnergyLoss=(int)System.in.read();
-        System.out.println("minimumMutationCount: ");
-        minimumMutationCount=(int)System.in.read();
-        System.out.println("maximumMutationCount: ");
-        maximumMutationCount=(int)System.in.read();
-        System.out.println("mutationVariant: ");
-        mutationVariant=System.in.toString();
-        System.out.println("genomeLength: ");
-        genomeLength=(int)System.in.read();
-        System.out.println("animalBehaviourType: ");
-        animalBehaviourType=System.in.toString();
-    }
     public Vector2d getMapSize() {
         return new Vector2d(mapSizeX, mapSizeY);
     }
@@ -91,56 +49,116 @@ public class SimulationConfigurator {
         return mapType;
     }
 
+    public void setMapType(String mapType) {
+        this.mapType = mapType;
+    }
+
     public int getInitialPlantCount() {
         return initialPlantCount;
+    }
+
+    public void setInitialPlantCount(int initialPlantCount) {
+        this.initialPlantCount = initialPlantCount;
     }
 
     public int getPlantEnergy() {
         return plantEnergy;
     }
 
+    public void setPlantEnergy(int plantEnergy) {
+        this.plantEnergy = plantEnergy;
+    }
+
     public int getNumberOfPlantsGrowingPerDay() {
         return numberOfPlantsGrowingPerDay;
+    }
+
+    public void setNumberOfPlantsGrowingPerDay(int numberOfPlantsGrowingPerDay) {
+        this.numberOfPlantsGrowingPerDay = numberOfPlantsGrowingPerDay;
     }
 
     public String getModeOfPlantGrowing() {
         return modeOfPlantGrowing;
     }
 
+    public void setModeOfPlantGrowing(String modeOfPlantGrowing) {
+        this.modeOfPlantGrowing = modeOfPlantGrowing;
+    }
+
     public int getInitialAnimalCount() {
         return initialAnimalCount;
+    }
+
+    public void setInitialAnimalCount(int initialAnimalCount) {
+        this.initialAnimalCount = initialAnimalCount;
     }
 
     public int getInitialAnimalEnergy() {
         return initialAnimalEnergy;
     }
 
+    public void setInitialAnimalEnergy(int initialAnimalEnergy) {
+        this.initialAnimalEnergy = initialAnimalEnergy;
+    }
+
     public int getReadyToReproduceEnergy() {
         return readyToReproduceEnergy;
+    }
+
+    public void setReadyToReproduceEnergy(int readyToReproduceEnergy) {
+        this.readyToReproduceEnergy = readyToReproduceEnergy;
     }
 
     public int getReproduceEnergyLoss() {
         return reproduceEnergyLoss;
     }
 
+    public void setReproduceEnergyLoss(int reproduceEnergyLoss) {
+        this.reproduceEnergyLoss = reproduceEnergyLoss;
+    }
+
     public int getMinimumMutationCount() {
         return minimumMutationCount;
+    }
+
+    public void setMinimumMutationCount(int minimumMutationCount) {
+        this.minimumMutationCount = minimumMutationCount;
     }
 
     public int getMaximumMutationCount() {
         return maximumMutationCount;
     }
 
+    public void setMaximumMutationCount(int maximumMutationCount) {
+        this.maximumMutationCount = maximumMutationCount;
+    }
+
     public String getMutationVariant() {
         return mutationVariant;
+    }
+
+    public void setMutationVariant(String mutationVariant) {
+        this.mutationVariant = mutationVariant;
     }
 
     public int getGenomeLength() {
         return genomeLength;
     }
 
+    public void setGenomeLength(int genomeLength) {
+        this.genomeLength = genomeLength;
+    }
+
     public String getAnimalBehaviourType() {
         return animalBehaviourType;
+    }
+
+    public void setAnimalBehaviourType(String animalBehaviourType) {
+        this.animalBehaviourType = animalBehaviourType;
+    }
+
+    public int getNumberOfDays() {
+        return numberOfDays;
     }
 
     public void setMapSize(int x, int y) {
@@ -148,84 +166,26 @@ public class SimulationConfigurator {
         this.mapSizeY = y;
     }
 
-    public void setMapType(String mapType) {
-        this.mapType = mapType;
-    }
-
-    public void setInitialPlantCount(int initialPlantCount) {
-        this.initialPlantCount = initialPlantCount;
-    }
-
-    public void setPlantEnergy(int plantEnergy) {
-        this.plantEnergy = plantEnergy;
-    }
-
-    public void setNumberOfPlantsGrowingPerDay(int numberOfPlantsGrowingPerDay) {
-        this.numberOfPlantsGrowingPerDay = numberOfPlantsGrowingPerDay;
-    }
-
-    public void setModeOfPlantGrowing(String modeOfPlantGrowing) {
-        this.modeOfPlantGrowing = modeOfPlantGrowing;
-    }
-
-    public void setInitialAnimalCount(int initialAnimalCount) {
-        this.initialAnimalCount = initialAnimalCount;
-    }
-
-    public void setInitialAnimalEnergy(int initialAnimalEnergy) {
-        this.initialAnimalEnergy = initialAnimalEnergy;
-    }
-
-    public void setReadyToReproduceEnergy(int readyToReproduceEnergy) {
-        this.readyToReproduceEnergy = readyToReproduceEnergy;
-    }
-
-    public void setReproduceEnergyLoss(int reproduceEnergyLoss) {
-        this.reproduceEnergyLoss = reproduceEnergyLoss;
-    }
-
-    public void setMinimumMutationCount(int minimumMutationCount) {
-        this.minimumMutationCount = minimumMutationCount;
-    }
-
-    public void setMaximumMutationCount(int maximumMutationCount) {
-        this.maximumMutationCount = maximumMutationCount;
-    }
-
-    public void setMutationVariant(String mutationVariant) {
-        this.mutationVariant = mutationVariant;
-    }
-
-    public void setGenomeLength(int genomeLength) {
-        this.genomeLength = genomeLength;
-    }
-
-    public void setAnimalBehaviourType(String animalBehaviourType) {
-        this.animalBehaviourType = animalBehaviourType;
-    }
-
-
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("SimulationConfigurator: ");
-        sb.append("mapSizeX: ").append(this.mapSizeX);
-        sb.append(", mapSizeY: ").append(this.mapSizeY);
-        sb.append(", mapType: ").append(this.mapType);
-        sb.append(", initialPlantCount: ").append(this.initialPlantCount);
-        sb.append(", plantEnergy: ").append(this.plantEnergy);
-        sb.append(", numberOfPlantsGrowingPerDay: ").append(this.numberOfPlantsGrowingPerDay);
-        sb.append(", modeOfPlantGrowing: ").append(this.modeOfPlantGrowing);
-        sb.append(", initialAnimalCount: ").append(this.initialAnimalCount);
-        sb.append(", initialAnimalEnergy: ").append(this.initialAnimalEnergy);
-        sb.append(", readyToReproduceEnergy: ").append(this.readyToReproduceEnergy);
-        sb.append(", reproduceEnergyLoss: ").append(this.reproduceEnergyLoss);
-        sb.append(", minimumMutationCount: ").append(this.minimumMutationCount);
-        sb.append(", maximumMutationCount: ").append(this.maximumMutationCount);
-        sb.append(", mutationVariant: ").append(this.mutationVariant);
-        sb.append(", genomeLength: ").append(this.genomeLength);
-        sb.append(", animalBehaviourType: ").append(this.animalBehaviourType);
-        return sb.toString();
+        String sb = "SimulationConfigurator: " +
+                "mapSizeX: " + this.mapSizeX +
+                ", mapSizeY: " + this.mapSizeY +
+                ", mapType: " + this.mapType +
+                ", initialPlantCount: " + this.initialPlantCount +
+                ", plantEnergy: " + this.plantEnergy +
+                ", numberOfPlantsGrowingPerDay: " + this.numberOfPlantsGrowingPerDay +
+                ", modeOfPlantGrowing: " + this.modeOfPlantGrowing +
+                ", initialAnimalCount: " + this.initialAnimalCount +
+                ", initialAnimalEnergy: " + this.initialAnimalEnergy +
+                ", readyToReproduceEnergy: " + this.readyToReproduceEnergy +
+                ", reproduceEnergyLoss: " + this.reproduceEnergyLoss +
+                ", minimumMutationCount: " + this.minimumMutationCount +
+                ", maximumMutationCount: " + this.maximumMutationCount +
+                ", mutationVariant: " + this.mutationVariant +
+                ", genomeLength: " + this.genomeLength +
+                ", animalBehaviourType: " + this.animalBehaviourType;
+        return sb;
     }
 }
 

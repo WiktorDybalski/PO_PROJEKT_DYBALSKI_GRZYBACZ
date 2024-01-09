@@ -1,8 +1,7 @@
-package RandomGenerators;
+package model.utils.RandomGenerators;
 
 import model.maps.WorldMap;
 import model.utils.Plant;
-import model.utils.Tile;
 import model.utils.Vector2d;
 
 import java.util.ArrayList;

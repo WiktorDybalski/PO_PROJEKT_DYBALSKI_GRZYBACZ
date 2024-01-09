@@ -1,5 +1,7 @@
 package model.utils;
 
+import javafx.scene.control.skin.TextInputControlSkin;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -141,13 +143,15 @@ public class Animal implements MapElement {
         this.actualActiveGenIndex = actualActiveGenIndex;
     }
 
+    public void setDirection(Directions direction) {
+        this.direction = direction;
+    }
+
+
     public void decreaseEnergy() {
         if (!this.isDead)
             this.energy--;
     }
-
-
-    //behavioral methods
 
     /**
      * Determines if the animal has enough energy to reproduce.

@@ -94,6 +94,7 @@ public class Tile {
     }
 
     /**
+     *
      * Metod simulates the eating of a plant by the strongest animal on the tile.
      */
     public void eatPlant() {

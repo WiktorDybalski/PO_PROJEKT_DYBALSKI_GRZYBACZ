@@ -1,7 +1,7 @@
 package model.maps;
 
-import RandomGenerators.RandomAnimalsGenerator;
-import RandomGenerators.RandomPlantsGenerator;
+import model.utils.RandomGenerators.RandomAnimalsGenerator;
+import model.utils.RandomGenerators.RandomPlantsGenerator;
 import model.simulation.SimulationConfigurator;
 import model.utils.*;
 import presenters.MapVisualizer;
@@ -257,26 +257,12 @@ public abstract class AbstractWorldMap implements WorldMap {
             if (canMoveTo(newPosition)) {
                 mapTiles.get(oldPosition).removeAnimal(animal);
                 animal.move(oldDirection, newPosition);
+                animal.setDirection(Directions.fromUnitVector(vector));
                 mapTiles.get(newPosition).addAnimal(animal);
             }
             animal.setActualActiveGenIndex(animal.getNextGene());
             animal.decreaseEnergy();
         }
-    }
-
-    /**
-     * The generateMap method is using in Map constructor to set all objects on the map
-     */
-    public void generateMap() {
-        for (int i = lowerLeft.getX(); i <= upperRight.getX(); i++) {
-            for (int j = lowerLeft.getY(); j <= upperRight.getY(); j++) {
-                Tile tile = new Tile(new Vector2d(i, j));
-                mapTiles.put(new Vector2d(i, j), tile);
-                freePositions.add(tile.getPosition());
-            }
-        }
-        placePlants(config.getInitialPlantCount());
-        placeAnimals(config.getInitialAnimalCount());
     }
 
     /**
@@ -296,9 +282,26 @@ public abstract class AbstractWorldMap implements WorldMap {
                 Animal parent2 = strongestAnimals.get(1);
                 if (parent1.canReproduce() && parent2.canReproduce()) {
                     Animal child = parent1.reproduce(parent2, currentDay, config.getReproduceEnergyLoss());
+                    placeAnimal(child, child.getPosition());
+                    this.animals.add(child);
                 }
             }
         }
+    }
+
+    /**
+     * The generateMap method is using in Map constructor to set all objects on the map
+     */
+    public void generateMap() {
+        for (int i = lowerLeft.getX(); i <= upperRight.getX(); i++) {
+            for (int j = lowerLeft.getY(); j <= upperRight.getY(); j++) {
+                Tile tile = new Tile(new Vector2d(i, j));
+                mapTiles.put(new Vector2d(i, j), tile);
+                freePositions.add(tile.getPosition());
+            }
+        }
+        placePlants(config.getInitialPlantCount());
+        placeAnimals(config.getInitialAnimalCount());
     }
 
     /**

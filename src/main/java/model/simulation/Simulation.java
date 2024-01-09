@@ -1,17 +1,19 @@
 package model.simulation;
 
 import model.maps.WorldMap;
+import model.utils.Statistics;
 
 
 public class Simulation extends Thread {
-    private WorldMap worldMap;
+    private final WorldMap worldMap;
 
-    private SimulationConfigurator config;
-    int days = 10;
+    private final SimulationConfigurator config;
+    private Statistics statistics;
 
     public Simulation(WorldMap worldmap, SimulationConfigurator config) {
         this.worldMap = worldmap;
         this.config = config;
+        this.statistics = new Statistics(worldMap);
     }
 
     public void run() {
@@ -21,8 +23,9 @@ public class Simulation extends Thread {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        for (int i = 1; i < days; i++) {
+        for (int i = 1; i < config.getNumberOfDays(); i++) {
             this.worldMap.dailyUpdate();
+            System.out.println(this.statistics.getStatistics());
             try {
                 Thread.sleep(1000); // Wait 1 second
             } catch (InterruptedException e) {

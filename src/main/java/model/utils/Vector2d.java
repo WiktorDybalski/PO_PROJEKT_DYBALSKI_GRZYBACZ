@@ -57,7 +57,12 @@ public class Vector2d {
         return new Vector2d(this.x - other.x, this.y - other.y);
     }
 
-
+    /**
+     * The upperRight method returns the upper right corner of the rectangle
+     * created by the two vectors.
+     * @param other The vector to be compared to.
+     * The upper right corner of the rectangle created by the two vectors.
+     */
     public Vector2d upperRight(Vector2d other) {
         return new Vector2d(Math.max(this.x, other.x), Math.max(this.y, other.y));
     }
@@ -71,14 +76,24 @@ public class Vector2d {
     public Vector2d lowerLeft(Vector2d other) {
         return new Vector2d(Math.min(this.x, other.x), Math.min(this.y, other.y));
     }
+
+    /**
+     * preceeds method checks if the vector preceeds another vector.
+     * @param position
+     * @return
+     */
     public boolean precedes(Vector2d position) {
         return this.x <= position.x && this.y <= position.y;
     }
 
+    /**
+     * follows method checks if the vector follows another vector.
+     * @param position
+     * @return
+     */
     public boolean follows(Vector2d position) {
         return this.x >= position.x && this.y >= position.y;
     }
-
 
     /**
      * The ovverrided hashCode method.

@@ -11,32 +11,43 @@ public class SimulationEngine implements Runnable {
 
     private final List<Thread> threads;
 
-
     public SimulationEngine(List<Simulation> simulations) {
         this.simulations = simulations;
         this.threads = new ArrayList<>();
     }
 
+    /**
+     * Runs all simulations in the list synchronously.
+     */
     public void runSync() {
         for (Simulation simulation : simulations) {
             simulation.run();
         }
     }
 
+    /**
+     * Runs all simulations in the list asynchronously.
+     */
     public void runAsync() {
-
         for (Simulation simulation : this.simulations) {
             simulation.start();
         }
     }
 
-
+    /**
+     * Waits for the completion of all simulation threads.
+     *
+     * @throws InterruptedException Thrown if waiting for threads is interrupted.
+     */
     public void awaitSimulationsEnd() throws InterruptedException {
         for (Thread thread : threads) {
             thread.join();
         }
     }
 
+    /**
+     * Runs simulations in a thread pool.
+     */
     public void runAsyncInThreadPool() {
         int numThreads = 4;
         ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
@@ -59,4 +70,3 @@ public class SimulationEngine implements Runnable {
         System.out.println("Thread started.");
     }
 }
-

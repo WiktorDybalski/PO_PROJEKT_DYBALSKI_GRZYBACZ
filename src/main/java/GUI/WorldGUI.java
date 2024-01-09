@@ -18,7 +18,7 @@ public class WorldGUI {
 
     public void runSimulation(int steps) {
         simulation1.start();
-        simulation2.start();
+        //simulation2.start();
     }
 
     public static void main(String[] args) {

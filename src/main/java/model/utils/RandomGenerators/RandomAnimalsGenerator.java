@@ -1,4 +1,4 @@
-package RandomGenerators;
+package model.utils.RandomGenerators;
 
 import model.maps.WorldMap;
 import model.utils.Animal;
@@ -23,7 +23,7 @@ public class RandomAnimalsGenerator {
     /**
      * The energy value each animal starts with.
      */
-    private int animalEnergy;
+    private final int animalEnergy;
 
     /**
      * The birthday of each animal, set to a constant value.
@@ -33,7 +33,7 @@ public class RandomAnimalsGenerator {
     /**
      * The minimum energy required for an animal to reproduce.
      */
-    public final int minimalReproductionEnergy;
+    private final int minimalReproductionEnergy;
 
     /**
      * The map where the animals will be placed.

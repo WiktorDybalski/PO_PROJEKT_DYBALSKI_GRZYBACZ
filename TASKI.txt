@@ -1,14 +1,8 @@
-- jungle
-- gradle IMPORTANT
-- poisonedArea
-- add simulationConfigurator to the simulation
-- check if the simulation is running properly(maybe some more tests?)
-- fix adding new plants
-- update UML file
 - update documentation
-- move WorldUI
-- update class hierarchy
 - update getters names
-- write methods which are using super. in maps
-- check RandomPlantsGenerator
+- check todo's
+- add some more tests
+- refactor code
+- add comments
+- update UML (add constructor arguments and relations between classes)
 

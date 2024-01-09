@@ -1,4 +1,4 @@
-package RandomGenerators;
+package model.utils.RandomGenerators;
 
 import model.maps.WorldMap;
 import model.simulation.SimulationConfigurator;
