@@ -16,11 +16,4 @@ public class GlobeMap extends AbstractWorldMap {
     public GlobeMap(SimulationConfigurator config) {
         super(config);
     }
-
-    /**
-     * The move method is responsible for the movement of all moving objects on the map
-     */
-    public void move(List<Animal> animals) {
-        super.move();
-    }
 }
