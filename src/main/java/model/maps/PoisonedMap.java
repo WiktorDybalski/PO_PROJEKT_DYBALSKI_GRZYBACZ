@@ -43,9 +43,7 @@ public class PoisonedMap extends AbstractWorldMap {
      */
 
     private boolean isPoisonous() {
-        Random random = new Random(1115);
-        int randomInt = random.nextInt(10);
-        return randomInt % 5 == 0;
+        return new Random().nextInt(0,10) < 5;
     }
 
     /**
@@ -59,14 +57,6 @@ public class PoisonedMap extends AbstractWorldMap {
         }
         mapTiles.get(position).setPlant(plant);
         plants.add(plant);
-    }
-
-    /**
-     * The move method is responsible for the movement of all moving objects on the map
-     */
-
-    public void move(List<Animal> animals) {
-        super.move();
     }
 
     /**

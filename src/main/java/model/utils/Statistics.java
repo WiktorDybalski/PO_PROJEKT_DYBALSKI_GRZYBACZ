@@ -11,6 +11,8 @@ public class Statistics {
     private WorldMap map;
     private int numberOfAnimals;
     private int numberOfPlants;
+
+    private int numberOfPoisonedPlants;
     private double averageLifeSpan;
     private double averageNumberOfChildren;
     private double averageEnergyLevel;
@@ -23,6 +25,7 @@ public class Statistics {
         this.map = map;
         this.numberOfAnimals = 0;
         this.numberOfPlants = 0;
+        this.numberOfPoisonedPlants = 0;
         this.averageLifeSpan = 0;
         this.averageNumberOfChildren = 0;
         this.averageEnergyLevel = 0;
@@ -39,6 +42,10 @@ public class Statistics {
 
     public int getNumberOfPlants() {
         return numberOfPlants;
+    }
+
+    private int getNumberOfPoisonedPlants() {
+        return this.numberOfPoisonedPlants;
     }
 
     public double getAverageLifeSpan() {
@@ -75,7 +82,6 @@ public class Statistics {
      * @return statistics about the map
      */
     public String getStatistics() {
-        updateStatistics();
         return this.toString();
     }
 
@@ -86,6 +92,7 @@ public class Statistics {
         int numberOfAliveAnimals = 0;
         int numberOfDeadAnimals = 0;
         int numberOfPlants = 0;
+        int numberOfPoisonedPlants = 0;
         double averageLifeSpan = 0;
         double averageNumberOfChildren = 0;
         double averageEnergyLevel = 0;
@@ -96,7 +103,10 @@ public class Statistics {
                 freeTilesCount++;
             } else {
                 numberOfAliveAnimals += tile.getAnimals().size();
-                numberOfPlants += tile.getPlant() == null ? 0 : 1;
+                if(tile.getPlant() != null) {
+                    numberOfPlants++;
+                    numberOfPoisonedPlants += tile.getPlant().getIsPoisoned() ? 1 : 0;
+                }
                 for (Animal animal : tile.getAnimals()) {
                     averageNumberOfChildren += animal.getChildren().size();
                     averageEnergyLevel += animal.getEnergy();
@@ -131,6 +141,7 @@ public class Statistics {
         this.numberOfDeadAnimals= numberOfDeadAnimals;
 
         this.numberOfPlants = numberOfPlants;
+        this.numberOfPoisonedPlants = numberOfPoisonedPlants;
         this.averageNumberOfChildren = averageNumberOfChildren/numberOfAliveAnimals/2.0;
         this.averageEnergyLevel = averageEnergyLevel/numberOfAliveAnimals;
         this.freeTilesCount = freeTilesCount;
@@ -146,6 +157,7 @@ public class Statistics {
                 "Number of alive animals: " + getNumberOfAliveAnimals() + "\n" +
                 "Number of dead animals: " + getNumberOfDeadAnimals() + "\n" +
                 "Number of plants: " + getNumberOfPlants() + "\n" +
+                "Number of poisoned plants: " + getNumberOfPoisonedPlants() + "\n" +
                 "Average life span: " + getAverageLifeSpan() + "\n" +
                 "Average number of children: " + getAverageNumberOfChildren() + "\n" +
                 "Average energy level: " + getAverageEnergyLevel() + "\n" +
@@ -170,6 +182,7 @@ public class Statistics {
         csvBuilder.append("Number of Alive Animals,").append(getNumberOfAliveAnimals()).append("\n");
         csvBuilder.append("Number of Dead Animals,").append(getNumberOfDeadAnimals()).append("\n");
         csvBuilder.append("Number of Plants,").append(getNumberOfPlants()).append("\n");
+        csvBuilder.append("Number of Poisoned Plants,").append(getNumberOfPoisonedPlants()).append("\n");
         csvBuilder.append("Average Life Span,").append(getAverageLifeSpan()).append("\n");
         csvBuilder.append("Average Number of Children,").append(getAverageNumberOfChildren()).append("\n");
         csvBuilder.append("Average Energy Level,").append(getAverageEnergyLevel()).append("\n");
@@ -183,5 +196,4 @@ public class Statistics {
             e.printStackTrace();
         }
     }
-
 }

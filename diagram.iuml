@@ -288,13 +288,12 @@ package model.maps {
        + public getHeight(): int
        + public getElements(): List<MapElement>
        + public canMoveTo(Vector2d): boolean
-       + public move(List<Animal>): void
+       + public move(): void
        + public placeAnimal(Animal, Vector2d): boolean
        + public objectsAt(Vector2d): MapObjects
        + public isOccupied(Vector2d): boolean
        + public placePlant(Plant, Vector2d): boolean
-       'TODO: why default?'
-       + public default generateMap(List<Plant>, List<Animal>): void
+       + public generateMap(): void
        + public toString(): String
        + public getTile(Vector2d): Tile
        + public firstDay(): void
@@ -302,6 +301,7 @@ package model.maps {
     }
 
     abstract class AbstractWorldMap implements WorldMap{
+        - private ID: UUID
         - protected SimulationConfigurator: config
         - private currentDay: int
         - private lowerLeft: Vector2d
@@ -314,6 +314,7 @@ package model.maps {
 
         + AbstractWorldMap(Vector2d, Vector2d)
 
+        + public getID(): UUID
         + public getConfig(): SimulationConfigurator
         + public getCurrentDay(): int
         + public getMapTiles(): HashMap<Vector2d, Tile>
@@ -333,7 +334,7 @@ package model.maps {
         + public isOccupied(Vector2d): boolean
         + public placeAnimal(Animal): void
         + public placeAnimals(int): void
-        + public placePlant(Plant): voif
+        + public placePlant(Plant): void
         + public placePlants(int): void
         'TODO: maybe private?'
         + public eat(): void
@@ -354,7 +355,6 @@ package model.maps {
 
     class GlobeMap extends AbstractWorldMap {
         + public GlobeMap()
-        + public move(): void
     }
 
     class PoisonedMap extends AbstractWorldMap {
@@ -367,7 +367,6 @@ package model.maps {
         + private generateRightUpCornerPoisonedSquare(): Vector2d
         + private isPoisonous(): boolean
         + public placePlant(Plant,Vector2d): void
-        + public move(List<Animal>): void
         'TODO: maybe private?'
         + public generateMap(): void
     }
@@ -415,9 +414,10 @@ package model.simulation {
         - private mutationVariant: String
         - private genomeLength: int
         - private animalBehaviourType: String
-        - private finalnumberOfDays: int
+        - private final numberOfDays: int
 
         + public SimulationConfigurator()
+        + public SimulationConfigurator(SimulationConfigurator)
         + public getMapSize(): Vector2d
         + public getMapType(): String
         + public getInitialPlantCount(): int
@@ -454,12 +454,13 @@ package model.simulation {
 }
 
 class WorldGUI {
-    - private final Simulation: simulation
-    - private final SimulationConfigurator: config
+    - private simulations: ArrayList<Simulation>
+    - private final config: SimulationConfigurator
 
     + public WorldGUI(SimulationConfigurator)
-    + public void runSimulation(): void
-    + public static void main: void
+    + public  runSimulations(): void
+    + public addSimulations(Simulation): void
+    + public static main: void
 }
 
 package model.presenters {

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import static java.lang.Math.abs;
+import static java.lang.Math.min;
+
 public class RandomPositionsGenerator {
     /**
      * The maximum width of the map.
@@ -104,6 +108,9 @@ public class RandomPositionsGenerator {
     }
 
     public List<Vector2d> generatePlants(List<Vector2d> freePositions) {
+        if (freePositions.size() < objectCount) {
+            return freePositions;
+        }
         List<Vector2d> tempAllPosition = new ArrayList<>(freePositions);
         Random random = new Random(1111);
         // Start of the equatorial band
@@ -111,7 +118,7 @@ public class RandomPositionsGenerator {
         // End of the equatorial band
         int equatorEnd = 2 * maxHeight / 3;
 
-        for (int i = 0; i < objectCount; i++) {
+        for (int i = 0; i < min(objectCount,freePositions.size()); i++) {
             int randomIndex;
             // Decide whether to place the plant in the equatorial band
             // 50% chance to be in the equatorial band
@@ -120,14 +127,14 @@ public class RandomPositionsGenerator {
                         .filter(p -> p.getY() >= equatorStart && p.getY() <= equatorEnd)
                         .toList();
                 if (!equatorialPositions.isEmpty()) {
-                    randomIndex = random.nextInt(equatorialPositions.size());
+                    randomIndex = abs(random.nextInt(equatorialPositions.size()));
                     plantResult.add(equatorialPositions.get(randomIndex));
                     tempAllPosition.remove(equatorialPositions.get(randomIndex));
                     continue;
                 }
             }
             // Else, select from any available position
-            randomIndex = random.nextInt(tempAllPosition.size());
+            randomIndex = abs(random.nextInt(tempAllPosition.size()));
             plantResult.add(tempAllPosition.get(randomIndex));
             tempAllPosition.remove(randomIndex);
         }

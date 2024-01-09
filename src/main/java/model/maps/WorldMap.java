@@ -1,11 +1,16 @@
 package model.maps;
+import model.simulation.SimulationConfigurator;
 import model.utils.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public interface WorldMap {
+
+    public UUID getID();
     public HashMap<Vector2d, Tile> getMapTiles();
+    SimulationConfigurator getConfig();
     public int getCurrentDay();
     public List<Animal> getAnimals();
     public List<Plant> getPlants();

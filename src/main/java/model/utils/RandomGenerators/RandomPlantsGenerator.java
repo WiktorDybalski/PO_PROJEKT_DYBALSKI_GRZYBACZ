@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Math.min;
+
 public class RandomPlantsGenerator {
     /**
      * The energy value each plant starts with.
@@ -75,6 +77,7 @@ public class RandomPlantsGenerator {
      * @param amount The number of plants to generate.
      */
     public void generatePlants(int amount, List<Vector2d> freePositions) {
+        amount=min(amount, freePositions.size());
         RandomPositionsGenerator positionsGenerator = new RandomPositionsGenerator(map, amount);
         List<Vector2d> positions = positionsGenerator.generatePlants(freePositions);
         for (int i = 0; i < amount; i++) {

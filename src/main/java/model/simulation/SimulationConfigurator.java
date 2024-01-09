@@ -26,11 +26,11 @@ public class SimulationConfigurator {
         this.mapSizeY = 10;
         this.mapType = "WorldMap";
         this.initialAnimalCount = 10;
-        this.initialPlantCount = 50;
+        this.initialPlantCount = 30;
         this.plantEnergy = 2;
-        this.numberOfPlantsGrowingPerDay = 3;
+        this.numberOfPlantsGrowingPerDay = 10;
         this.modeOfPlantGrowing = "Random";
-        this.initialAnimalEnergy = 5;
+        this.initialAnimalEnergy = 10;
         this.readyToReproduceEnergy = 10;
         this.reproduceEnergyLoss = 10;
         this.minimumMutationCount = 1;
@@ -38,7 +38,27 @@ public class SimulationConfigurator {
         this.mutationVariant = "Random";
         this.genomeLength = 8;
         this.animalBehaviourType = "Random";
-        this.numberOfDays = 100;
+        this.numberOfDays = 5;
+    }
+
+    public SimulationConfigurator( SimulationConfigurator other){
+        this.mapSizeX = other.getMapSize().getX();
+        this.mapSizeY = other.getMapSize().getY();
+        this.mapType = other.getMapType();
+        this.initialAnimalCount = other.getInitialAnimalCount();
+        this.initialPlantCount = other.getInitialPlantCount();
+        this.plantEnergy = other.getPlantEnergy();
+        this.numberOfPlantsGrowingPerDay = other.getNumberOfPlantsGrowingPerDay();
+        this.modeOfPlantGrowing = other.getModeOfPlantGrowing();
+        this.initialAnimalEnergy = other.getInitialAnimalEnergy();
+        this.readyToReproduceEnergy = other.getReadyToReproduceEnergy();
+        this.reproduceEnergyLoss = other.getReproduceEnergyLoss();
+        this.minimumMutationCount = other.getMinimumMutationCount();
+        this.maximumMutationCount = other.getMaximumMutationCount();
+        this.mutationVariant = other.getMutationVariant();
+        this.genomeLength = other.getGenomeLength();
+        this.animalBehaviourType = other.getAnimalBehaviourType();
+        this.numberOfDays = other.getNumberOfDays();
     }
 
     public Vector2d getMapSize() {
@@ -165,6 +185,35 @@ public class SimulationConfigurator {
         this.mapSizeX = x;
         this.mapSizeY = y;
     }
+
+    //for CSV file like: mapSizeX,mapSizeY,mapType,initialPlantCount,plantEnergy,numberOfPlantsGrowingPerDay,modeOfPlantGrowing,initialAnimalCount,initialAnimalEnergy,readyToReproduceEnergy,reproduceEnergyLoss,minimumMutationCount,maximumMutationCount,mutationVariant,genomeLength
+    public static SimulationConfigurator fromCSV(String csvString) {
+        SimulationConfigurator configurator = new SimulationConfigurator();
+
+        String[] values = csvString.split(",");
+
+        if (values.length != 15) {
+            throw new IllegalArgumentException("Invalid CSV string format");
+        }
+
+        configurator.setMapSize(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
+        configurator.setMapType(values[2]);
+        configurator.setInitialPlantCount(Integer.parseInt(values[3]));
+        configurator.setPlantEnergy(Integer.parseInt(values[4]));
+        configurator.setNumberOfPlantsGrowingPerDay(Integer.parseInt(values[5]));
+        configurator.setModeOfPlantGrowing(values[6]);
+        configurator.setInitialAnimalCount(Integer.parseInt(values[7]));
+        configurator.setInitialAnimalEnergy(Integer.parseInt(values[8]));
+        configurator.setReadyToReproduceEnergy(Integer.parseInt(values[9]));
+        configurator.setReproduceEnergyLoss(Integer.parseInt(values[10]));
+        configurator.setMinimumMutationCount(Integer.parseInt(values[11]));
+        configurator.setMaximumMutationCount(Integer.parseInt(values[12]));
+        configurator.setMutationVariant(values[13]);
+        configurator.setGenomeLength(Integer.parseInt(values[14]));
+
+        return configurator;
+    }
+
 
     @Override
     public String toString() {

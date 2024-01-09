@@ -31,13 +31,8 @@ public class MapVisualizer {
      * @return String representation of the selected region of the map.
      */
     public String draw(Vector2d lowerLeft, Vector2d upperRight) {
-        if (map instanceof GlobeMap) {
-            System.out.println("GlobeMap.");
-        } else if (map instanceof PoisonedMap) {
-            System.out.println("PoisonedMap.");
-        } else {
-            System.out.println("To jest inny rodzaj WorldMap.");
-        }
+        System.out.println(this.map.getConfig().getMapType());
+        System.out.println(this.map.getID());
         StringBuilder builder = new StringBuilder();
         for (int i = upperRight.getY() + 1; i >= lowerLeft.getY() - 1; i--) {
             if (i == upperRight.getY() + 1) {
@@ -83,7 +78,10 @@ public class MapVisualizer {
             if(!tile.getAnimals().isEmpty()){
                 return tile.getStrongestAnimal().getEnergy() + "";
             }
-            else{
+            else if (tile.getPlant().getIsPoisoned()) {
+                return "#";
+            }
+            else {
                 return "*";
             }
         }

@@ -9,9 +9,11 @@ import presenters.MapVisualizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractWorldMap implements WorldMap {
 
+    private UUID id;
     protected SimulationConfigurator config;
 
     private int currentDay;
@@ -52,6 +54,7 @@ public abstract class AbstractWorldMap implements WorldMap {
      * Constructor of the Map
      */
     public AbstractWorldMap(SimulationConfigurator config) {
+        this.id = UUID.randomUUID();
         this.config = config;
         this.currentDay = 0;
         this.lowerLeft = new Vector2d(0, 0);
@@ -69,6 +72,10 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public SimulationConfigurator getConfig() {
         return config;
+    }
+
+    public UUID getID() {
+        return id;
     }
 
     public int getCurrentDay() {
@@ -308,20 +315,23 @@ public abstract class AbstractWorldMap implements WorldMap {
      * The firstDay method is responsible for the first day of the World
      */
     public void firstDay() {
-        System.out.println(this);
-        this.eat();
-        this.reproduce();
-        this.placePlants(config.getNumberOfPlantsGrowingPerDay());
-        this.removeDeadAnimals();
-        this.currentDay++;
-        this.move();
+        synchronized (this) {
+            System.out.println(this);
+            this.removeEatenPlants();
+            this.move();
+            this.eat();
+            this.reproduce();
+            this.placePlants(config.getNumberOfPlantsGrowingPerDay());
+            this.removeDeadAnimals();
+            this.currentDay++;
+        }
+
     }
 
     /**
      * The dailyUpdate method is responsible for the daily update of the map
      */
     public void dailyUpdate() {
-        System.out.println(this);
         this.removeEatenPlants();
         this.move();
         this.eat();
