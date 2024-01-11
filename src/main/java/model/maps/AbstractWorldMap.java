@@ -67,6 +67,10 @@ public abstract class AbstractWorldMap implements WorldMap {
      * Getters
      */
 
+    public Boundary getCurrentBounds() {
+        return new Boundary(new Vector2d(0, 0), new Vector2d(this.getWidth() - 1, this.getHeight() - 1));
+
+    }
     public SimulationConfigurator getConfig() {
         return config;
     }

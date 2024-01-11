@@ -25,4 +25,5 @@ public interface WorldMap {
     public Tile getTile(Vector2d currentPosition);
     public void firstDay();
     public void dailyUpdate();
+    public Boundary getCurrentBounds();
 }
