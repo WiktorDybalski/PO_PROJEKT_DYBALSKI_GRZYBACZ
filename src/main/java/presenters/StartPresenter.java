@@ -105,8 +105,8 @@ public class StartPresenter {
     }
     @FXML
     public void initialize() {
-        MapVariant.setItems(FXCollections.observableArrayList("Earth", "Secret Tunnels"));
-        BehaviourVariant.setItems(FXCollections.observableArrayList("a", "dup"));
+        MapVariant.setItems(FXCollections.observableArrayList("GlobeMap", "PoisonedMap"));
+        BehaviourVariant.setItems(FXCollections.observableArrayList("Normal", "Mutation"));
         validateTextField(startEnergyField, this::isNonNegativeInteger);
         validateTextField(plantEnergyField, this::isNonNegativeInteger);
         validateTextField(widthField, this::isNonNegativeInteger);

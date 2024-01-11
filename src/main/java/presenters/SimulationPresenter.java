@@ -14,6 +14,8 @@ import model.simulation.Simulation;
 import model.simulation.SimulationConfigurator;
 import model.simulation.SimulationEngine;
 import model.utils.Boundary;
+import model.utils.MapObjects;
+import model.utils.Tile;
 import model.utils.Vector2d;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.List;
 
 
 public class SimulationPresenter implements MapChangeListener {
+    private static final String EMPTY_CELL = " ";
     private WorldMap worldMap;
     @FXML
     private Label infoLabel;
@@ -61,8 +64,19 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void drawGridCell(Vector2d position, int column, int row) {
-        Object element = worldMap.objectsAt(position);
-        Label label = createLabelForElement(element);
+        Tile tile = worldMap.getTile(position);
+        String string = EMPTY_CELL;
+        if (tile.isOccupied()) {
+            if (!tile.getAnimals().isEmpty()) {
+                string = tile.getStrongestAnimal().getEnergy() + "";
+            } else {
+                if (tile.getPlant() != null) {
+                    string = "******\n******\n******";
+                }
+            }
+        }
+        Label label = createLabelForElement(string);
+
         mapGrid.add(label, column, row);
     }
 
@@ -134,5 +148,4 @@ public class SimulationPresenter implements MapChangeListener {
             System.out.println(e.getMessage());
         }
     }
-
 }

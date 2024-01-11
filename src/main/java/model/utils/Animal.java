@@ -258,27 +258,27 @@ public class Animal implements MapElement {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Animal: ");
-        sb.append(this.position.toString());
-        sb.append(", energy: ");
-        sb.append(this.energy);
-        sb.append(", direction: ");
-        sb.append(this.direction.toString());
-        sb.append(", genotype: ");
-        sb.append(this.genotype.toString());
-        sb.append(", children: ");
-        sb.append(this.children.toString());
-        sb.append(", eatenPlantCount: ");
-        sb.append(this.eatenPlantCount);
-        sb.append(", birthDay: ");
-        sb.append(this.birthDay);
-        sb.append(", isDead: ");
-        sb.append(this.isDead);
-        if (this.isDead) {
-            sb.append(", deathDay: ");
-            sb.append(this.birthDay + this.age);
-        }
-        return sb.toString();
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("Animal: ");
+//        sb.append(this.position.toString());
+//        sb.append(", energy: ");
+//        sb.append(this.energy);
+//        sb.append(", direction: ");
+//        sb.append(this.direction.toString());
+//        sb.append(", genotype: ");
+//        sb.append(this.genotype.toString());
+//        sb.append(", children: ");
+//        sb.append(this.children.toString());
+//        sb.append(", eatenPlantCount: ");
+//        sb.append(this.eatenPlantCount);
+//        sb.append(", birthDay: ");
+//        sb.append(this.birthDay);
+//        sb.append(", isDead: ");
+//        sb.append(this.isDead);
+//        if (this.isDead) {
+//            sb.append(", deathDay: ");
+//            sb.append(this.birthDay + this.age);
+//        }
+        return String.valueOf(getEnergy());
     }
 }

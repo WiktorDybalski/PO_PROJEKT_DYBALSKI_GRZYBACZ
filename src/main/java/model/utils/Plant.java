@@ -90,13 +90,13 @@ public class Plant implements MapElement {
      * @return string representation of the plant
      */
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append("Plant: ");
-        s.append("position: ").append(position.toString());
-        s.append(", energy: ").append(energy);
-        s.append(", dayOfGrowth: ").append(dayOfGrowth);
-        s.append(", isPoisoned: ").append(isPoisoned);
-        s.append(", isEaten: ").append(isEaten);
-        return s.toString();
+//        StringBuilder s = new StringBuilder();
+//        s.append("Plant: ");
+//        s.append("position: ").append(position.toString());
+//        s.append(", energy: ").append(energy);
+//        s.append(", dayOfGrowth: ").append(dayOfGrowth);
+//        s.append(", isPoisoned: ").append(isPoisoned);
+//        s.append(", isEaten: ").append(isEaten);
+        return "*";
     }
 }
