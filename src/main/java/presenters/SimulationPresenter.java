@@ -7,19 +7,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.maps.GlobeMap;
 import model.maps.WorldMap;
+import model.simulation.MapChangeListener;
 import model.simulation.Simulation;
 import model.simulation.SimulationConfigurator;
 import model.simulation.SimulationEngine;
 import model.utils.Boundary;
-import model.utils.Directions;
 import model.utils.Vector2d;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class SimulationPresenter {
+public class SimulationPresenter implements MapChangeListener {
     private WorldMap worldMap;
     @FXML
     private Label infoLabel;
@@ -114,6 +115,13 @@ public class SimulationPresenter {
         infoLabel.setText("");
     }
 
+    @Override
+    public void mapChanged(WorldMap worldMap, String message) {
+        Platform.runLater(() -> {
+            this.drawMap();
+            moveInfoLabel.setText(message);
+        });
+    }
 
     @FXML
     public void onSimulationStartClicked() {
@@ -125,7 +133,6 @@ public class SimulationPresenter {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
 }

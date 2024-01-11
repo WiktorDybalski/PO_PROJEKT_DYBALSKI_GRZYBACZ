@@ -2,6 +2,7 @@ package model.simulation;
 
 import model.maps.WorldMap;
 import model.utils.Statistics;
+import presenters.ConsoleMapDisplay;
 
 
 public class Simulation extends Thread {
@@ -17,6 +18,7 @@ public class Simulation extends Thread {
     }
 
     public void run() {
+        worldMap.addObserver(new ConsoleMapDisplay());
         this.worldMap.firstDay();
         try {
             Thread.sleep(1000);

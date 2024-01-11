@@ -1,0 +1,85 @@
+* {
+    -fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Ustawienia głównego kontenera */
+BorderPane {
+    background-color: #f0f0f0;
+    -fx-padding: 20;
+}
+
+/* Ustawienia kontenera centralnego */
+.center {
+    -fx-spacing: 15;
+}
+
+/* Ustawienia przycisków */
+Button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+}
+
+/* Ustawienia siatki */
+GridPane {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+/* Ustawienia etykiet */
+Label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Ustawienia pól tekstowych */
+TextField {
+    -fx-font-size: 14px;
+    -fx-padding: 8;
+    -fx-background-radius: 5;
+}
+
+/* Ustawienia wyboru */
+ChoiceBox {
+    -fx-font-size: 14px;
+    -fx-padding: 8;
+    -fx-background-radius: 5;
+}
+
+/* Ustawienia kontenera HBox */
+HBox {
+    -fx-spacing: 20;
+}
+
+/* Ustawienia przycisku startowego */
+#startButton {
+    -fx-background-color: #27ae60;
+}
+
+/* Ustawienia kontenera mapy */
+#mapGrid {
+    -fx-background-color: #ecf0f1;
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+    -fx-alignment: center;
+}
+
+/* Ustawienia pól inputowych */
+#widthField, #heightField, #startEnergyField, #plantEnergyField,
+#initialanimalsNumberField, #initialgrassNumberField, #plantSpawnRate,
+#reproduceEnergy, #parentEnergy, #minGeneMutation, #maxGeneMutation,
+#genomeLength, #MapVariant, #BehaviourVariant {
+    -fx-pref-width: 200;
+}
+
+/* Wyśrodkowanie siatki */
+GridPane {
+    -fx-alignment: center;
+}
+
+/* Przesunięcie przycisku StartButton pod pola inputowe */
+VBox {
+    -fx-alignment: center;
+}

@@ -1,37 +1,32 @@
 package model.maps;
 
-import model.utils.RandomGenerators.RandomAnimalsGenerator;
-import model.utils.RandomGenerators.RandomPlantsGenerator;
+import model.simulation.MapChangeListener;
 import model.simulation.SimulationConfigurator;
 import model.utils.*;
+import model.utils.RandomGenerators.RandomAnimalsGenerator;
+import model.utils.RandomGenerators.RandomPlantsGenerator;
 import presenters.MapVisualizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class AbstractWorldMap implements WorldMap {
+public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
 
-    protected SimulationConfigurator config;
-
-    private int currentDay;
     /**
      * Lower, Left corner of the Map
      */
     private final Vector2d lowerLeft;
-
     /**
      * Upper, Right corner of the Map
      */
     private final Vector2d upperRight;
-
+    protected SimulationConfigurator config;
     protected List<Animal> animals;
-
     /**
      * List of plants on the Map
      */
     protected List<Plant> plants;
-
     /**
      * Map: key - position of each single tile, value: a tile
      */
@@ -41,12 +36,13 @@ public abstract class AbstractWorldMap implements WorldMap {
      */
 
     protected List<Vector2d> freePositions;
-
     /**
      * mapVisualizer to draw a map.
      * One day it will be replaced by GUI
      */
     protected MapVisualizer mapVisualizer = new MapVisualizer(this);
+    private List<MapChangeListener> listeners = new ArrayList<>();
+    private int currentDay;
 
     /**
      * Constructor of the Map
@@ -71,6 +67,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         return new Boundary(new Vector2d(0, 0), new Vector2d(this.getWidth() - 1, this.getHeight() - 1));
 
     }
+
     public SimulationConfigurator getConfig() {
         return config;
     }
@@ -116,6 +113,28 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public Tile getTile(Vector2d position) {
         return mapTiles.get(position);
+    }
+
+    @Override
+    public void addObserver(MapChangeListener observer) {
+        listeners.add(observer);
+    }
+
+    @Override
+    public void removeObserver(MapChangeListener observer) {
+
+        listeners.remove(observer);
+    }
+
+    @Override
+    public void mapChanged(WorldMap worldMap, String message) {
+
+    }
+
+    protected synchronized void mapChanged(String message) {
+        for (MapChangeListener observer : listeners) {
+            observer.mapChanged(this, message);
+        }
     }
 
     /**
@@ -319,6 +338,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         this.removeDeadAnimals();
         this.currentDay++;
         this.move();
+        mapChanged("First day left");
     }
 
     /**
@@ -333,6 +353,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         this.placePlants(config.getNumberOfPlantsGrowingPerDay());
         this.removeDeadAnimals();
         this.currentDay++;
+        mapChanged(currentDay + " day left");
     }
 
     /**

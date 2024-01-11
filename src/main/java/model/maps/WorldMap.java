@@ -1,4 +1,5 @@
 package model.maps;
+import model.simulation.MapChangeListener;
 import model.utils.*;
 
 import java.util.HashMap;
@@ -20,10 +21,13 @@ public interface WorldMap {
     public MapObjects objectsAt(Vector2d position);
     public boolean isOccupied(Vector2d position);
     public void placePlant(Plant plant, Vector2d position);
-    public default void generateMap(List<Plant> plants, List<Animal> animals){}
+    public void generateMap();
     public String toString();
     public Tile getTile(Vector2d currentPosition);
     public void firstDay();
     public void dailyUpdate();
     public Boundary getCurrentBounds();
+
+    public void addObserver(MapChangeListener observer);
+    public void removeObserver(MapChangeListener observer);
 }
