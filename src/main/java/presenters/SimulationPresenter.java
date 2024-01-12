@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import model.maps.GlobeMap;
+import model.maps.PoisonedMap;
 import model.maps.WorldMap;
 import model.simulation.MapChangeListener;
 import model.simulation.Simulation;
@@ -40,8 +41,12 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private GridPane mapGrid;
 
-    public void setWorldMap(WorldMap worldMap) {
-        this.worldMap = worldMap;
+    public void setWorldMap(SimulationConfigurator config) {
+        if (config.getMapType().equals("GlobeMap")) {
+            this.worldMap = new GlobeMap(config);
+        } else {
+            this.worldMap = new PoisonedMap(config);
+        }
     }
 
     private void clearGrid() {

@@ -3,7 +3,7 @@ package model.simulation;
 import model.utils.Vector2d;
 
 public class SimulationConfigurator {
-    private final int numberOfDays;
+    private int numberOfDays;
     private int mapSizeX;
     private int mapSizeY;
     private String mapType;
@@ -45,12 +45,21 @@ public class SimulationConfigurator {
         return new Vector2d(mapSizeX, mapSizeY);
     }
 
+    public void setMapSize(int x, int y) {
+        if (x > 0 && y > 0) {
+            this.mapSizeX = x;
+            this.mapSizeY = y;
+        }
+    }
+
     public String getMapType() {
         return mapType;
     }
 
     public void setMapType(String mapType) {
-        this.mapType = mapType;
+        if (mapType != null && !mapType.isEmpty()) {
+            this.mapType = mapType;
+        }
     }
 
     public int getInitialPlantCount() {
@@ -58,7 +67,9 @@ public class SimulationConfigurator {
     }
 
     public void setInitialPlantCount(int initialPlantCount) {
-        this.initialPlantCount = initialPlantCount;
+        if (initialPlantCount > 0) {
+            this.initialPlantCount = initialPlantCount;
+        }
     }
 
     public int getPlantEnergy() {
@@ -66,7 +77,9 @@ public class SimulationConfigurator {
     }
 
     public void setPlantEnergy(int plantEnergy) {
-        this.plantEnergy = plantEnergy;
+        if(plantEnergy > 0) {
+            this.plantEnergy = plantEnergy;
+        }
     }
 
     public int getNumberOfPlantsGrowingPerDay() {
@@ -74,7 +87,9 @@ public class SimulationConfigurator {
     }
 
     public void setNumberOfPlantsGrowingPerDay(int numberOfPlantsGrowingPerDay) {
-        this.numberOfPlantsGrowingPerDay = numberOfPlantsGrowingPerDay;
+        if (numberOfPlantsGrowingPerDay > 0) {
+            this.numberOfPlantsGrowingPerDay = numberOfPlantsGrowingPerDay;
+        }
     }
 
     public String getModeOfPlantGrowing() {
@@ -82,7 +97,9 @@ public class SimulationConfigurator {
     }
 
     public void setModeOfPlantGrowing(String modeOfPlantGrowing) {
-        this.modeOfPlantGrowing = modeOfPlantGrowing;
+        if (modeOfPlantGrowing != null && !modeOfPlantGrowing.isEmpty()) {
+            this.modeOfPlantGrowing = modeOfPlantGrowing;
+        }
     }
 
     public int getInitialAnimalCount() {
@@ -90,7 +107,9 @@ public class SimulationConfigurator {
     }
 
     public void setInitialAnimalCount(int initialAnimalCount) {
-        this.initialAnimalCount = initialAnimalCount;
+        if (initialAnimalCount > 0) {
+            this.initialAnimalCount = initialAnimalCount;
+        }
     }
 
     public int getInitialAnimalEnergy() {
@@ -98,7 +117,9 @@ public class SimulationConfigurator {
     }
 
     public void setInitialAnimalEnergy(int initialAnimalEnergy) {
-        this.initialAnimalEnergy = initialAnimalEnergy;
+        if (initialAnimalEnergy > 0) {
+            this.initialAnimalEnergy = initialAnimalEnergy;
+        }
     }
 
     public int getReadyToReproduceEnergy() {
@@ -106,7 +127,9 @@ public class SimulationConfigurator {
     }
 
     public void setReadyToReproduceEnergy(int readyToReproduceEnergy) {
-        this.readyToReproduceEnergy = readyToReproduceEnergy;
+        if (readyToReproduceEnergy > 0) {
+            this.readyToReproduceEnergy = readyToReproduceEnergy;
+        }
     }
 
     public int getReproduceEnergyLoss() {
@@ -114,7 +137,9 @@ public class SimulationConfigurator {
     }
 
     public void setReproduceEnergyLoss(int reproduceEnergyLoss) {
-        this.reproduceEnergyLoss = reproduceEnergyLoss;
+        if (reproduceEnergyLoss > 0) {
+            this.reproduceEnergyLoss = reproduceEnergyLoss;
+        }
     }
 
     public int getMinimumMutationCount() {
@@ -122,7 +147,9 @@ public class SimulationConfigurator {
     }
 
     public void setMinimumMutationCount(int minimumMutationCount) {
-        this.minimumMutationCount = minimumMutationCount;
+        if (minimumMutationCount >= 0) {
+            this.minimumMutationCount = minimumMutationCount;
+        }
     }
 
     public int getMaximumMutationCount() {
@@ -130,7 +157,9 @@ public class SimulationConfigurator {
     }
 
     public void setMaximumMutationCount(int maximumMutationCount) {
-        this.maximumMutationCount = maximumMutationCount;
+        if (maximumMutationCount >= this.minimumMutationCount) {
+            this.maximumMutationCount = maximumMutationCount;
+        }
     }
 
     public String getMutationVariant() {
@@ -138,7 +167,9 @@ public class SimulationConfigurator {
     }
 
     public void setMutationVariant(String mutationVariant) {
-        this.mutationVariant = mutationVariant;
+        if (mutationVariant != null && !mutationVariant.isEmpty()) {
+            this.mutationVariant = mutationVariant;
+        }
     }
 
     public int getGenomeLength() {
@@ -146,7 +177,9 @@ public class SimulationConfigurator {
     }
 
     public void setGenomeLength(int genomeLength) {
-        this.genomeLength = genomeLength;
+        if (genomeLength > 0) {
+            this.genomeLength = genomeLength;
+        }
     }
 
     public String getAnimalBehaviourType() {
@@ -154,16 +187,19 @@ public class SimulationConfigurator {
     }
 
     public void setAnimalBehaviourType(String animalBehaviourType) {
-        this.animalBehaviourType = animalBehaviourType;
+        if (animalBehaviourType != null && !animalBehaviourType.isEmpty()) {
+            this.animalBehaviourType = animalBehaviourType;
+        }
     }
 
     public int getNumberOfDays() {
         return numberOfDays;
     }
 
-    public void setMapSize(int x, int y) {
-        this.mapSizeX = x;
-        this.mapSizeY = y;
+    public void setNumberOfDays(int numberOfDays) {
+        if (numberOfDays > 0) {
+            this.numberOfDays = numberOfDays;
+        }
     }
 
     @Override

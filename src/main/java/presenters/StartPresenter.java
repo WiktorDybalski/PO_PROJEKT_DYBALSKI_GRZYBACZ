@@ -12,55 +12,92 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.maps.GlobeMap;
-import model.maps.PoisonedMap;
-import model.simulation.Simulation;
 import model.simulation.SimulationConfigurator;
-import model.simulation.SimulationEngine;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 
 public class StartPresenter {
 
-    @FXML
-    public Label infoLabel;
-    @FXML
-    public TextField parentEnergy;
-    @FXML
-    public TextField reproduceEnergy;
-    @FXML
-    public TextField minGeneMutation;
-    @FXML
-    public TextField maxGeneMutation;
-    @FXML
-    public ChoiceBox BehaviourVariant;
+    @FXML public Label infoLabel;
+    @FXML public TextField reproduceEnergyLossField;
+    @FXML public TextField readyToReproduceEnergyField;
+    @FXML public TextField minimumMutationCountField;
+    @FXML public TextField maximumMutationCountField;
+    @FXML public ChoiceBox<String> animalBehaviourTypeChoiceBox;
+    @FXML private TextField mapSizeXField;
+    @FXML private TextField mapSizeYField;
+    @FXML private TextField initialPlantCountField;
+    @FXML private ChoiceBox<String> mapTypeChoiceBox;
+    @FXML private TextField initialAnimalCountField;
+    @FXML private TextField initialAnimalEnergyField;
+    @FXML private TextField plantEnergyField;
+    @FXML private TextField genomeLengthField;
+    @FXML private TextField numberOfPlantsGrowingPerDayField;
+    @FXML private Button startButton;
+    @FXML private TextField numberOfDaysField;
+    @FXML private TextField modeOfPlantGrowingField;
+    @FXML private TextField mutationVariantField;
+
+    private SimulationConfigurator config;
 
     @FXML
-    private TextField widthField;
-    @FXML
-    private TextField heightField;
-    @FXML
-    private TextField initialgrassNumberField;
-    @FXML
-    private ChoiceBox MapVariant;
-    @FXML
-    private TextField initialanimalsNumberField;
-    @FXML
-    private TextField startEnergyField;
-    @FXML
-    private TextField plantEnergyField;
-    @FXML
-    private TextField genomeLength;
-    @FXML
-    private TextField plantSpawnRate;
-    @FXML
-    private Button startButton;
-    private SimulationEngine simulationEngine;
-    private Simulation simulation;
+    public void initialize() {
+        mapTypeChoiceBox.setItems(FXCollections.observableArrayList("GlobeMap", "PoisonedMap"));
+        animalBehaviourTypeChoiceBox.setItems(FXCollections.observableArrayList("Normal", "Mutation"));
 
+        setupValidation();
+        setupStartButtonBinding();
+    }
+
+    private void setupValidation() {
+        validateTextField(mapSizeXField, this::isNonNegativeInteger);
+        validateTextField(mapSizeYField, this::isNonNegativeInteger);
+        validateTextField(initialPlantCountField, this::isNonNegativeInteger);
+        validateTextField(initialAnimalCountField, this::isNonNegativeInteger);
+        validateTextField(initialAnimalEnergyField, this::isNonNegativeInteger);
+        validateTextField(plantEnergyField, this::isNonNegativeInteger);
+        validateTextField(genomeLengthField, this::isNonNegativeInteger);
+        validateTextField(numberOfPlantsGrowingPerDayField, this::isNonNegativeInteger);
+        validateTextField(reproduceEnergyLossField, this::isNonNegativeInteger);
+        validateTextField(readyToReproduceEnergyField, this::isNonNegativeInteger);
+        validateTextField(minimumMutationCountField, this::isNonNegativeInteger);
+        validateTextField(maximumMutationCountField, this::isNonNegativeInteger);
+        // Additional validations can be added here if necessary
+    }
+
+    private boolean isNonNegativeInteger(String value) {
+        try {
+            return Integer.parseInt(value) >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private void setupStartButtonBinding() {
+        BooleanBinding areFieldsEmpty = Bindings.createBooleanBinding(() ->
+                        mapSizeXField.getText().isEmpty() || mapSizeYField.getText().isEmpty() ||
+                                initialPlantCountField.getText().isEmpty() || initialAnimalCountField.getText().isEmpty() ||
+                                initialAnimalEnergyField.getText().isEmpty() || plantEnergyField.getText().isEmpty() ||
+                                genomeLengthField.getText().isEmpty() || numberOfPlantsGrowingPerDayField.getText().isEmpty() ||
+                                reproduceEnergyLossField.getText().isEmpty() || readyToReproduceEnergyField.getText().isEmpty() ||
+                                minimumMutationCountField.getText().isEmpty() || maximumMutationCountField.getText().isEmpty() ||
+                                numberOfDaysField.getText().isEmpty() || modeOfPlantGrowingField.getText().isEmpty() ||
+                                mutationVariantField.getText().isEmpty() || mapTypeChoiceBox.getValue() == null ||
+                                animalBehaviourTypeChoiceBox.getValue() == null,
+                mapSizeXField.textProperty(), mapSizeYField.textProperty(),
+                initialPlantCountField.textProperty(), initialAnimalCountField.textProperty(),
+                initialAnimalEnergyField.textProperty(), plantEnergyField.textProperty(),
+                genomeLengthField.textProperty(), numberOfPlantsGrowingPerDayField.textProperty(),
+                reproduceEnergyLossField.textProperty(), readyToReproduceEnergyField.textProperty(),
+                minimumMutationCountField.textProperty(), maximumMutationCountField.textProperty(),
+                numberOfDaysField.textProperty(), modeOfPlantGrowingField.textProperty(),
+                mutationVariantField.textProperty(), mapTypeChoiceBox.valueProperty(),
+                animalBehaviourTypeChoiceBox.valueProperty()
+        );
+
+        startButton.disableProperty().bind(areFieldsEmpty);
+    }
 
     private void validateTextField(TextField textField, Predicate<String> validationFunction) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -70,135 +107,50 @@ public class StartPresenter {
         });
     }
 
-    private boolean isNonNegativeInteger(String value) {
-        return value.matches("\\d*") && Integer.parseInt(value) >= 0;
-    }
-
-    private void validateTextFieldWithComparison(TextField lowerValue, TextField biggerValue) {
-        lowerValue.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            String text = lowerValue.getText();
-            if (!newValue) {
-                if (!text.matches("\\d*") || Integer.parseInt(text) > Integer.parseInt(biggerValue.getText())) {
-                    lowerValue.setText("");
-                    infoLabel.setText(text + " is not legal input in " + lowerValue.getId() + "TextField");
-                }
-            } else {
-                infoLabel.setText("");
-            }
-        });
-
-        biggerValue.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            String text = biggerValue.getText();
-            if (!newValue) {
-                if (!text.matches("\\d*") || Integer.parseInt(text) < Integer.parseInt(lowerValue.getText())) {
-                    biggerValue.setText("");
-                    infoLabel.setText(text + " is not legal input in " + biggerValue.getId() + "TextField");
-                }
-            } else {
-                infoLabel.setText("");
-            }
-        });
-    }
-
-    private int parseTextFieldToInt(TextField textField) {
-        return Integer.parseInt(textField.getText());
-    }
-    @FXML
-    public void initialize() {
-        MapVariant.setItems(FXCollections.observableArrayList("GlobeMap", "PoisonedMap"));
-        BehaviourVariant.setItems(FXCollections.observableArrayList("Normal", "Mutation"));
-        validateTextField(startEnergyField, this::isNonNegativeInteger);
-        validateTextField(plantEnergyField, this::isNonNegativeInteger);
-        validateTextField(widthField, this::isNonNegativeInteger);
-        validateTextField(heightField, this::isNonNegativeInteger);
-        validateTextField(initialgrassNumberField, this::isNonNegativeInteger);
-        validateTextField(initialanimalsNumberField, this::isNonNegativeInteger);
-        validateTextField(genomeLength, this::isNonNegativeInteger);
-        validateTextField(plantSpawnRate, this::isNonNegativeInteger);
-        validateTextField(parentEnergy, this::isNonNegativeInteger);
-        validateTextField(reproduceEnergy, this::isNonNegativeInteger);
-        validateTextField(minGeneMutation, this::isNonNegativeInteger);
-        validateTextField(maxGeneMutation, this::isNonNegativeInteger);
-        validateTextFieldWithComparison(minGeneMutation,maxGeneMutation);
-        validateTextFieldWithComparison(parentEnergy,reproduceEnergy);
-        validateTextFieldWithComparison(maxGeneMutation,genomeLength);
-        validateTextFieldWithComparison(minGeneMutation, genomeLength);
-
-        BooleanBinding areFieldsEmpty = Bindings.createBooleanBinding(() ->
-                        startEnergyField.getText().isEmpty() ||
-                                plantEnergyField.getText().isEmpty() ||
-                                widthField.getText().isEmpty() ||
-                                heightField.getText().isEmpty() ||
-                                initialgrassNumberField.getText().isEmpty() ||
-                                initialanimalsNumberField.getText().isEmpty() ||
-                                genomeLength.getText().isEmpty() ||
-                                plantSpawnRate.getText().isEmpty() ||
-                                parentEnergy.getText().isEmpty() ||
-                                reproduceEnergy.getText().isEmpty() ||
-                                minGeneMutation.getText().isEmpty() ||
-                                maxGeneMutation.getText().isEmpty() ||
-                                MapVariant.getValue() == null ||
-                                BehaviourVariant.getValue() == null,
-                startEnergyField.textProperty(),
-                plantEnergyField.textProperty(),
-                widthField.textProperty(),
-                heightField.textProperty(),
-                initialgrassNumberField.textProperty(),
-                initialanimalsNumberField.textProperty(),
-                genomeLength.textProperty(),
-                plantSpawnRate.textProperty(),
-                parentEnergy.textProperty(),
-                reproduceEnergy.textProperty(),
-                minGeneMutation.textProperty(),
-                maxGeneMutation.textProperty(),
-                MapVariant.valueProperty(),
-                BehaviourVariant.valueProperty()
-        );
-
-        startButton.disableProperty().bind(areFieldsEmpty);
-    }
-
-
     @FXML
     public void onStartClicked() {
         try {
-            String selectedOption = (String) MapVariant.getValue();
-            String behaviourvariant = (String) BehaviourVariant.getValue();
-            int mapWidth = parseTextFieldToInt(widthField);
-            int mapHeight = parseTextFieldToInt(heightField);
-            int initialGrassNumber = parseTextFieldToInt(initialgrassNumberField);
-            int animalNumber = parseTextFieldToInt(initialanimalsNumberField);
-            int initialEnergy = parseTextFieldToInt(startEnergyField);
-            int plantEnergy = parseTextFieldToInt(plantEnergyField);
-            int genomelength = parseTextFieldToInt(genomeLength);
-            int plantspawnRate = parseTextFieldToInt(plantSpawnRate);
-            int parentenergy = parseTextFieldToInt(parentEnergy);
-            int reproduceenergy = parseTextFieldToInt(reproduceEnergy);
-            int mingeneMutation = parseTextFieldToInt(minGeneMutation);
-            int maxgeneMutation = parseTextFieldToInt(maxGeneMutation);
+            config = new SimulationConfigurator();
+            configureSimulation();
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/simulation.fxml"));
             Parent root = loader.load();
 
             SimulationPresenter simulationPresenter = loader.getController();
-            SimulationConfigurator config = new SimulationConfigurator();
-            if (selectedOption.equals("Globe Map")) {
-                GlobeMap globeMap = new GlobeMap(config);
-                Simulation simulation = new Simulation(globeMap, new SimulationConfigurator());
-                simulationPresenter.setWorldMap(globeMap);
-                globeMap.addObserver(simulationPresenter);
-            } else {
-                PoisonedMap poisonedMap = new PoisonedMap(config);
-                simulationPresenter.setWorldMap(poisonedMap);
-                poisonedMap.addObserver(simulationPresenter);
-            }
-
-            simulationPresenter.onSimulationStartClicked();
+            simulationPresenter.setWorldMap(config);
 
             Stage simulationStage = new Stage();
             simulationStage.setScene(new Scene(root));
             simulationStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void configureSimulation() {
+        config.setMapSize(parseTextFieldToInt(mapSizeXField), parseTextFieldToInt(mapSizeYField));
+        config.setInitialAnimalCount(parseTextFieldToInt(initialAnimalCountField));
+        config.setInitialPlantCount(parseTextFieldToInt(initialPlantCountField));
+        config.setPlantEnergy(parseTextFieldToInt(plantEnergyField));
+        config.setInitialAnimalEnergy(parseTextFieldToInt(initialAnimalEnergyField));
+        config.setGenomeLength(parseTextFieldToInt(genomeLengthField));
+        config.setNumberOfPlantsGrowingPerDay(parseTextFieldToInt(numberOfPlantsGrowingPerDayField));
+        config.setReproduceEnergyLoss(parseTextFieldToInt(reproduceEnergyLossField));
+        config.setReadyToReproduceEnergy(parseTextFieldToInt(readyToReproduceEnergyField));
+        config.setMinimumMutationCount(parseTextFieldToInt(minimumMutationCountField));
+        config.setMaximumMutationCount(parseTextFieldToInt(maximumMutationCountField));
+        config.setNumberOfDays(parseTextFieldToInt(numberOfDaysField));
+        config.setModeOfPlantGrowing(modeOfPlantGrowingField.getText());
+        config.setMutationVariant(mutationVariantField.getText());
+        config.setMapType(mapTypeChoiceBox.getValue());
+        config.setAnimalBehaviourType(animalBehaviourTypeChoiceBox.getValue());
+    }
+
+    private int parseTextFieldToInt(TextField textField) {
+        try {
+            return Integer.parseInt(textField.getText());
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 }
