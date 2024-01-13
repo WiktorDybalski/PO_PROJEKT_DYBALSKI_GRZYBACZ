@@ -1,110 +1,89 @@
 package presenters;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.simulation.SimulationConfigurator;
 
 import java.io.IOException;
-import java.util.function.Predicate;
 
 public class StartPresenter {
+    @FXML private Slider daysCountSlider;
+    @FXML private Label daysCountValueLabel;
+    @FXML private Slider mapWidthSlider;
+    @FXML private Label mapWidthValueLabel;
+    @FXML private Slider mapHeightSlider;
+    @FXML private Label mapHeightValueLabel;
+    @FXML private Slider initialPlantCountSlider;
+    @FXML private Label initialPlantCountValueLabel;
+    @FXML private Slider numberOfPlantsGrowingPerDaySlider;
+    @FXML private Label numberOfPlantsGrowingPerDayValueLabel;
+    @FXML private Slider initialAnimalCountSlider;
+    @FXML private Label initialAnimalCountValueLabel;
+    @FXML private Slider initialAnimalEnergySlider;
+    @FXML private Label initialAnimalEnergyValueLabel;
+    @FXML private Slider readyToReproduceEnergySlider;
+    @FXML private Label readyToReproduceEnergyValueLabel;
+    @FXML private Slider reproduceEnergyLossSlider;
+    @FXML private Label reproduceEnergyLossValueLabel;
+    @FXML private Slider minimumMutationCountSlider;
+    @FXML private Label minimumMutationCountValueLabel;
+    @FXML private Slider maximumMutationCountSlider;
+    @FXML private Label maximumMutationCountValueLabel;
+    @FXML private Slider genomeLengthSlider;
+    @FXML private Label genomeLengthValueLabel;
 
-    @FXML public Label infoLabel;
-    @FXML public TextField reproduceEnergyLossField;
-    @FXML public TextField readyToReproduceEnergyField;
-    @FXML public TextField minimumMutationCountField;
-    @FXML public TextField maximumMutationCountField;
-    @FXML public ChoiceBox<String> animalBehaviourTypeChoiceBox;
-    @FXML private TextField mapSizeXField;
-    @FXML private TextField mapSizeYField;
-    @FXML private TextField initialPlantCountField;
     @FXML private ChoiceBox<String> mapTypeChoiceBox;
-    @FXML private TextField initialAnimalCountField;
-    @FXML private TextField initialAnimalEnergyField;
-    @FXML private TextField plantEnergyField;
-    @FXML private TextField genomeLengthField;
-    @FXML private TextField numberOfPlantsGrowingPerDayField;
+    @FXML private ChoiceBox<String> BehaviourVariantChoiceBox;
+
     @FXML private Button startButton;
-    @FXML private TextField numberOfDaysField;
-    @FXML private TextField modeOfPlantGrowingField;
-    @FXML private TextField mutationVariantField;
 
     private SimulationConfigurator config;
 
     @FXML
     public void initialize() {
-        mapTypeChoiceBox.setItems(FXCollections.observableArrayList("GlobeMap", "PoisonedMap"));
-        animalBehaviourTypeChoiceBox.setItems(FXCollections.observableArrayList("Normal", "Mutation"));
-
-        setupValidation();
-        setupStartButtonBinding();
-    }
-
-    private void setupValidation() {
-        validateTextField(mapSizeXField, this::isNonNegativeInteger);
-        validateTextField(mapSizeYField, this::isNonNegativeInteger);
-        validateTextField(initialPlantCountField, this::isNonNegativeInteger);
-        validateTextField(initialAnimalCountField, this::isNonNegativeInteger);
-        validateTextField(initialAnimalEnergyField, this::isNonNegativeInteger);
-        validateTextField(plantEnergyField, this::isNonNegativeInteger);
-        validateTextField(genomeLengthField, this::isNonNegativeInteger);
-        validateTextField(numberOfPlantsGrowingPerDayField, this::isNonNegativeInteger);
-        validateTextField(reproduceEnergyLossField, this::isNonNegativeInteger);
-        validateTextField(readyToReproduceEnergyField, this::isNonNegativeInteger);
-        validateTextField(minimumMutationCountField, this::isNonNegativeInteger);
-        validateTextField(maximumMutationCountField, this::isNonNegativeInteger);
-        // Additional validations can be added here if necessary
-    }
-
-    private boolean isNonNegativeInteger(String value) {
-        try {
-            return Integer.parseInt(value) >= 0;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    private void setupStartButtonBinding() {
-        BooleanBinding areFieldsEmpty = Bindings.createBooleanBinding(() ->
-                        mapSizeXField.getText().isEmpty() || mapSizeYField.getText().isEmpty() ||
-                                initialPlantCountField.getText().isEmpty() || initialAnimalCountField.getText().isEmpty() ||
-                                initialAnimalEnergyField.getText().isEmpty() || plantEnergyField.getText().isEmpty() ||
-                                genomeLengthField.getText().isEmpty() || numberOfPlantsGrowingPerDayField.getText().isEmpty() ||
-                                reproduceEnergyLossField.getText().isEmpty() || readyToReproduceEnergyField.getText().isEmpty() ||
-                                minimumMutationCountField.getText().isEmpty() || maximumMutationCountField.getText().isEmpty() ||
-                                numberOfDaysField.getText().isEmpty() || modeOfPlantGrowingField.getText().isEmpty() ||
-                                mutationVariantField.getText().isEmpty() || mapTypeChoiceBox.getValue() == null ||
-                                animalBehaviourTypeChoiceBox.getValue() == null,
-                mapSizeXField.textProperty(), mapSizeYField.textProperty(),
-                initialPlantCountField.textProperty(), initialAnimalCountField.textProperty(),
-                initialAnimalEnergyField.textProperty(), plantEnergyField.textProperty(),
-                genomeLengthField.textProperty(), numberOfPlantsGrowingPerDayField.textProperty(),
-                reproduceEnergyLossField.textProperty(), readyToReproduceEnergyField.textProperty(),
-                minimumMutationCountField.textProperty(), maximumMutationCountField.textProperty(),
-                numberOfDaysField.textProperty(), modeOfPlantGrowingField.textProperty(),
-                mutationVariantField.textProperty(), mapTypeChoiceBox.valueProperty(),
-                animalBehaviourTypeChoiceBox.valueProperty()
+        daysCountValueLabel.textProperty().bind(
+                daysCountSlider.valueProperty().asString("%.0f")
         );
-
-        startButton.disableProperty().bind(areFieldsEmpty);
-    }
-
-    private void validateTextField(TextField textField, Predicate<String> validationFunction) {
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!validationFunction.test(newValue)) {
-                textField.setText(oldValue);
-            }
-        });
+        mapWidthValueLabel.textProperty().bind(
+                mapWidthSlider.valueProperty().asString("%.0f")
+        );
+        mapHeightValueLabel.textProperty().bind(
+                mapHeightSlider.valueProperty().asString("%.0f")
+        );
+        initialPlantCountValueLabel.textProperty().bind(
+                initialPlantCountSlider.valueProperty().asString("%.0f")
+        );
+        numberOfPlantsGrowingPerDayValueLabel.textProperty().bind(
+                numberOfPlantsGrowingPerDaySlider.valueProperty().asString("%.0f")
+        );
+        initialAnimalCountValueLabel.textProperty().bind(
+                initialAnimalCountSlider.valueProperty().asString("%.0f")
+        );
+        initialAnimalEnergyValueLabel.textProperty().bind(
+                initialAnimalEnergySlider.valueProperty().asString("%.0f")
+        );
+        readyToReproduceEnergyValueLabel.textProperty().bind(
+                readyToReproduceEnergySlider.valueProperty().asString("%.0f")
+        );
+        reproduceEnergyLossValueLabel.textProperty().bind(
+                reproduceEnergyLossSlider.valueProperty().asString("%.0f")
+        );
+        minimumMutationCountValueLabel.textProperty().bind(
+                minimumMutationCountSlider.valueProperty().asString("%.0f")
+        );
+        maximumMutationCountValueLabel.textProperty().bind(
+                maximumMutationCountSlider.valueProperty().asString("%.0f")
+        );
+        genomeLengthValueLabel.textProperty().bind(
+                genomeLengthSlider.valueProperty().asString("%.0f")
+        );
+        mapTypeChoiceBox.setItems(FXCollections.observableArrayList("GlobeMap", "PoisonedMap"));
+        BehaviourVariantChoiceBox.setItems(FXCollections.observableArrayList("Normal", "Mutation"));
     }
 
     @FXML
@@ -127,30 +106,24 @@ public class StartPresenter {
         }
     }
 
-    private void configureSimulation() {
-        config.setMapSize(parseTextFieldToInt(mapSizeXField), parseTextFieldToInt(mapSizeYField));
-        config.setInitialAnimalCount(parseTextFieldToInt(initialAnimalCountField));
-        config.setInitialPlantCount(parseTextFieldToInt(initialPlantCountField));
-        config.setPlantEnergy(parseTextFieldToInt(plantEnergyField));
-        config.setInitialAnimalEnergy(parseTextFieldToInt(initialAnimalEnergyField));
-        config.setGenomeLength(parseTextFieldToInt(genomeLengthField));
-        config.setNumberOfPlantsGrowingPerDay(parseTextFieldToInt(numberOfPlantsGrowingPerDayField));
-        config.setReproduceEnergyLoss(parseTextFieldToInt(reproduceEnergyLossField));
-        config.setReadyToReproduceEnergy(parseTextFieldToInt(readyToReproduceEnergyField));
-        config.setMinimumMutationCount(parseTextFieldToInt(minimumMutationCountField));
-        config.setMaximumMutationCount(parseTextFieldToInt(maximumMutationCountField));
-        config.setNumberOfDays(parseTextFieldToInt(numberOfDaysField));
-        config.setModeOfPlantGrowing(modeOfPlantGrowingField.getText());
-        config.setMutationVariant(mutationVariantField.getText());
-        config.setMapType(mapTypeChoiceBox.getValue());
-        config.setAnimalBehaviourType(animalBehaviourTypeChoiceBox.getValue());
+    public SimulationConfigurator getConfig() {
+        return config;
     }
 
-    private int parseTextFieldToInt(TextField textField) {
-        try {
-            return Integer.parseInt(textField.getText());
-        } catch (NumberFormatException e) {
-            return 0;
-        }
+    private void configureSimulation() {
+        config.setMapSize((int) mapWidthSlider.getValue(), (int) mapHeightSlider.getValue());
+        config.setNumberOfDays((int) daysCountSlider.getValue());
+        config.setInitialPlantCount((int) initialPlantCountSlider.getValue());
+        config.setNumberOfPlantsGrowingPerDay((int) numberOfPlantsGrowingPerDaySlider.getValue());
+        config.setInitialAnimalCount((int) initialAnimalCountSlider.getValue());
+        config.setInitialAnimalEnergy((int) initialAnimalEnergySlider.getValue());
+        config.setReadyToReproduceEnergy((int) readyToReproduceEnergySlider.getValue());
+        config.setReproduceEnergyLoss((int) reproduceEnergyLossSlider.getValue());
+        config.setMinimumMutationCount((int) minimumMutationCountSlider.getValue());
+        config.setMaximumMutationCount((int) maximumMutationCountSlider.getValue());
+        config.setGenomeLength((int) genomeLengthSlider.getValue());
+
+        config.setMapType(mapTypeChoiceBox.getValue());
+        config.setAnimalBehaviourType(BehaviourVariantChoiceBox.getValue());
     }
 }

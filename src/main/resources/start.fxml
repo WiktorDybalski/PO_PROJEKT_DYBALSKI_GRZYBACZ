@@ -7,53 +7,63 @@
             fx:controller="presenters.StartPresenter"
             stylesheets="@styles.css">
     <center>
-        <HBox spacing="10">
-            <GridPane hgap="10" vgap="5">
-                <Label text="Width:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="widthField" promptText="Width" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <GridPane hgap="10" vgap="10" alignment="CENTER">
+            <Label text="Number of days:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Slider fx:id="daysCountSlider" min="1" max="1000" value="10" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Label fx:id="daysCountValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
-                <Label text="Height:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="heightField" promptText="Height" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Width of map:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Slider fx:id="mapWidthSlider" min="1" max="30" value="10" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="mapWidthValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
-                <Label text="Animal Starting Energy:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <TextField fx:id="startEnergyField" promptText="Animal Starting Energy" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Height of map:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Slider fx:id="mapHeightSlider" min="1" max="30" value="10" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="mapHeightValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
-                <Label text="Energy Received From Eating Plant:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                <TextField fx:id="plantEnergyField" promptText="Animal energy Received From Eating Plant" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Initial plant count:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <Slider fx:id="initialPlantCountSlider" min="1" max="100" value="2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="initialPlantCountValueLabel" text="2" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
-                <Label text="Initial Animals Number:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                <TextField fx:id="initialanimalsNumberField" promptText="Initial Animals Number" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Plants Growing Per Day:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <Slider fx:id="numberOfPlantsGrowingPerDaySlider" min="1" max="100" value="10" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="numberOfPlantsGrowingPerDayValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
 
-                <Label text="Initial Grass Number:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-                <TextField fx:id="initialgrassNumberField" promptText="Initial Grass Number" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Initial Animal Count:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+            <Slider fx:id="initialAnimalCountSlider" min="1" max="100" value="10" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="initialAnimalCountValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
 
-                <Label text="Plant Spawn Rate:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
-                <TextField fx:id="plantSpawnRate" promptText="Plant Spawn Rate" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Initial Animal Energy:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+            <Slider fx:id="initialAnimalEnergySlider" min="1" max="100" value="30" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="initialAnimalEnergyValueLabel" text="30" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
 
-                <Label text="Reproduce Energy:" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
-                <TextField fx:id="reproduceEnergy" promptText="Reproduce Energy" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Ready To Reproduce Energy:" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+            <Slider fx:id="readyToReproduceEnergySlider" min="1" max="100" value="50" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="readyToReproduceEnergyValueLabel" text="50" GridPane.columnIndex="2" GridPane.rowIndex="7"/>
 
-                <Label text="Parent Energy:" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
-                <TextField fx:id="parentEnergy" promptText="Parent Energy" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label text="Reproduce Energy Loss:" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+            <Slider fx:id="reproduceEnergyLossSlider" min="1" max="50" value="10" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label fx:id="reproduceEnergyLossValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="8"/>
 
-                <Label text="Min Number Of Mutations:" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
-                <TextField fx:id="minGeneMutation" promptText="Min Number Of Mutations" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Label text="Minimum Mutation Count:" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+            <Slider fx:id="minimumMutationCountSlider" min="1" max="8" value="1" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Label fx:id="minimumMutationCountValueLabel" text="1" GridPane.columnIndex="2" GridPane.rowIndex="9"/>
 
-                <Label text="Max Number Of Mutations:" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
-                <TextField fx:id="maxGeneMutation" promptText="Max Number Of Mutations" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Label text="Maximum Mutation Count:" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+            <Slider fx:id="maximumMutationCountSlider" min="1" max="8" value="3" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Label fx:id="maximumMutationCountValueLabel" text="3" GridPane.columnIndex="2" GridPane.rowIndex="10"/>
 
-                <Label text="Length of Genome:" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
-                <TextField fx:id="genomeLength" promptText="Length of Genome" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <Label text="Genome Length:" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
+            <Slider fx:id="genomeLengthSlider" min="8" max="16" value="8" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <Label fx:id="genomeLengthValueLabel" text="8" GridPane.columnIndex="2" GridPane.rowIndex="11"/>
 
-                <Label text="Map Variant:" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
-                <ChoiceBox fx:id="MapVariant" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                <Label text="Behaviour Variant:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
-                <ChoiceBox fx:id="BehaviourVariant" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-            </GridPane>
+            <Label text="Map Type:" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
+            <ChoiceBox fx:id="mapTypeChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="12" />
 
-            <VBox spacing="10">
-                <Button fx:id="startButton" minWidth="200" text="Start Simulation" onAction="#onStartClicked" />
-            </VBox>
-        </HBox>
+
+            <Label text="Behaviour Variant:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
+            <ChoiceBox fx:id="BehaviourVariantChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+
+            <Button fx:id="startButton" text="Start Simulation" onAction="#onStartClicked" GridPane.columnIndex="0" GridPane.rowIndex="14" GridPane.columnSpan="2"/>
+        </GridPane>
     </center>
 </BorderPane>

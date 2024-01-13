@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import static java.lang.Math.abs;
+
 public class RandomPositionsGenerator {
     /**
      * The maximum width of the map.
@@ -97,7 +100,7 @@ public class RandomPositionsGenerator {
     public List<Vector2d> generateAnimals() {
         Random random = new Random(1111);
         for (int i = 0; i < objectCount; i++) {
-            int randomIndex = random.nextInt(allPositions.size());
+            int randomIndex = abs(random.nextInt(allPositions.size()));
             animalResult.add(allPositions.get(randomIndex));
         }
         return animalResult;
@@ -120,14 +123,14 @@ public class RandomPositionsGenerator {
                         .filter(p -> p.getY() >= equatorStart && p.getY() <= equatorEnd)
                         .toList();
                 if (!equatorialPositions.isEmpty()) {
-                    randomIndex = random.nextInt(equatorialPositions.size());
+                    randomIndex = abs(random.nextInt(equatorialPositions.size()));
                     plantResult.add(equatorialPositions.get(randomIndex));
                     tempAllPosition.remove(equatorialPositions.get(randomIndex));
                     continue;
                 }
             }
             // Else, select from any available position
-            randomIndex = random.nextInt(tempAllPosition.size());
+            randomIndex = abs(random.nextInt(tempAllPosition.size()));
             plantResult.add(tempAllPosition.get(randomIndex));
             tempAllPosition.remove(randomIndex);
         }
