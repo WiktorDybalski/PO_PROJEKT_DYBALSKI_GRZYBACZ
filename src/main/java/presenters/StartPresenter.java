@@ -5,44 +5,81 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.stage.Stage;
+import model.maps.GlobeMap;
+import model.maps.PoisonedMap;
+import model.simulation.Simulation;
 import model.simulation.SimulationConfigurator;
 
 import java.io.IOException;
 
 public class StartPresenter {
-    @FXML private Slider daysCountSlider;
-    @FXML private Label daysCountValueLabel;
-    @FXML private Slider mapWidthSlider;
-    @FXML private Label mapWidthValueLabel;
-    @FXML private Slider mapHeightSlider;
-    @FXML private Label mapHeightValueLabel;
-    @FXML private Slider initialPlantCountSlider;
-    @FXML private Label initialPlantCountValueLabel;
-    @FXML private Slider numberOfPlantsGrowingPerDaySlider;
-    @FXML private Label numberOfPlantsGrowingPerDayValueLabel;
-    @FXML private Slider initialAnimalCountSlider;
-    @FXML private Label initialAnimalCountValueLabel;
-    @FXML private Slider initialAnimalEnergySlider;
-    @FXML private Label initialAnimalEnergyValueLabel;
-    @FXML private Slider readyToReproduceEnergySlider;
-    @FXML private Label readyToReproduceEnergyValueLabel;
-    @FXML private Slider reproduceEnergyLossSlider;
-    @FXML private Label reproduceEnergyLossValueLabel;
-    @FXML private Slider minimumMutationCountSlider;
-    @FXML private Label minimumMutationCountValueLabel;
-    @FXML private Slider maximumMutationCountSlider;
-    @FXML private Label maximumMutationCountValueLabel;
-    @FXML private Slider genomeLengthSlider;
-    @FXML private Label genomeLengthValueLabel;
+    @FXML
+    public ChoiceBox BehaviourVariant;
+    @FXML
+    private ChoiceBox MapVariant;
+    @FXML
+    private Slider daysCountSlider;
+    @FXML
+    private Label daysCountValueLabel;
+    @FXML
+    private Slider mapWidthSlider;
+    @FXML
+    private Label mapWidthValueLabel;
+    @FXML
+    private Slider mapHeightSlider;
+    @FXML
+    private Label mapHeightValueLabel;
+    @FXML
+    private Slider initialPlantCountSlider;
+    @FXML
+    private Label initialPlantCountValueLabel;
+    @FXML
+    private Slider numberOfPlantsGrowingPerDaySlider;
+    @FXML
+    private Label numberOfPlantsGrowingPerDayValueLabel;
+    @FXML
+    private Slider initialAnimalCountSlider;
+    @FXML
+    private Label initialAnimalCountValueLabel;
+    @FXML
+    private Slider initialAnimalEnergySlider;
+    @FXML
+    private Label initialAnimalEnergyValueLabel;
+    @FXML
+    private Slider readyToReproduceEnergySlider;
+    @FXML
+    private Label readyToReproduceEnergyValueLabel;
+    @FXML
+    private Slider reproduceEnergyLossSlider;
+    @FXML
+    private Label reproduceEnergyLossValueLabel;
+    @FXML
+    private Slider minimumMutationCountSlider;
+    @FXML
+    private Label minimumMutationCountValueLabel;
+    @FXML
+    private Slider maximumMutationCountSlider;
+    @FXML
+    private Label maximumMutationCountValueLabel;
+    @FXML
+    private Slider genomeLengthSlider;
+    @FXML
+    private Label genomeLengthValueLabel;
 
-    @FXML private ChoiceBox<String> mapTypeChoiceBox;
-    @FXML private ChoiceBox<String> BehaviourVariantChoiceBox;
+    @FXML
+    private ChoiceBox<String> mapTypeChoiceBox;
+    @FXML
+    private ChoiceBox<String> BehaviourVariantChoiceBox;
 
-    @FXML private Button startButton;
+    @FXML
+    private Button startButton;
 
-    private SimulationConfigurator config;
+    private SimulationConfigurator config = new SimulationConfigurator();
 
     @FXML
     public void initialize() {
@@ -82,6 +119,7 @@ public class StartPresenter {
         genomeLengthValueLabel.textProperty().bind(
                 genomeLengthSlider.valueProperty().asString("%.0f")
         );
+
         mapTypeChoiceBox.setItems(FXCollections.observableArrayList("GlobeMap", "PoisonedMap"));
         BehaviourVariantChoiceBox.setItems(FXCollections.observableArrayList("Normal", "Mutation"));
     }
@@ -89,17 +127,35 @@ public class StartPresenter {
     @FXML
     public void onStartClicked() {
         try {
-            config = new SimulationConfigurator();
             configureSimulation();
+            String selectedOption = config.getMapType();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/simulation.fxml"));
             Parent root = loader.load();
 
             SimulationPresenter simulationPresenter = loader.getController();
-            simulationPresenter.setWorldMap(config);
 
+            if (selectedOption.equals("GlobeMap")) {
+                config.setMapType("GlobeMap");
+                GlobeMap globeMap = new GlobeMap(config);
+                simulationPresenter.setWorldMap(globeMap);
+                globeMap.addObserver(simulationPresenter);
+            } else {
+                config.setMapType("PoisonedMap");
+                PoisonedMap poisonedMap = new PoisonedMap(config);
+                simulationPresenter.setWorldMap(poisonedMap);
+                poisonedMap.addObserver(simulationPresenter);
+            }
+
+            simulationPresenter.onSimulationStartClicked();
             Stage simulationStage = new Stage();
             simulationStage.setScene(new Scene(root));
+            simulationStage.setOnCloseRequest(event -> {
+                if (simulationPresenter.getSimulation() != null)
+                    if (simulationPresenter.getSimulation().isRunning()) {
+                        simulationPresenter.getSimulation().interrupt();
+                    }
+            });
             simulationStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,7 +167,9 @@ public class StartPresenter {
     }
 
     private void configureSimulation() {
-        config.setMapSize((int) mapWidthSlider.getValue(), (int) mapHeightSlider.getValue());
+        int width = (int) mapWidthSlider.getValue();
+        int height = (int) mapHeightSlider.getValue();
+        config.setMapSize(width, height);
         config.setNumberOfDays((int) daysCountSlider.getValue());
         config.setInitialPlantCount((int) initialPlantCountSlider.getValue());
         config.setNumberOfPlantsGrowingPerDay((int) numberOfPlantsGrowingPerDaySlider.getValue());

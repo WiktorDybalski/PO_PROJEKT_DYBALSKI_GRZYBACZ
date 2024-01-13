@@ -2,6 +2,12 @@
     -fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.root {
+    -fx-background-image: url('malpy.png');
+    -fx-background-repeat: stretch;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+}
 /* Ustawienia głównego kontenera */
 BorderPane {
     background-color: #f0f0f0;
@@ -13,24 +19,18 @@ BorderPane {
     -fx-spacing: 15;
 }
 
-/* Ustawienia przycisków */
 Button {
-    -fx-background-color: #3498db;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #333333; /* Ciemniejszy odcień dla tła */
+    -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-padding: 10 20;
-}
-
-/* Ustawienia siatki */
-GridPane {
-    -fx-hgap: 10;
-    -fx-vgap: 10;
+    -fx-alignment: center;
 }
 
 /* Ustawienia etykiet */
 Label {
     -fx-font-size: 14px;
-    -fx-text-fill: #333333;
+    -fx-text-fill: black;
 }
 
 /* Ustawienia pól tekstowych */
@@ -38,6 +38,7 @@ TextField {
     -fx-font-size: 14px;
     -fx-padding: 8;
     -fx-background-radius: 5;
+    -fx-border-color: black; /* Kolor bordery */
 }
 
 /* Ustawienia wyboru */
@@ -45,41 +46,64 @@ ChoiceBox {
     -fx-font-size: 14px;
     -fx-padding: 8;
     -fx-background-radius: 5;
+    -fx-border-color: black; /* Kolor bordery */
 }
 
-/* Ustawienia kontenera HBox */
-HBox {
-    -fx-spacing: 20;
+/* ... (inne zmiany) ... */
+
+Slider {
+    -fx-pref-width: 500px;
+    -fx-border-color: black;
+    -fx-background-color: #333333; /* Ciemniejszy odcień dla tła */
 }
 
-/* Ustawienia przycisku startowego */
-#startButton {
-    -fx-background-color: #27ae60;
+/* ... (inne zmiany) ... */
+
+.button {
+    -fx-background-color: #333333; /* Ciemniejszy odcień dla tła */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
-/* Ustawienia kontenera mapy */
-#mapGrid {
-    -fx-background-color: #ecf0f1;
-    -fx-border-color: #bdc3c7;
-    -fx-border-width: 1;
-    -fx-padding: 10;
+.button:hover {
+    -fx-background-color: #45a049;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.text-field {
+    -fx-font-size: 14px;
+    -fx-border-color: black;
+    -fx-padding: 5px;
+}
+
+.grid-pane {
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: black;
+    -fx-border-radius: 10px;
+}
+
+.grid-pane .label {
+    -fx-background-color: #e0e0e0;
+    -fx-padding: 0px;
+    -fx-border-color: black;
+    -fx-border-radius: 10px;
+}
+
+/* Styl dla komórek siatki mapy */
+.map-grid-cell {
+    -fx-background-color: #b3e5fc;
     -fx-alignment: center;
+    -fx-border-color: black;
+    -fx-min-width: 20px;
+    -fx-min-height: 50px;
 }
 
-/* Ustawienia pól inputowych */
-#widthField, #heightField, #startEnergyField, #plantEnergyField,
-#initialanimalsNumberField, #initialgrassNumberField, #plantSpawnRate,
-#reproduceEnergy, #parentEnergy, #minGeneMutation, #maxGeneMutation,
-#genomeLength, #MapVariant, #BehaviourVariant {
-    -fx-pref-width: 200;
-}
-
-/* Wyśrodkowanie siatki */
 GridPane {
-    -fx-alignment: center;
-}
-
-/* Przesunięcie przycisku StartButton pod pola inputowe */
-VBox {
-    -fx-alignment: center;
+    -fx-hgap: 10;  /* Brak poziomego odstępu między komórkami */
+    -fx-vgap: 10;  /* Brak pionowego odstępu między komórkami */
 }

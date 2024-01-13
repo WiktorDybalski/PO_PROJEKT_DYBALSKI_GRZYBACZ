@@ -1,5 +1,6 @@
 package model.maps;
 import model.simulation.MapChangeListener;
+import model.simulation.SimulationConfigurator;
 import model.utils.*;
 
 import java.util.HashMap;
@@ -27,6 +28,8 @@ public interface WorldMap {
     public void firstDay();
     public void dailyUpdate();
     public Boundary getCurrentBounds();
+
+    public SimulationConfigurator getConfig();
 
     public void addObserver(MapChangeListener observer);
     public void removeObserver(MapChangeListener observer);

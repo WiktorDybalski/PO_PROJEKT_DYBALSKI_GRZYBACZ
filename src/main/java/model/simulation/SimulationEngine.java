@@ -64,6 +64,25 @@ public class SimulationEngine implements Runnable {
             e.printStackTrace();
         }
     }
+    public boolean isRunning() {
+        for (Simulation simulation : this.simulations) {
+            if (simulation.isRunning()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void pauseSimulation() {
+        for (Simulation simulation : this.simulations) {
+            simulation.pauseSimulation();
+        }
+    }
+
+    public void resumeSimulation() {
+        for (Simulation simulation : this.simulations) {
+            simulation.resumeSimulation();
+        }
+    }
 
     @Override
     public void run() {

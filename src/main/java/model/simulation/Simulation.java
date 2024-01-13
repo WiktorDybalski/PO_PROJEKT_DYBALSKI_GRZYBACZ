@@ -10,6 +10,13 @@ public class Simulation extends Thread {
 
     private final SimulationConfigurator config;
     private Statistics statistics;
+    private final Object lock = new Object();
+
+    private boolean running = false;
+
+    public boolean isRunning() {
+        return running;
+    }
 
     public Simulation(WorldMap worldmap, SimulationConfigurator config) {
         this.worldMap = worldmap;
@@ -33,7 +40,16 @@ public class Simulation extends Thread {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+    public void pauseSimulation() {
+        running = false;
+    }
 
+    public void resumeSimulation() {
+        running = true;
+        synchronized (lock) {
+            lock.notify();
         }
     }
 }

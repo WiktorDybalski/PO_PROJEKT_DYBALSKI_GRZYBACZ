@@ -7,15 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import model.maps.GlobeMap;
-import model.maps.PoisonedMap;
 import model.maps.WorldMap;
 import model.simulation.MapChangeListener;
 import model.simulation.Simulation;
-import model.simulation.SimulationConfigurator;
 import model.simulation.SimulationEngine;
 import model.utils.Boundary;
-import model.utils.MapObjects;
 import model.utils.Tile;
 import model.utils.Vector2d;
 
@@ -25,6 +21,8 @@ import java.util.List;
 
 public class SimulationPresenter implements MapChangeListener {
     private static final String EMPTY_CELL = " ";
+    private Simulation simulation;
+    private SimulationEngine simulationEngine;
     private WorldMap worldMap;
     @FXML
     private Label infoLabel;
@@ -36,17 +34,17 @@ public class SimulationPresenter implements MapChangeListener {
     private Label moveInfoLabel;
 
     @FXML
-    private Button startButton;
+    private Button startStopButton;
 
     @FXML
     private GridPane mapGrid;
 
-    public void setWorldMap(SimulationConfigurator config) {
-        if (config.getMapType().equals("GlobeMap")) {
-            this.worldMap = new GlobeMap(config);
-        } else {
-            this.worldMap = new PoisonedMap(config);
-        }
+    public Simulation getSimulation() {
+        return this.simulation;
+    }
+
+    public void setWorldMap(WorldMap worldMap) {
+        this.worldMap = worldMap;
     }
 
     private void clearGrid() {
@@ -145,10 +143,19 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     public void onSimulationStartClicked() {
         try {
-            Simulation simulation = new Simulation(worldMap, new SimulationConfigurator());
-            SimulationEngine simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation)));
-            simulationEngine.runAsync();
-            Platform.runLater(() -> startButton.setDisable(true));
+            if (simulationEngine == null) {
+                simulation = new Simulation(worldMap, worldMap.getConfig());
+                SimulationEngine simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation)));
+                simulationEngine.runAsync();
+                Platform.runLater(() -> startStopButton.setText("Stop"));
+            } else if (simulationEngine.isRunning()) {
+                simulationEngine.pauseSimulation();
+                startStopButton.setText("Start");
+            } else {
+                simulationEngine.resumeSimulation();
+                startStopButton.setText("Stop");
+            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
