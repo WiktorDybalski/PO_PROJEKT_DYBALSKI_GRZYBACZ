@@ -52,6 +52,13 @@ public class Simulation extends Thread {
             lock.notify();
         }
     }
+    public void interruptSimulation() {
+        interrupt();  // Przerwanie wątku
+    }
+    public void stopSimulation() {
+        running = false;
+        interrupt();  // Przerwanie wątku
+    }
 }
 
 

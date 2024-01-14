@@ -12,6 +12,7 @@ import model.simulation.MapChangeListener;
 import model.simulation.Simulation;
 import model.simulation.SimulationEngine;
 import model.utils.Boundary;
+import model.utils.Statistics;
 import model.utils.Tile;
 import model.utils.Vector2d;
 
@@ -20,10 +21,14 @@ import java.util.List;
 
 
 public class SimulationPresenter implements MapChangeListener {
+    private Statistics statistics;
+    private int day;
     private static final String EMPTY_CELL = " ";
     private Simulation simulation;
     private SimulationEngine simulationEngine;
     private WorldMap worldMap;
+    @FXML
+    private Label currentDayLabel;
     @FXML
     private Label infoLabel;
 
@@ -63,22 +68,31 @@ public class SimulationPresenter implements MapChangeListener {
         label.setMinWidth(50);
         label.setMinHeight(50);
         label.setAlignment(Pos.CENTER);
+        label.getStyleClass().add("map-grid-cell");
         return label;
     }
 
     private void drawGridCell(Vector2d position, int column, int row) {
         Tile tile = worldMap.getTile(position);
         String string = EMPTY_CELL;
+        Label label;
+
         if (tile.isOccupied()) {
             if (!tile.getAnimals().isEmpty()) {
                 string = tile.getStrongestAnimal().getEnergy() + "";
+                label = createLabelForElement(string);
             } else {
                 if (tile.getPlant() != null) {
-                    string = "******\n******\n******";
+                    string = "";
+                    label = createLabelForElement(string);
+                    label.getStyleClass().add("plant-cell"); // Dodajemy klasę CSS dla komórki z rośliną
+                } else {
+                    label = createLabelForElement(string);
                 }
             }
+        } else {
+            label = createLabelForElement(string);
         }
-        Label label = createLabelForElement(string);
 
         mapGrid.add(label, column, row);
     }
@@ -135,9 +149,19 @@ public class SimulationPresenter implements MapChangeListener {
     @Override
     public void mapChanged(WorldMap worldMap, String message) {
         Platform.runLater(() -> {
+            day = worldMap.getCurrentDay();
+            currentDayLabel.setText("   Day: " + day);
+            moveInfoLabel.setText(statistics.getStatistics());
             this.drawMap();
             moveInfoLabel.setText(message);
         });
+    }
+
+
+    public void stopSimulation() {
+        if (simulation != null) {
+            simulation.stopSimulation();
+        }
     }
 
     @FXML
@@ -145,19 +169,24 @@ public class SimulationPresenter implements MapChangeListener {
         try {
             if (simulationEngine == null) {
                 simulation = new Simulation(worldMap, worldMap.getConfig());
-                SimulationEngine simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation)));
+                simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation))); // Użyj pola klasy
                 simulationEngine.runAsync();
+                statistics = new Statistics(worldMap);
                 Platform.runLater(() -> startStopButton.setText("Stop"));
-            } else if (simulationEngine.isRunning()) {
-                simulationEngine.pauseSimulation();
-                startStopButton.setText("Start");
             } else {
-                simulationEngine.resumeSimulation();
-                startStopButton.setText("Stop");
+                Platform.runLater(() -> {
+                    if (simulationEngine.isRunning()) {
+                        simulationEngine.pauseSimulation();
+                        startStopButton.setText("Start");
+                    } else {
+                        simulationEngine.resumeSimulation();
+                        startStopButton.setText("Stop");
+                    }
+                });
             }
-
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Wystąpił błąd: " + e.getMessage());
+            e.printStackTrace(); // Bardziej szczegółowa obsługa błędów
         }
     }
 }

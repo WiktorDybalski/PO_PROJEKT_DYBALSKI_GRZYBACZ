@@ -3,10 +3,7 @@
 }
 
 .root {
-    -fx-background-image: url('malpy.png');
-    -fx-background-repeat: stretch;
-    -fx-background-size: contain;
-    -fx-background-position: center center;
+    -fx-background-color: #FFFFF0;
 }
 /* Ustawienia głównego kontenera */
 BorderPane {
@@ -81,29 +78,3 @@ Slider {
     -fx-padding: 5px;
 }
 
-.grid-pane {
-    -fx-background-color: #f5f5f5;
-    -fx-border-color: black;
-    -fx-border-radius: 10px;
-}
-
-.grid-pane .label {
-    -fx-background-color: #e0e0e0;
-    -fx-padding: 0px;
-    -fx-border-color: black;
-    -fx-border-radius: 10px;
-}
-
-/* Styl dla komórek siatki mapy */
-.map-grid-cell {
-    -fx-background-color: #b3e5fc;
-    -fx-alignment: center;
-    -fx-border-color: black;
-    -fx-min-width: 20px;
-    -fx-min-height: 50px;
-}
-
-GridPane {
-    -fx-hgap: 10;  /* Brak poziomego odstępu między komórkami */
-    -fx-vgap: 10;  /* Brak pionowego odstępu między komórkami */
-}

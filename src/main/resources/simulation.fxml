@@ -14,13 +14,19 @@
             minHeight="850.0" minWidth="1100.0"
             fx:controller="presenters.SimulationPresenter"
             stylesheets="@simulationStyles.css">
+    <top>
+        <HBox alignment="CENTER">
+            <Label text="Darwin World Simulator" />
+            <Label fx:id="currentDayLabel" text="    Day: " />
+        </HBox>
+    </top>
     <center>
-        <VBox alignment="CENTER">
-            <HBox alignment="CENTER">
+        <HBox alignment="CENTER">
+            <VBox alignment="CENTER">
+                <Label fx:id="moveInfoLabel" alignment="CENTER"/>
                 <Button fx:id="startStopButton" minWidth="100" text="Start" onAction="#onSimulationStartClicked" />
-            </HBox>
-            <Label fx:id="moveInfoLabel" alignment="CENTER"/>
+            </VBox>
             <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER"  />
-        </VBox>
+        </HBox>
     </center>
 </BorderPane>

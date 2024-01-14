@@ -9,7 +9,7 @@
     <center>
         <GridPane hgap="10" vgap="10" alignment="CENTER">
             <Label text="Number of days:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <Slider fx:id="daysCountSlider" min="1" max="1000" value="10" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Slider fx:id="daysCountSlider" min="1" max="1000" value="30" GridPane.columnIndex="1" GridPane.rowIndex="0" />
             <Label fx:id="daysCountValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
             <Label text="Width of map:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
@@ -57,7 +57,7 @@
             <Label fx:id="genomeLengthValueLabel" text="8" GridPane.columnIndex="2" GridPane.rowIndex="11"/>
 
             <Label text="Day Length(ms):" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
-            <Slider fx:id="dayLengthSlider" min="10" max="1000" value="100" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <Slider fx:id="dayLengthSlider" min="10" max="1000" value="300" GridPane.columnIndex="1" GridPane.rowIndex="12" />
             <Label fx:id="dayLengthValueLabel" text="8" GridPane.columnIndex="2" GridPane.rowIndex="12"/>
 
             <Label text="Map Type:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>

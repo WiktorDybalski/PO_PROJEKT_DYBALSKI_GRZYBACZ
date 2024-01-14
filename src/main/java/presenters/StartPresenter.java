@@ -12,12 +12,15 @@ import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 import model.maps.GlobeMap;
 import model.maps.PoisonedMap;
-import model.simulation.Simulation;
 import model.simulation.SimulationConfigurator;
+import javafx.scene.control.Alert;
+
 
 import java.io.IOException;
 
 public class StartPresenter {
+    private SimulationPresenter simulationPresenter;
+
     @FXML
     public ChoiceBox BehaviourVariant;
     public Slider dayLengthSlider;
@@ -130,16 +133,38 @@ public class StartPresenter {
         BehaviourVariantChoiceBox.setItems(FXCollections.observableArrayList("Random", "LittleRandom"));
     }
 
+    private boolean isChoiceBoxValid() {
+        return mapTypeChoiceBox.getValue() != null && BehaviourVariantChoiceBox.getValue() != null;
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void stopSimulation() {
+        if (simulationPresenter != null) {
+            simulationPresenter.stopSimulation();
+        }
+    }
     @FXML
     public void onStartClicked() {
         try {
             configureSimulation();
+            if (!isChoiceBoxValid()) {
+                // Wyświetl komunikat o błędzie lub podejmij inne odpowiednie działania
+                showAlert("Validation Error", "Please select options from all ChoiceBoxes before starting the simulation.");
+                return;
+            }
             String selectedOption = config.getMapType();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/simulation.fxml"));
             Parent root = loader.load();
 
-            SimulationPresenter simulationPresenter = loader.getController();
+            simulationPresenter = loader.getController();
 
             if (selectedOption.equals("GlobeMap")) {
                 config.setMapType("GlobeMap");
@@ -156,12 +181,7 @@ public class StartPresenter {
             simulationPresenter.onSimulationStartClicked();
             Stage simulationStage = new Stage();
             simulationStage.setScene(new Scene(root));
-            simulationStage.setOnCloseRequest(event -> {
-                if (simulationPresenter.getSimulation() != null)
-                    if (simulationPresenter.getSimulation().isRunning()) {
-                        simulationPresenter.getSimulation().interrupt();
-                    }
-            });
+            simulationStage.setOnCloseRequest(event -> stopSimulation());
             simulationStage.show();
         } catch (IOException e) {
             e.printStackTrace();
