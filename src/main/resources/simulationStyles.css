@@ -3,16 +3,16 @@
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
-VBox {
-    -fx-padding: 0 50px 10px 20px;
-}
 .label {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
     -fx-alignment: center;
 }
-
+.header {
+    -fx-font-size: 30px; /* Rozmiar czcionki nagłówka */
+    -fx-alignment: center; /* Wyśrodkowanie tekstu w nagłówku */
+}
 .button {
     -fx-background-color: #4CAF50;
     -fx-text-fill: white;

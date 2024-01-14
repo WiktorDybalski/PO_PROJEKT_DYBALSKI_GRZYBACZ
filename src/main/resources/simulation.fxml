@@ -15,10 +15,10 @@
             fx:controller="presenters.SimulationPresenter"
             stylesheets="@simulationStyles.css">
     <top>
-        <HBox alignment="CENTER">
-            <Label text="Darwin World Simulator" />
+        <VBox alignment="CENTER">
+            <Label fx:id="header" text="Darwin World Simulator" />
             <Label fx:id="currentDayLabel" text="    Day: " />
-        </HBox>
+        </VBox>
     </top>
     <center>
         <HBox alignment="CENTER">

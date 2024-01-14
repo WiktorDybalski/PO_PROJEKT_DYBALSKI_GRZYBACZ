@@ -31,7 +31,8 @@ public class SimulationPresenter implements MapChangeListener {
     private Label currentDayLabel;
     @FXML
     private Label infoLabel;
-
+    @FXML
+    public Label header;
     @FXML
     private TextField movesListTextField;
 
