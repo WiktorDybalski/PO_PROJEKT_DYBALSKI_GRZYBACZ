@@ -100,4 +100,14 @@ public class GlobeMapTest {
         assertEquals(28, map.getPlants().size());
         System.out.println(map.toString());
     }
+
+    @Test
+    void animalAgeTest(){
+        for(int i = 0; i < 10; i++) {
+            map.dailyUpdate();
+            for (Animal animal : map.getAnimals()) {
+                System.out.println(animal.getAge());
+            }
+        }
+    }
 }

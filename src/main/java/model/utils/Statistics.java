@@ -42,15 +42,15 @@ public class Statistics {
     }
 
     public double getAverageLifeSpan() {
-        return averageLifeSpan;
+        return (double) Math.round(averageLifeSpan * 100.0) /100;
     }
 
     public double getAverageNumberOfChildren() {
-        return averageNumberOfChildren;
+        return (double) Math.round(averageNumberOfChildren * 100.0) /100;
     }
 
     public double getAverageEnergyLevel() {
-        return averageEnergyLevel;
+        return (double) Math.round(averageEnergyLevel * 100.0) /100;
     }
 
     public Genotype getDominantGenotype() {
@@ -86,7 +86,7 @@ public class Statistics {
         int numberOfAliveAnimals = 0;
         int numberOfDeadAnimals = 0;
         int numberOfPlants = 0;
-        double averageLifeSpan = 0;
+        int cumulativeLifeSpan = 0;
         double averageNumberOfChildren = 0;
         double averageEnergyLevel = 0;
         int freeTilesCount = 0;
@@ -112,11 +112,8 @@ public class Statistics {
             }
             if (animal.getIsDead()) {
                 numberOfDeadAnimals++;
-                averageLifeSpan += animal.getAge();
+                cumulativeLifeSpan += animal.getAge();
             }
-        }
-        if (numberOfDeadAnimals != 0) {
-            this.averageLifeSpan = averageLifeSpan/ numberOfDeadAnimals;
         }
         int max = 0;
         Genotype dominantGenotype = null;
@@ -126,7 +123,10 @@ public class Statistics {
                 dominantGenotype = genotype;
             }
         }
-        this.numberOfAnimals = numberOfAliveAnimals + numberOfDeadAnimals;
+        if (numberOfDeadAnimals > 0) {
+            this.averageLifeSpan = (double) cumulativeLifeSpan / numberOfDeadAnimals;
+        }
+        this.numberOfAnimals = this.map.getAnimals().size();
         this.numberOfAliveAnimals = numberOfAliveAnimals;
         this.numberOfDeadAnimals= numberOfDeadAnimals;
 

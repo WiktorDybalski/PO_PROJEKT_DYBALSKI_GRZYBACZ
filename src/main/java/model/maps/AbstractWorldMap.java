@@ -261,12 +261,23 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
             tile.removeDeadAnimalsFromTile();
         }
     }
+    private void growAnimals() {
+        for (Animal animal : animals) {
+            if (animal.getIsDead()) {
+                continue;
+            }
+            animal.grow();
+        }
+    }
 
     /**
      * The move method is responsible for the movement of all moving objects on the map
      */
     public void move() {
         for (Animal animal : animals) {
+            if (animal.getIsDead()) {
+                continue;
+            }
             Vector2d oldPosition = animal.getPosition();
             Directions oldDirection = animal.getDirection();
             int oldActualActiveGeneIndex = animal.getActualActiveGenIndex();
@@ -346,6 +357,7 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
      */
     public void dailyUpdate() {
         System.out.println(this);
+        this.growAnimals();
         this.removeEatenPlants();
         this.move();
         this.eat();
