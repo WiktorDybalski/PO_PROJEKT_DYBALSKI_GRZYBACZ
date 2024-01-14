@@ -1,6 +1,8 @@
 package model.simulation;
-
 import model.utils.Vector2d;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class SimulationConfigurator {
     private int numberOfDays;
@@ -21,6 +23,8 @@ public class SimulationConfigurator {
     private int genomeLength;
     private String animalBehaviourType;
 
+    private int dayLength;
+
     public SimulationConfigurator() {
         this.mapSizeX = 10;
         this.mapSizeY = 10;
@@ -39,6 +43,7 @@ public class SimulationConfigurator {
         this.genomeLength = 8;
         this.animalBehaviourType = "Random";
         this.numberOfDays = 100;
+        this.dayLength = 1000;
     }
 
     public Vector2d getMapSize() {
@@ -199,6 +204,76 @@ public class SimulationConfigurator {
     public void setNumberOfDays(int numberOfDays) {
         if (numberOfDays > 0) {
             this.numberOfDays = numberOfDays;
+        }
+    }
+
+    public int getDayLength() {
+        return dayLength;
+    }
+
+    public void setDayLength(int dayLength) {
+        if (dayLength > 0) {
+            this.dayLength = dayLength;
+        }
+    }
+
+    public void toTextFile() {
+        try (FileWriter writer = new FileWriter("config.txt")) {
+            writer.write("numberOfDays: " + numberOfDays + "\n");
+            writer.write("mapSizeX: " + mapSizeX + "\n");
+            writer.write("mapSizeY: " + mapSizeY + "\n");
+            writer.write("mapType: " + mapType + "\n");
+            writer.write("initialPlantCount: " + initialPlantCount + "\n");
+            writer.write("plantEnergy: " + plantEnergy + "\n");
+            writer.write("numberOfPlantsGrowingPerDay: " + numberOfPlantsGrowingPerDay + "\n");
+            writer.write("modeOfPlantGrowing: " + modeOfPlantGrowing + "\n");
+            writer.write("initialAnimalCount: " + initialAnimalCount + "\n");
+            writer.write("initialAnimalEnergy: " + initialAnimalEnergy + "\n");
+            writer.write("readyToReproduceEnergy: " + readyToReproduceEnergy + "\n");
+            writer.write("reproduceEnergyLoss: " + reproduceEnergyLoss + "\n");
+            writer.write("minimumMutationCount: " + minimumMutationCount + "\n");
+            writer.write("maximumMutationCount: " + maximumMutationCount + "\n");
+            writer.write("mutationVariant: " + mutationVariant + "\n");
+            writer.write("genomeLength: " + genomeLength + "\n");
+            writer.write("animalBehaviourType: " + animalBehaviourType + "\n");
+            writer.write("dayLength: " + dayLength + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void fromTextFile() {
+        try {
+            String[] lines = new String[20];
+            int i = 0;
+            java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader("config.txt"));
+            String line = reader.readLine();
+            while (line != null) {
+                lines[i] = line;
+                line = reader.readLine();
+                i++;
+            }
+            reader.close();
+            this.numberOfDays = Integer.parseInt(lines[0].split(" ")[1]);
+            this.mapSizeX = Integer.parseInt(lines[1].split(" ")[1]);
+            this.mapSizeY = Integer.parseInt(lines[2].split(" ")[1]);
+            this.mapType = lines[3].split(" ")[1];
+            this.initialPlantCount = Integer.parseInt(lines[4].split(" ")[1]);
+            this.plantEnergy = Integer.parseInt(lines[5].split(" ")[1]);
+            this.numberOfPlantsGrowingPerDay = Integer.parseInt(lines[6].split(" ")[1]);
+            this.modeOfPlantGrowing = lines[7].split(" ")[1];
+            this.initialAnimalCount = Integer.parseInt(lines[8].split(" ")[1]);
+            this.initialAnimalEnergy = Integer.parseInt(lines[9].split(" ")[1]);
+            this.readyToReproduceEnergy = Integer.parseInt(lines[10].split(" ")[1]);
+            this.reproduceEnergyLoss = Integer.parseInt(lines[11].split(" ")[1]);
+            this.minimumMutationCount = Integer.parseInt(lines[12].split(" ")[1]);
+            this.maximumMutationCount = Integer.parseInt(lines[13].split(" ")[1]);
+            this.mutationVariant = lines[14].split(" ")[1];
+            this.genomeLength = Integer.parseInt(lines[15].split(" ")[1]);
+            this.animalBehaviourType = lines[16].split(" ")[1];
+            this.dayLength = Integer.parseInt(lines[17].split(" ")[1]);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

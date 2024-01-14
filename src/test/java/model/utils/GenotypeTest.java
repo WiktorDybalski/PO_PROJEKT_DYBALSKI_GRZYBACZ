@@ -18,7 +18,7 @@ public class GenotypeTest {
         for (int i = 0; i < 8; i++)
             genes.add(i);
 
-        genotype = new Genotype(genes);
+        genotype = new Genotype(genes,8);
     }
 
     @Test
@@ -33,8 +33,8 @@ public class GenotypeTest {
 
     @Test
     public void testMutate() {
-        Genotype genotypeCopy = new Genotype(new ArrayList<>(genes));
-        genotype.mutate();
+        Genotype genotypeCopy = new Genotype(new ArrayList<>(genes),8);
+        genotype.mutate(true);
         assertEquals(genotype.getGenomeLength(), genotypeCopy.getGenomeLength());
         //due to uncontrollable nature of random, we can't test if the genotype has changed
     }

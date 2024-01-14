@@ -17,6 +17,8 @@ public class RandomGensGenerator {
      */
     private List<Genotype> gens;
 
+    private final int genomeLength;
+
     /**
      * Random object for generating random numbers.
      */
@@ -28,9 +30,10 @@ public class RandomGensGenerator {
      *
      * @param initialNumberOfGens The number of genotypes to generate initially.
      */
-    public RandomGensGenerator(int initialNumberOfGens) {
-        gens = new ArrayList<>();
-        random = new Random(1111);
+    public RandomGensGenerator(int initialNumberOfGens, int genomeLength) {
+        this.gens = new ArrayList<>();
+        this.random = new Random(1111);
+        this.genomeLength=genomeLength;
         generateGens(initialNumberOfGens);
     }
 
@@ -78,7 +81,7 @@ public class RandomGensGenerator {
             Integer digit = random.nextInt(8);
             listOfGens.add(digit);
         }
-        return new Genotype(listOfGens);
+        return new Genotype(listOfGens, genomeLength);
     }
 }
 

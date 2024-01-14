@@ -110,7 +110,7 @@ public class Tile {
      * @param currentDay current day of the simulation
      * @param energyToTransfer energy to be transferred from the parents to child
      */
-    public void reproduceAnimals(int currentDay, int energyToTransfer) {
+    public void reproduceAnimals(int currentDay, int energyToTransfer, boolean mutationType) {
         if (objects.getAnimals().size() < 2) {
             return;
         }
@@ -118,7 +118,7 @@ public class Tile {
         Animal animal1 = strongestAnimals.get(0);
         Animal animal2 = strongestAnimals.get(1);
         if (animal1.canReproduce() && animal2.canReproduce()) {
-            Animal child = animal1.reproduce(animal2, currentDay, energyToTransfer);
+            Animal child = animal1.reproduce(animal2, currentDay, energyToTransfer, mutationType);
             objects.addAnimal(child);
         }
     }

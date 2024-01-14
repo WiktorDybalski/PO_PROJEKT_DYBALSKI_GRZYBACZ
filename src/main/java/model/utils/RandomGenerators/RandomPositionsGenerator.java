@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.max;
 
 public class RandomPositionsGenerator {
     /**
@@ -129,6 +130,8 @@ public class RandomPositionsGenerator {
                     continue;
                 }
             }
+            if(tempAllPosition.isEmpty())
+                break;
             // Else, select from any available position
             randomIndex = abs(random.nextInt(tempAllPosition.size()));
             plantResult.add(tempAllPosition.get(randomIndex));

@@ -26,7 +26,7 @@ public class TileTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
 
         Animal animal = new Animal(new Vector2d(0,0), 10, genotype , 10, 10);
         tile.addAnimal(animal);
@@ -43,7 +43,7 @@ public class TileTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
 
         Animal animal = new Animal(new Vector2d(0,0), 10, genotype , 10, 10);
         tile.addAnimal(animal);
@@ -65,7 +65,7 @@ public class TileTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
 
         Animal animal = new Animal(new Vector2d(0,0), 10, genotype , 10, 10);
         tile.addAnimal(animal);
@@ -83,7 +83,7 @@ public class TileTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
 
         Animal animal = new Animal(new Vector2d(0,0), 10, genotype , 10, 10);
         tile.addAnimal(animal);
@@ -97,7 +97,7 @@ public class TileTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
 
         for (int i= 0; i < 10; i++) {
             Animal animal = new Animal(new Vector2d(0,0), i*i%10, genotype , 10, 10);
@@ -113,7 +113,7 @@ public class TileTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
 
         for (int i= 0; i < 10; i++) {
             Animal animal = new Animal(new Vector2d(0,0), i , genotype , 10, 10);
@@ -132,7 +132,7 @@ public class TileTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
         Animal animal = new Animal(new Vector2d(0,0), 10, genotype , 10, 10);
         tile.addAnimal(animal);
         assertEquals(tile.getAnimals().size(),1);
@@ -149,23 +149,23 @@ public class TileTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype1 = new Genotype(genes);
-        Genotype genotype2 = new Genotype(genes);
+        Genotype genotype1 = new Genotype(genes,8);
+        Genotype genotype2 = new Genotype(genes,8);
         Animal animal1 = new Animal(new Vector2d(0,0), 10, genotype1 , 10, 10);
         Animal animal2 = new Animal(new Vector2d(0,0), 10, genotype2 , 10, 10);
         tile.addAnimal(animal1);
         tile.addAnimal(animal2);
         assertEquals(tile.getAnimals().size(),2);
-        tile.reproduceAnimals(10, 10);
+        tile.reproduceAnimals(10, 10,true);
         assertEquals(tile.getAnimals().size(),3);
-        tile.reproduceAnimals(10, 10);
+        tile.reproduceAnimals(10, 10,true);
         assertEquals(tile.getAnimals().size(),3);
-        tile.reproduceAnimals(10, 10);
+        tile.reproduceAnimals(10, 10,true);
         Animal animal3 = new Animal(new Vector2d(0,0), 10, genotype2 , 10, 10);
         tile.addAnimal(animal3);
         Animal animal4 = new Animal(new Vector2d(0,0), 10, genotype2 , 10, 10);
         tile.addAnimal(animal4);
-        tile.reproduceAnimals(10, 10);
+        tile.reproduceAnimals(10, 10,true);
         assertEquals(tile.getAnimals().size(),6);
     }
 

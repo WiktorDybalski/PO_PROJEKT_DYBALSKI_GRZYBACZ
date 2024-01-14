@@ -20,6 +20,8 @@ import java.io.IOException;
 public class StartPresenter {
     @FXML
     public ChoiceBox BehaviourVariant;
+    public Slider dayLengthSlider;
+    public Label dayLengthValueLabel;
     @FXML
     private ChoiceBox MapVariant;
     @FXML
@@ -120,8 +122,12 @@ public class StartPresenter {
                 genomeLengthSlider.valueProperty().asString("%.0f")
         );
 
+        dayLengthValueLabel.textProperty().bind(
+                dayLengthSlider.valueProperty().asString("%.0f")
+        );
+
         mapTypeChoiceBox.setItems(FXCollections.observableArrayList("GlobeMap", "PoisonedMap"));
-        BehaviourVariantChoiceBox.setItems(FXCollections.observableArrayList("Normal", "Mutation"));
+        BehaviourVariantChoiceBox.setItems(FXCollections.observableArrayList("Random", "LittleRandom"));
     }
 
     @FXML
@@ -180,6 +186,7 @@ public class StartPresenter {
         config.setMinimumMutationCount((int) minimumMutationCountSlider.getValue());
         config.setMaximumMutationCount((int) maximumMutationCountSlider.getValue());
         config.setGenomeLength((int) genomeLengthSlider.getValue());
+        config.setDayLength((int) dayLengthSlider.getValue());
 
         config.setMapType(mapTypeChoiceBox.getValue());
         config.setAnimalBehaviourType(BehaviourVariantChoiceBox.getValue());

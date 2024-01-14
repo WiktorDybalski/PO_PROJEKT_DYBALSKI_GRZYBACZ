@@ -36,7 +36,7 @@ public class Simulation extends Thread {
             this.worldMap.dailyUpdate();
             System.out.println(this.statistics.getStatistics());
             try {
-                Thread.sleep(1000); // Wait 1 second
+                Thread.sleep(this.worldMap.getConfig().getDayLength()); // Wait 1 second
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

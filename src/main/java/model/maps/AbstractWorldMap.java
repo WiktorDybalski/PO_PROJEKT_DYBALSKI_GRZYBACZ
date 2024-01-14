@@ -16,11 +16,11 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
     /**
      * Lower, Left corner of the Map
      */
-    private final Vector2d lowerLeft;
+    protected final Vector2d lowerLeft;
     /**
      * Upper, Right corner of the Map
      */
-    private final Vector2d upperRight;
+    protected final Vector2d upperRight;
     protected SimulationConfigurator config;
     protected List<Animal> animals;
     /**
@@ -304,7 +304,7 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
                 Animal parent1 = strongestAnimals.get(0);
                 Animal parent2 = strongestAnimals.get(1);
                 if (parent1.canReproduce() && parent2.canReproduce()) {
-                    Animal child = parent1.reproduce(parent2, currentDay, config.getReproduceEnergyLoss());
+                    Animal child = parent1.reproduce(parent2, currentDay, config.getReproduceEnergyLoss(), config.getMutationVariant()=="Random");
                     placeAnimal(child, child.getPosition());
                     this.animals.add(child);
                 }

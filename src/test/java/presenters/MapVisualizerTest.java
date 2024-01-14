@@ -22,7 +22,7 @@ public class MapVisualizerTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
 
         map.placeAnimal(new Animal(new Vector2d(5, 5), 1,  genotype, 0, 10), new Vector2d(5, 5));
         map.placeAnimal(new Animal(new Vector2d(5, 5), 2,  genotype, 0, 10), new Vector2d(5, 6));

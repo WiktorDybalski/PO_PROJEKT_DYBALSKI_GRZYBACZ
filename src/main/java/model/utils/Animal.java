@@ -208,7 +208,7 @@ public class Animal implements MapElement {
      * @param energyToTransfer The energy transferred to the new animal.
      * @return The new offspring animal.
      */
-    public Animal reproduce(Animal partner, int currentDay, int energyToTransfer) {
+    public Animal reproduce(Animal partner, int currentDay, int energyToTransfer, boolean mutation_type) {
         double ratio = (double) this.getEnergy() / (this.getEnergy() + partner.getEnergy());
         Random random = new Random();
         //if 0 then left, if 1 then right
@@ -219,7 +219,7 @@ public class Animal implements MapElement {
         } else {
             childgenotype = partner.getGenotype().mixGenotypes(this.getGenotype(), ratio);
         }
-        childgenotype.mutate();
+        childgenotype.mutate(mutation_type);
         Animal child = new Animal(this.getPosition(), energyToTransfer, childgenotype, currentDay, this.minimalReproductionEnergy);
         this.energy -= (int) (ratio * energyToTransfer);
         partner.energy -= (int) ((1 - ratio) * energyToTransfer);

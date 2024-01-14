@@ -19,12 +19,15 @@ public class Genotype {
     // List to store the genes which make up the genotype.
     private ArrayList<Integer> genes;
 
+    private final int genomeLength;
+
     /**
      * Constructor to initialize a Genotype with a given set of genes.
      * @param genes The list of genes to be assigned to the genotype.
      */
-    public Genotype(ArrayList<Integer> genes) {
+    public Genotype(ArrayList<Integer> genes, int genomeLength) {
         this.genes = new ArrayList<>(genes);
+        this.genomeLength=genomeLength;
     }
 
     //getters and setters
@@ -41,7 +44,25 @@ public class Genotype {
     /**
      * Mutates the genotype by randomly changing a specified number of genes.
      */
-    public void mutate() {
+    public void mutate(boolean mutationType) {
+        if (mutationType) {
+            fullyRandomMutate();
+        } else {
+            littleMutate();
+        }
+    }
+
+    private void littleMutate() {
+        Random random = new Random();
+        int mutationCount = random.nextInt(genes.size()) + 1;
+        for (int i = 0; i < mutationCount; i++) {
+            int geneIndex = random.nextInt(genes.size());
+            int geneValue = (genes.get(geneIndex) + random.nextInt()%2 ) % 7+1; // to avoid mutation to the same value
+            genes.set(geneIndex, geneValue);
+        }
+    }
+
+    private void fullyRandomMutate() {
         Random random = new Random();
         int mutationCount = random.nextInt(genes.size()) + 1;
         for (int i = 0; i < mutationCount; i++) {
@@ -66,7 +87,7 @@ public class Genotype {
                 newGenes.add(genotype.genes.get(i));
             }
         }
-        return new Genotype(newGenes);
+        return new Genotype(newGenes,genomeLength);
     }
 
 

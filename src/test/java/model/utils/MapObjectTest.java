@@ -37,7 +37,7 @@ public class MapObjectTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
         Animal animal = new Animal(new Vector2d(1, 1), 1, genotype, 1,2);
         mapObjects.addAnimal(animal);
         assertTrue(mapObjects.getAnimals().contains(animal));
@@ -54,7 +54,7 @@ public class MapObjectTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
         Animal animal = new Animal(new Vector2d(1, 1), 1, genotype, 1,2);
         mapObjects.addAnimal(animal);
         assertTrue(mapObjects.getAnimals().contains(animal));
@@ -69,7 +69,7 @@ public class MapObjectTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
         Animal animal = new Animal(new Vector2d(1, 1), 1, genotype, 1,2);
         mapObjects.addAnimal(animal);
         assertTrue(mapObjects.getObjects().contains(animal));
@@ -86,7 +86,7 @@ public class MapObjectTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
         Animal animal = new Animal(new Vector2d(1, 1), 1, genotype, 1,2);
         mapObjects.addAnimal(animal);
         assertTrue(mapObjects.isOccupied());
@@ -99,7 +99,7 @@ public class MapObjectTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
         Animal animal = new Animal(new Vector2d(1, 1), 1, genotype, 1,2);
         mapObjects.addAnimal(animal);
         assertEquals(mapObjects.getStrongestAnimal(), animal);
@@ -115,7 +115,7 @@ public class MapObjectTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
         Animal animal = new Animal(new Vector2d(1, 1), 1, genotype, 1,2);
         mapObjects.addAnimal(animal);
         assertNull(mapObjects.getStrongestAnimals());
@@ -136,7 +136,7 @@ public class MapObjectTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
         Animal animal = new Animal(new Vector2d(1, 1), 0, genotype, 1,2);
         mapObjects.addAnimal(animal);
         mapObjects.addAnimal(animal);
@@ -166,7 +166,7 @@ public class MapObjectTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes);
+        Genotype genotype = new Genotype(genes,8);
 
         Animal animal = new Animal(new Vector2d(1, 1), 1, genotype, 1,2);
         mapObjects.addAnimal(animal);

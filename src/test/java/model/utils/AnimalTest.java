@@ -28,8 +28,8 @@ public class AnimalTest {
             genes2.add(7-i);
         }
 
-        genotype1 = new Genotype(genes1);
-        genotype2 = new Genotype(genes2);
+        genotype1 = new Genotype(genes1,8);
+        genotype2 = new Genotype(genes2,8);
 
         int birthDay = 0;
         int minimal_reproduction_energy = 5;
@@ -123,7 +123,7 @@ public class AnimalTest {
 
     @Test
     public void reproduce() {
-        Animal animal3=animal1.reproduce(animal2, 0,10);
+        Animal animal3=animal1.reproduce(animal2, 0,10,true);
         assertEquals(animal1.getChildrenCount(), 1);
         assertEquals(animal2.getChildrenCount(), 1);
         assertEquals(animal1.getEnergy(), 5);

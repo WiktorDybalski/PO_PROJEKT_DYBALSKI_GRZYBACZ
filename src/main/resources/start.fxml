@@ -56,12 +56,16 @@
             <Slider fx:id="genomeLengthSlider" min="8" max="16" value="8" GridPane.columnIndex="1" GridPane.rowIndex="11" />
             <Label fx:id="genomeLengthValueLabel" text="8" GridPane.columnIndex="2" GridPane.rowIndex="11"/>
 
-            <Label text="Map Type:" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
-            <ChoiceBox fx:id="mapTypeChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <Label text="Day Length(ms):" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
+            <Slider fx:id="dayLengthSlider" min="10" max="1000" value="100" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <Label fx:id="dayLengthValueLabel" text="8" GridPane.columnIndex="2" GridPane.rowIndex="12"/>
+
+            <Label text="Map Type:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
+            <ChoiceBox fx:id="mapTypeChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="13" />
 
 
-            <Label text="Behaviour Variant:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
-            <ChoiceBox fx:id="BehaviourVariantChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+            <Label text="Behaviour Variant:" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
+            <ChoiceBox fx:id="BehaviourVariantChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="14" />
 
             <Button fx:id="startButton" text="Start Simulation" onAction="#onStartClicked" GridPane.columnIndex="0" GridPane.rowIndex="14" GridPane.columnSpan="2"/>
         </GridPane>

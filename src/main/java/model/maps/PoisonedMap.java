@@ -1,10 +1,7 @@
 package model.maps;
 
 import model.simulation.SimulationConfigurator;
-import model.utils.Animal;
-import model.utils.MapObjects;
-import model.utils.Plant;
-import model.utils.Vector2d;
+import model.utils.*;
 
 import java.util.List;
 import java.util.Random;
@@ -66,7 +63,39 @@ public class PoisonedMap extends AbstractWorldMap {
      */
 
     public void move(List<Animal> animals) {
-        super.move();
+        for (Animal animal : animals) {
+            Vector2d oldPosition = animal.getPosition();
+            Directions oldDirection = animal.getDirection();
+            int oldActualActiveGeneIndex = animal.getActualActiveGenIndex();
+            Vector2d vector = new Vector2d(Directions.toUnitVector(oldActualActiveGeneIndex).getX(), Directions.toUnitVector(oldActualActiveGeneIndex).getY());
+            Vector2d newPosition = oldPosition.add(vector);
+            if (newPositionOutOfLeftBound(newPosition)) {
+                newPosition = new Vector2d(upperRight.getX(), newPosition.getY());
+            } else if (newPositionOutOfRightBound(newPosition)) {
+                newPosition = new Vector2d(lowerLeft.getX(), newPosition.getY());
+            }
+            if (canMoveTo(newPosition)) {
+                if(mapTiles.get(newPosition).getPlant()!=null && mapTiles.get(newPosition).getPlant().getIsPoisoned()){
+                    Random random = new Random();
+                    if(random.nextInt(10)%5==0){
+                        oldActualActiveGeneIndex = (oldActualActiveGeneIndex + 1) % 8;
+                        vector = new Vector2d(Directions.toUnitVector(oldActualActiveGeneIndex).getX(), Directions.toUnitVector(oldActualActiveGeneIndex).getY());
+                        newPosition = oldPosition.add(vector);
+                        if (newPositionOutOfLeftBound(newPosition)) {
+                            newPosition = new Vector2d(upperRight.getX(), newPosition.getY());
+                        } else if (newPositionOutOfRightBound(newPosition)) {
+                            newPosition = new Vector2d(lowerLeft.getX(), newPosition.getY());
+                        }
+                    }
+                }
+                mapTiles.get(oldPosition).removeAnimal(animal);
+                animal.move(oldDirection, newPosition);
+                animal.setDirection(Directions.fromUnitVector(vector));
+                mapTiles.get(newPosition).addAnimal(animal);
+            }
+            animal.setActualActiveGenIndex(animal.getNextGene());
+            animal.decreaseEnergy();
+        }
     }
 
     /**
