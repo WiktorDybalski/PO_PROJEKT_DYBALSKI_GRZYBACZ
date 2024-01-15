@@ -8,8 +8,10 @@
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
     -fx-alignment: center;
+    -fx-padding: 5px; /* Add padding to create space around label text */
 }
-.header {
+
+header {
     -fx-font-size: 30px; /* Rozmiar czcionki nagłówka */
     -fx-alignment: center; /* Wyśrodkowanie tekstu w nagłówku */
 }
@@ -21,6 +23,7 @@
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-margin: 20px;
 }
 
 .button:hover {
@@ -33,6 +36,7 @@
     -fx-font-size: 14px;
     -fx-border-color: #9e9e9e;
     -fx-padding: 5px;
+    -fx-margin: 5px; /* Add margin to separate text fields */
 }
 
 .grid-pane {
@@ -40,6 +44,7 @@
     -fx-border-color: black;
     -fx-border-width: 10px;
     -fx-border-radius: 10px;
+    -fx-margin: 20px;
 }
 
 .grid-pane .label {

@@ -9,9 +9,10 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="850.0" minWidth="1100.0"
+            minHeight="850.0" minWidth="1200.0"
             fx:controller="presenters.SimulationPresenter"
             stylesheets="@simulationStyles.css">
     <top>
@@ -22,11 +23,12 @@
     </top>
     <center>
         <HBox alignment="CENTER">
-            <VBox alignment="CENTER">
+            <VBox alignment="CENTER" HBox.hgrow="NEVER">
                 <Label fx:id="moveInfoLabel" alignment="CENTER"/>
-                <Button fx:id="startStopButton" minWidth="100" text="Start" onAction="#onSimulationStartClicked" />
+                <Button fx:id="startStopButton" minWidth="120" text="Start" onAction="#onSimulationStartClicked" />
             </VBox>
-            <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER"  />
+            <Pane/>
+            <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER"  HBox.hgrow="ALWAYS"/>
         </HBox>
     </center>
 </BorderPane>

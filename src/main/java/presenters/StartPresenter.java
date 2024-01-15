@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.maps.GlobeMap;
 import model.maps.PoisonedMap;
@@ -29,6 +30,8 @@ public class StartPresenter {
     private ChoiceBox MapVariant;
     @FXML
     private Slider daysCountSlider;
+    @FXML
+    private GridPane contentArea;
     @FXML
     private Label daysCountValueLabel;
     @FXML

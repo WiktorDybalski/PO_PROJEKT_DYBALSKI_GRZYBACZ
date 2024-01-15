@@ -15,7 +15,9 @@ BorderPane {
 .center {
     -fx-spacing: 15;
 }
-
+#contentArea {
+    -fx-background-color: #9DC88D; /* Cream color */
+}
 Button {
     -fx-background-color: #333333; /* Ciemniejszy odcień dla tła */
     -fx-text-fill: white;
