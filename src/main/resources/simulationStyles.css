@@ -11,9 +11,15 @@
     -fx-padding: 5px; /* Add padding to create space around label text */
 }
 
-header {
+#header {
     -fx-font-size: 30px; /* Rozmiar czcionki nagłówka */
     -fx-alignment: center; /* Wyśrodkowanie tekstu w nagłówku */
+    -fx-font-weight: 20px;
+}
+#currentDayLabel {
+    -fx-font-size: 22px; /* Rozmiar czcionki nagłówka */
+    -fx-alignment: center; /* Wyśrodkowanie tekstu w nagłówku */
+    -fx-font-weight: 20px;
 }
 .button {
     -fx-background-color: #4CAF50;

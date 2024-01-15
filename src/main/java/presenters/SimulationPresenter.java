@@ -31,11 +31,8 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private Label currentDayLabel;
     @FXML
-    private Label infoLabel;
-    @FXML
     public Label header;
-    @FXML
-    private TextField movesListTextField;
+
 
     @FXML
     private Label moveInfoLabel;
@@ -164,17 +161,15 @@ public class SimulationPresenter implements MapChangeListener {
         Boundary boundary = worldMap.getCurrentBounds();
         drawAxes(boundary);
         drawGrid(boundary);
-        infoLabel.setText("");
     }
 
     @Override
     public void mapChanged(WorldMap worldMap, String message) {
         Platform.runLater(() -> {
-            day = worldMap.getCurrentDay();
-            currentDayLabel.setText("   Day: " + day);
+            currentDayLabel.setText("   Day: " + worldMap.getCurrentDay());
             moveInfoLabel.setText(statistics.getStatistics());
             this.drawMap();
-            moveInfoLabel.setText(message);
+            moveInfoLabel.setText(statistics.getStatistics());
         });
     }
 
@@ -192,10 +187,11 @@ public class SimulationPresenter implements MapChangeListener {
                 simulation = new Simulation(worldMap, worldMap.getConfig());
                 int maxsize=Math.max(worldMap.getConfig().getMapSizeX(),worldMap.getConfig().getMapSizeY());
                 cellSize*=(10.0/maxsize);
-                cellSize=Math.min(cellSize,60);
+                cellSize=Math.min(cellSize,40);
                 simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation)));
                 simulationEngine.runAsync();
                 statistics = new Statistics(worldMap);
+                simulation.setStatistics(statistics);
                 Platform.runLater(() -> startStopButton.setText("Start"));
                 isSimulationRunning = false;
             } else {
@@ -222,8 +218,8 @@ public class SimulationPresenter implements MapChangeListener {
 
     @FXML
     private void onShowDominantGenotypeClicked() {
-        Set<Vector2d> dominantGenotypeAnimals = simulation.getDominantGenotypeAnimals();
-        System.out.println(dominantGenotypeAnimals);
+        Set<Vector2d> dominantGenotypeAnimals = simulation.getStatistics().getDominantGenotypeAnimals();
+
 
         for (Node node : mapGrid.getChildren()) {
             Integer colIndex = GridPane.getColumnIndex(node);

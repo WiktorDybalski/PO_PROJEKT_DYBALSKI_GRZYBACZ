@@ -1,37 +1,40 @@
 package presenters;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.maps.GlobeMap;
 import model.maps.PoisonedMap;
 import model.simulation.SimulationConfigurator;
-import javafx.scene.control.Alert;
-
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StartPresenter {
-    private SimulationPresenter simulationPresenter;
-
     @FXML
-    public ChoiceBox BehaviourVariant;
+    private Button loadConfigButton;
+    @FXML
+    private Button saveConfigButton;
+    @FXML
+    private Button startButton;
+    @FXML
+    public ChoiceBox<String> saveToCsvChoiceBox;
+    @FXML
+    public ChoiceBox<String> BehaviourVariant;
+    @FXML
     public Slider dayLengthSlider;
-    public Label dayLengthValueLabel;
     @FXML
-    private ChoiceBox MapVariant;
+    public Label dayLengthValueLabel;
+    private SimulationPresenter simulationPresenter;
+    @FXML
+    private ChoiceBox<String> MapVariant;
     @FXML
     private Slider daysCountSlider;
     @FXML
@@ -88,9 +91,6 @@ public class StartPresenter {
     @FXML
     private ChoiceBox<String> BehaviourVariantChoiceBox;
 
-    @FXML
-    private Button startButton;
-
     private SimulationConfigurator config = new SimulationConfigurator();
 
     @FXML
@@ -138,17 +138,19 @@ public class StartPresenter {
 
         mapTypeChoiceBox.setItems(FXCollections.observableArrayList("GlobeMap", "PoisonedMap"));
         BehaviourVariantChoiceBox.setItems(FXCollections.observableArrayList("Random", "LittleRandom"));
+        saveToCsvChoiceBox.setItems(FXCollections.observableArrayList("Yes", "No"));
+        saveToCsvChoiceBox.setValue("No");
     }
 
     private boolean isChoiceBoxValid() {
-        return mapTypeChoiceBox.getValue() != null && BehaviourVariantChoiceBox.getValue() != null;
+        return mapTypeChoiceBox.getValue() != null && BehaviourVariantChoiceBox.getValue() != null && saveToCsvChoiceBox.getValue() != null;
     }
 
-    private void showAlert(String title, String content) {
+    private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
+        alert.setTitle("Validation Error");
         alert.setHeaderText(null);
-        alert.setContentText(content);
+        alert.setContentText("Please select options from all ChoiceBoxes before starting the simulation.");
         alert.showAndWait();
     }
 
@@ -157,15 +159,16 @@ public class StartPresenter {
             simulationPresenter.stopSimulation();
         }
     }
+
     @FXML
     public void onStartClicked() {
         try {
             configureSimulation();
             if (!isChoiceBoxValid()) {
-                // Wyświetl komunikat o błędzie lub podejmij inne odpowiednie działania
-                showAlert("Validation Error", "Please select options from all ChoiceBoxes before starting the simulation.");
+                showAlert();
                 return;
             }
+
             String selectedOption = config.getMapType();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/simulation.fxml"));
@@ -217,6 +220,7 @@ public class StartPresenter {
 
         config.setMapType(mapTypeChoiceBox.getValue());
         config.setAnimalBehaviourType(BehaviourVariantChoiceBox.getValue());
+        config.setWriteToCsv(saveToCsvChoiceBox.getValue());
     }
 
     private void updateUIWithConfig() {

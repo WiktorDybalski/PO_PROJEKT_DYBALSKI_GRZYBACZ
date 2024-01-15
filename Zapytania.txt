@@ -1,4 +1,0 @@
-1. Czy firstday zostawić czy usunąć?
-2. Czy super.methoda musi być nadpisywane np. w GlobeMap mamy updateMap?
-3. Czy równik ma być w każdej mapie
-4. Czy stream w positionGenerator jest git?

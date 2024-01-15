@@ -76,7 +76,7 @@ public class Statistics {
         return numberOfDeadAnimals;
     }
 
-    public Set<Vector2d> getDiminantGenotypeAnimals() {
+    public Set<Vector2d> getDominantGenotypeAnimals() {
         return dominantGenotypeAnimals;
     }
 

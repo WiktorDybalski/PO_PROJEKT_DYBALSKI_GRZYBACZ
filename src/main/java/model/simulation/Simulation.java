@@ -26,7 +26,10 @@ public class Simulation extends Thread {
     public Simulation(WorldMap worldmap, SimulationConfigurator config) {
         this.worldMap = worldmap;
         this.config = config;
-        this.statistics = new Statistics(worldMap);
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
     }
 
     public Statistics getStatistics() {
@@ -53,7 +56,6 @@ public class Simulation extends Thread {
                 }
             }
             this.worldMap.dailyUpdate();
-            //System.out.println(this.statistics.getStatistics());
             try {
                 Thread.sleep(this.worldMap.getConfig().getDayLength());
             } catch (InterruptedException e) {
@@ -83,7 +85,7 @@ public class Simulation extends Thread {
     }
 
     public Set<Vector2d> getDominantGenotypeAnimals() {
-        return this.statistics.getDiminantGenotypeAnimals();
+        return this.statistics.getDominantGenotypeAnimals();
     }
 
     public Set<Vector2d> getPlantPreferredFields() {

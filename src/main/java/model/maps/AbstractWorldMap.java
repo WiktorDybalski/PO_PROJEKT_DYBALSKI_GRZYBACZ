@@ -356,7 +356,6 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
      * The dailyUpdate method is responsible for the daily update of the map
      */
     public void dailyUpdate() {
-        //System.out.println(this);
         this.growAnimals();
         this.removeEatenPlants();
         this.move();

@@ -1,8 +1,14 @@
-- update documentation
-- update getters names
-- check todo's
-- add some more tests
-- refactor code
-- add comments
-- update UML (add constructor arguments and relations between classes)
+1. Update file loading and saving method
+2. Fix moving animals on the bound of the map
+3. Po zatrzymaniu programu można oznaczyć jednego zwierzaka jako wybranego do śledzenia. Od tego momentu (do zatrzymania śledzenia) UI powinien przekazywać nam informacje o jego statusie i historii:
+jaki ma genom,
+która jego część jest aktywowana,
+ile ma energii,
+ile zjadł roślin,
+ile posiada dzieci,
+ile posiada potomków (niekoniecznie będących bezpośrednio dziećmi),
+ile dni już żyje (jeżeli żyje),
+którego dnia zmarło (jeżeli żywot już skończyło).
 
+5. Jeżeli zdecydowano się na to w momencie uruchamiania symulacji, to jej statystyki powinny być zapisywane (każdego dnia)
+ do pliku CSV. Plik ten powinnien być "otwieralny" przez dowolny rozujmiejący ten format program (np. MS Excel).

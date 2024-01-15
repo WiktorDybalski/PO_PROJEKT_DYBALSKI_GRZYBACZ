@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class SimulationConfigurator {
+    private String writeToCsv;
     private int numberOfDays;
     private int mapSizeX;
     private int mapSizeY;
@@ -44,6 +45,7 @@ public class SimulationConfigurator {
         this.animalBehaviourType = "Random";
         this.numberOfDays = 100;
         this.dayLength = 1000;
+        this.writeToCsv = "No";
     }
 
     public int getMapSizeX() {
@@ -72,6 +74,14 @@ public class SimulationConfigurator {
         if (mapType != null && !mapType.isEmpty()) {
             this.mapType = mapType;
         }
+    }
+
+    public String isWriteToCsv() {
+        return writeToCsv;
+    }
+
+    public void setWriteToCsv(String writeToCsv) {
+        this.writeToCsv = writeToCsv;
     }
 
     public int getInitialPlantCount() {
