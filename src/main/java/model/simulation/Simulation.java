@@ -1,10 +1,7 @@
 package model.simulation;
 
 import model.maps.WorldMap;
-import model.utils.Genotype;
-import model.utils.Statistics;
-import model.utils.Tile;
-import model.utils.Vector2d;
+import model.utils.*;
 import presenters.ConsoleMapDisplay;
 
 import java.util.Collection;
@@ -89,8 +86,12 @@ public class Simulation extends Thread {
         Set<Vector2d> dominantGenotypePositions = new HashSet<>();
         Genotype dominantGenotype = this.statistics.getDominantGenotype();
         for (Tile tile : this.worldMap.getMapTiles().values()) {
-            if (tile.getStrongestAnimal() != null && tile.getStrongestAnimal().getGenotype().equals(dominantGenotype)) {
-                dominantGenotypePositions.add(tile.getStrongestAnimal().getPosition());
+            if (tile.getAnimals()!=null) {
+                for (Animal animal : tile.getAnimals()) {
+                    if (animal.getGenotype().equals(dominantGenotype)) {
+                        dominantGenotypePositions.add(animal.getPosition());
+                    }
+                }
             }
         }
         return dominantGenotypePositions;

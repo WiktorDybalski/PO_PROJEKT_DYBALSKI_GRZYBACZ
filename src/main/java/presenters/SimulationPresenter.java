@@ -223,6 +223,7 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private void onShowDominantGenotypeClicked() {
         Set<Vector2d> dominantGenotypeAnimals = simulation.getDominantGenotypeAnimals();
+        System.out.println(dominantGenotypeAnimals);
 
         for (Node node : mapGrid.getChildren()) {
             Integer colIndex = GridPane.getColumnIndex(node);

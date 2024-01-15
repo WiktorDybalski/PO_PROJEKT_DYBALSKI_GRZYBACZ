@@ -90,14 +90,6 @@ public class Genotype {
         return new Genotype(newGenes,genomeLength);
     }
 
-
-    /**
-     * Overrides the default hashCode method.
-     */
-    public int hashCode() {
-        return Objects.hash(genes);
-    }
-
     /**
      * Checks if two genotypes are equal.
      * @param obj The object to be compared to.
@@ -111,7 +103,9 @@ public class Genotype {
             return false;
         }
         Genotype other = (Genotype) obj;
-        return genes.equals(other.genes);
+        String genotype1 = this.toString();
+        String genotype2 = other.toString();
+        return genotype1.equals(genotype2);
     }
 
     /**
