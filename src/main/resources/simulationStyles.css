@@ -8,18 +8,16 @@
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
     -fx-alignment: center;
-    -fx-padding: 5px; /* Add padding to create space around label text */
+    -fx-padding: 5px;
 }
 
 #header {
-    -fx-font-size: 30px; /* Rozmiar czcionki nagłówka */
-    -fx-alignment: center; /* Wyśrodkowanie tekstu w nagłówku */
-    -fx-font-weight: 20px;
+    -fx-font-size: 30px;
+    -fx-alignment: center;
 }
 #currentDayLabel {
-    -fx-font-size: 22px; /* Rozmiar czcionki nagłówka */
-    -fx-alignment: center; /* Wyśrodkowanie tekstu w nagłówku */
-    -fx-font-weight: 20px;
+    -fx-font-size: 22px;
+    -fx-alignment: center;
 }
 .button {
     -fx-background-color: #4CAF50;
@@ -29,13 +27,14 @@
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    -fx-margin: 20px;
+    -fx-margin: 25px;
 }
 
 .button:hover {
     -fx-background-color: #45a049;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
+    -fx-margin: 5px;
 }
 
 .text-field {

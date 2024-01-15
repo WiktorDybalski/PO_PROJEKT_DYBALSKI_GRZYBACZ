@@ -129,7 +129,6 @@ public class Statistics {
             if (genotypeCounter.get(genotype).size() > maxCount) {
                 maxCount = genotypeCounter.get(genotype).size();
                 this.dominantGenotype = genotype;
-                System.out.println(genotype+ " " + genotypeCounter.get(genotype).size()+ " " +maxCount);
             }
         }
 
@@ -164,7 +163,8 @@ public class Statistics {
      * @return statistics about the map
      */
     public String toString() {
-        return "Number of animals: " + getNumberOfAnimals() + "\n" +
+        return "Statistics:" + "\n" +
+                "Number of animals: " + getNumberOfAnimals() + "\n" +
                 "Number of alive animals: " + getNumberOfAliveAnimals() + "\n" +
                 "Number of dead animals: " + getNumberOfDeadAnimals() + "\n" +
                 "Number of plants: " + getNumberOfPlants() + "\n" +

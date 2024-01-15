@@ -262,7 +262,8 @@ public class Animal implements MapElement {
     }
 
     public String getInfo() {
-        String info = "Position: " + this.position.toString() + "\n" +
+        String info = "Animal info: " + "\n" +
+                "Position: " + this.position.toString() + "\n" +
                 "Energy: " + this.energy + "\n" +
                 "Direction: " + this.direction.toString() + "\n" +
                 "Genotype: " + this.genotype.toString() + "\n" +
@@ -272,5 +273,19 @@ public class Animal implements MapElement {
                 "Age: " + this.age + "\n" +
                 "Is dead: " + this.isDead + "\n";
         return info;
+    }
+    public static String getInfoForNone() {
+        return """
+                Animal info:\s
+                Position:\s
+                Energy:\s
+                Direction:\s
+                Genotype:\s
+                Children:\s
+                Eaten plant count:\s
+                Birth day:\s
+                Age:\s
+                Is dead:\s
+                """;
     }
 }
