@@ -111,15 +111,7 @@ public class Genotype {
             return false;
         }
         Genotype other = (Genotype) obj;
-        if (this.genes.size() != other.genes.size()) {
-            return false;
-        }
-        for (int i = 0; i < this.genes.size(); i++) {
-            if (!this.genes.get(i).equals(other.genes.get(i))) {
-                return false;
-            }
-        }
-        return true;
+        return genes.equals(other.genes);
     }
 
     /**

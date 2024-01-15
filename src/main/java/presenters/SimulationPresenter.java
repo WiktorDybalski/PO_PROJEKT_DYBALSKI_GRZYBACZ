@@ -54,6 +54,8 @@ public class SimulationPresenter implements MapChangeListener {
 
     private boolean isSimulationRunning = false;
 
+    private double cellSize = 60;
+
     public Simulation getSimulation() {
         return this.simulation;
     }
@@ -75,8 +77,8 @@ public class SimulationPresenter implements MapChangeListener {
         } else {
             label = new Label(" ");
         }
-        label.setMinWidth(50);
-        label.setMinHeight(50);
+        label.setMinWidth(cellSize);
+        label.setMinHeight(cellSize);
         label.setAlignment(Pos.CENTER);
         label.getStyleClass().add("map-grid-cell");
         return label;
@@ -86,7 +88,6 @@ public class SimulationPresenter implements MapChangeListener {
         Tile tile = worldMap.getTile(position);
         String string = EMPTY_CELL;
         Label label;
-
         if (tile.isOccupied()) {
             if (!tile.getAnimals().isEmpty()) {
                 string = tile.getStrongestAnimal().getEnergy() + "";
@@ -129,8 +130,8 @@ public class SimulationPresenter implements MapChangeListener {
     private void drawXAxis(Boundary boundary) {
         for (int j = boundary.leftDownCorner().getX(); j <= boundary.rightUpperCorner().getX(); j++) {
             Label label = new Label(Integer.toString(j));
-            label.setMinWidth(50);
-            label.setMinHeight(50);
+            label.setMinWidth(cellSize);
+            label.setMinHeight(cellSize);
             label.setAlignment(Pos.CENTER);
             mapGrid.add(label, j + 1 - boundary.leftDownCorner().getX(), 0); // Dodajemy etykiety osi X na górze siatki
         }
@@ -139,8 +140,8 @@ public class SimulationPresenter implements MapChangeListener {
     private void drawYAxis(Boundary boundary) {
         for (int i = boundary.leftDownCorner().getY(); i <= boundary.rightUpperCorner().getY(); i++) {
             Label label = new Label(Integer.toString(i));
-            label.setMinWidth(50);
-            label.setMinHeight(50);
+            label.setMinWidth(cellSize);
+            label.setMinHeight(cellSize);
             label.setAlignment(Pos.CENTER);
             mapGrid.add(label, 0, boundary.rightUpperCorner().getY()-i + 1);
         }
@@ -150,8 +151,8 @@ public class SimulationPresenter implements MapChangeListener {
         drawXAxis(boundary);
         drawYAxis(boundary);
         Label label = new Label("x/y");
-        label.setMinWidth(50);
-        label.setMinHeight(50);
+        label.setMinWidth(cellSize);
+        label.setMinHeight(cellSize);
         label.setAlignment(Pos.CENTER);
         mapGrid.add(label, 0, 0);
 
@@ -189,7 +190,10 @@ public class SimulationPresenter implements MapChangeListener {
         try {
             if (simulationEngine == null) {
                 simulation = new Simulation(worldMap, worldMap.getConfig());
-                simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation))); // Użyj pola klasy
+                int maxsize=Math.max(worldMap.getConfig().getMapSizeX(),worldMap.getConfig().getMapSizeY());
+                cellSize*=(10.0/maxsize);
+                cellSize=Math.min(cellSize,60);
+                simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation)));
                 simulationEngine.runAsync();
                 statistics = new Statistics(worldMap);
                 Platform.runLater(() -> startStopButton.setText("Start"));
@@ -212,30 +216,29 @@ public class SimulationPresenter implements MapChangeListener {
                 });
             }
         } catch (Exception e) {
-            System.out.println("Wystąpił błąd: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     @FXML
     private void onShowDominantGenotypeClicked() {
-        Set<Vector2d> dominantGenotypePositions = simulation.getDominantGenotypeAnimals();
+        Set<Vector2d> dominantGenotypeAnimals = simulation.getDominantGenotypeAnimals();
 
         for (Node node : mapGrid.getChildren()) {
             Integer colIndex = GridPane.getColumnIndex(node);
             Integer rowIndex = GridPane.getRowIndex(node);
-
             colIndex = colIndex != null ? colIndex : 0;
             rowIndex = rowIndex != null ? rowIndex : 0;
 
-            Vector2d position = new Vector2d(colIndex-1, worldMap.getHeight()-rowIndex);
-            if (dominantGenotypePositions.contains(position)) {
+            Vector2d position = new Vector2d(colIndex+1, this.worldMap.getHeight()-rowIndex-2);
+            if (dominantGenotypeAnimals.contains(position)) {
                 node.setStyle("-fx-background-color: red; -fx-border-color: black; -fx-border-width: 1;");
             } else {
                 node.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 1;");
             }
         }
     }
+
 
     public void onShowPlantFieldsClicked() {
         Set<Vector2d> plantPreferredFields = simulation.getPlantPreferredFields();
@@ -254,4 +257,6 @@ public class SimulationPresenter implements MapChangeListener {
             }
         }
     }
+
+
 }

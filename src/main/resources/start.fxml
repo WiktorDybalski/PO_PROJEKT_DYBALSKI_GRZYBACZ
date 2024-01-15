@@ -13,11 +13,11 @@
             <Label fx:id="daysCountValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
             <Label text="Width of map:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <Slider fx:id="mapWidthSlider" min="1" max="30" value="10" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Slider fx:id="mapWidthSlider" min="1" max="20" value="10" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="mapWidthValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
             <Label text="Height of map:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <Slider fx:id="mapHeightSlider" min="1" max="30" value="10" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Slider fx:id="mapHeightSlider" min="1" max="20" value="10" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="mapHeightValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
             <Label text="Initial plant count:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
@@ -53,11 +53,11 @@
             <Label fx:id="maximumMutationCountValueLabel" text="3" GridPane.columnIndex="2" GridPane.rowIndex="10"/>
 
             <Label text="Genome Length:" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
-            <Slider fx:id="genomeLengthSlider" min="1" max="16" value="8" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <Slider fx:id="genomeLengthSlider" min="1" max="8" value="2" GridPane.columnIndex="1" GridPane.rowIndex="11" />
             <Label fx:id="genomeLengthValueLabel" text="8" GridPane.columnIndex="2" GridPane.rowIndex="11"/>
 
             <Label text="Day Length(ms):" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
-            <Slider fx:id="dayLengthSlider" min="100" max="1000" value="300" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <Slider fx:id="dayLengthSlider" min="50" max="1000" value="300" GridPane.columnIndex="1" GridPane.rowIndex="12" />
             <Label fx:id="dayLengthValueLabel" text="8" GridPane.columnIndex="2" GridPane.rowIndex="12"/>
 
             <Label text="Map Type:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>

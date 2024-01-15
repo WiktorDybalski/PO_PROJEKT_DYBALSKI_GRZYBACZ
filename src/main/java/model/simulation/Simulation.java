@@ -97,9 +97,9 @@ public class Simulation extends Thread {
     }
 
     public Set<Vector2d> getPlantPreferredFields() {
-        int mapHeight= this.worldMap.getConfig().getMapSizeY()+1;
+        int mapHeight= this.worldMap.getConfig().getMapSizeY();
         int equatorialStart = (mapHeight-mapHeight%3) / 3;
-        int equatorialEnd = mapHeight - equatorialStart;
+        int equatorialEnd = mapHeight - equatorialStart+1;
 
         Set<Vector2d> plantPreferredFields = new HashSet<>();
         for (int i = 1; i <= this.worldMap.getConfig().getMapSizeX()+1; i++) {

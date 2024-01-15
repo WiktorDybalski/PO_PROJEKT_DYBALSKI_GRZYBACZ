@@ -23,7 +23,7 @@
     </top>
     <center>
         <HBox alignment="CENTER">
-            <VBox alignment="CENTER" HBox.hgrow="NEVER">
+            <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
                 <Label fx:id="moveInfoLabel" alignment="CENTER"/>
                 <Button fx:id="startStopButton" minWidth="120" text="Start" onAction="#onSimulationStartClicked" />
                 <Button fx:id="showDominantGenotypeButton" text="Show Dominant Genotype" onAction="#onShowDominantGenotypeClicked" visible="false"/>
@@ -31,7 +31,7 @@
 
             </VBox>
             <Pane/>
-            <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER"  HBox.hgrow="ALWAYS"/>
+            <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER_LEFT"  HBox.hgrow="ALWAYS"/>
         </HBox>
     </center>
 </BorderPane>

@@ -104,16 +104,20 @@ public class Statistics {
             }
         }
         for (Animal animal : map.getAnimals()) {
-            Genotype genotype = animal.getGenotype();
-            if (genotypeCounter.containsKey(genotype) && !animal.getIsDead()) {
-                genotypeCounter.put(genotype, genotypeCounter.get(genotype) + 1);
-            } else {
-                genotypeCounter.put(genotype, 1);
-            }
             if (animal.getIsDead()) {
                 numberOfDeadAnimals++;
                 cumulativeLifeSpan += animal.getAge();
             }
+            else {
+                Genotype genotype = animal.getGenotype();
+                if (genotypeCounter.containsKey(genotype)) {
+                    genotypeCounter.put(genotype, genotypeCounter.get(genotype) + 1);
+                } else {
+                    genotypeCounter.put(genotype, 1);
+                }
+            }
+
+
         }
         int max = 0;
         Genotype dominantGenotype = null;
