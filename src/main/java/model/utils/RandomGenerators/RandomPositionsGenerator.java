@@ -111,9 +111,9 @@ public class RandomPositionsGenerator {
         List<Vector2d> tempAllPosition = new ArrayList<>(freePositions);
         Random random = new Random(1111);
         // Start of the equatorial band
-        int equatorStart = maxHeight / 3;
+        int equatorStart = (maxHeight-maxHeight%3) / 3;
         // End of the equatorial band
-        int equatorEnd = 2 * maxHeight / 3;
+        int equatorEnd = maxHeight - equatorStart;
 
         for (int i = 0; i < objectCount; i++) {
             int randomIndex;
@@ -121,7 +121,7 @@ public class RandomPositionsGenerator {
             // 50% chance to be in the equatorial band
             if (random.nextBoolean()) {
                 List<Vector2d> equatorialPositions = tempAllPosition.stream()
-                        .filter(p -> p.getY() >= equatorStart && p.getY() <= equatorEnd)
+                        .filter(p -> p.getY() > equatorStart && p.getY() < equatorEnd)
                         .toList();
                 if (!equatorialPositions.isEmpty()) {
                     randomIndex = abs(random.nextInt(equatorialPositions.size()));

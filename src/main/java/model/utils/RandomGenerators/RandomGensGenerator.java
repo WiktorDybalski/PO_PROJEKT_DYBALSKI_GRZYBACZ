@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomGensGenerator {
-    /**
-     * The length of each genotype.
-     */
-    private static final int GEN_LENGTH = 7;
 
     /**
      * List to store the generated genotypes.
@@ -76,7 +72,7 @@ public class RandomGensGenerator {
      */
     private Genotype generateRandomGen() {
         ArrayList<Integer> listOfGens = new ArrayList<>();
-        for (int i = 0; i < GEN_LENGTH; i++) {
+        for (int i = 0; i < genomeLength; i++) {
             // Random number between 0 and 7
             Integer digit = random.nextInt(8);
             listOfGens.add(digit);

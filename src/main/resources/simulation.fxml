@@ -26,6 +26,9 @@
             <VBox alignment="CENTER" HBox.hgrow="NEVER">
                 <Label fx:id="moveInfoLabel" alignment="CENTER"/>
                 <Button fx:id="startStopButton" minWidth="120" text="Start" onAction="#onSimulationStartClicked" />
+                <Button fx:id="showDominantGenotypeButton" text="Show Dominant Genotype" onAction="#onShowDominantGenotypeClicked" visible="false"/>
+                <Button fx:id="showPlantFieldsButton" text="Highlight Plant Fields" onAction="#onShowPlantFieldsClicked" visible="false"/>
+
             </VBox>
             <Pane/>
             <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER"  HBox.hgrow="ALWAYS"/>

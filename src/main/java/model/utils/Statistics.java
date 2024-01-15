@@ -105,7 +105,7 @@ public class Statistics {
         }
         for (Animal animal : map.getAnimals()) {
             Genotype genotype = animal.getGenotype();
-            if (genotypeCounter.containsKey(genotype)) {
+            if (genotypeCounter.containsKey(genotype) && !animal.getIsDead()) {
                 genotypeCounter.put(genotype, genotypeCounter.get(genotype) + 1);
             } else {
                 genotypeCounter.put(genotype, 1);
@@ -126,15 +126,20 @@ public class Statistics {
         if (numberOfDeadAnimals > 0) {
             this.averageLifeSpan = (double) cumulativeLifeSpan / numberOfDeadAnimals;
         }
-        this.numberOfAnimals = this.map.getAnimals().size();
+        this.numberOfAnimals = numberOfAliveAnimals + numberOfDeadAnimals;
         this.numberOfAliveAnimals = numberOfAliveAnimals;
         this.numberOfDeadAnimals= numberOfDeadAnimals;
 
+        if (numberOfAliveAnimals > 0) {
+            this.averageNumberOfChildren = averageNumberOfChildren/numberOfAliveAnimals/2.0;
+            this.averageEnergyLevel = averageEnergyLevel/numberOfAliveAnimals;
+        } else {
+            this.averageNumberOfChildren = 0;
+            this.averageEnergyLevel = 0;
+        }
         this.numberOfPlants = numberOfPlants;
-        this.averageNumberOfChildren = averageNumberOfChildren/numberOfAliveAnimals/2.0;
-        this.averageEnergyLevel = averageEnergyLevel/numberOfAliveAnimals;
-        this.freeTilesCount = freeTilesCount;
         this.dominantGenotype = dominantGenotype;
+        this.freeTilesCount = freeTilesCount;
     }
 
     /**

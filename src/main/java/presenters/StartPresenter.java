@@ -1,6 +1,7 @@
 package presenters;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.maps.GlobeMap;
 import model.maps.PoisonedMap;
@@ -17,7 +19,9 @@ import model.simulation.SimulationConfigurator;
 import javafx.scene.control.Alert;
 
 
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StartPresenter {
     private SimulationPresenter simulationPresenter;
@@ -213,5 +217,69 @@ public class StartPresenter {
 
         config.setMapType(mapTypeChoiceBox.getValue());
         config.setAnimalBehaviourType(BehaviourVariantChoiceBox.getValue());
+    }
+
+    private void updateUIWithConfig() {
+        // Aktualizacja elementów UI na podstawie obiektu konfiguracyjnego
+        daysCountSlider.setValue(config.getNumberOfDays());
+        mapWidthSlider.setValue(config.getMapSize().getX());
+        mapHeightSlider.setValue(config.getMapSize().getY());
+        initialPlantCountSlider.setValue(config.getInitialPlantCount());
+        numberOfPlantsGrowingPerDaySlider.setValue(config.getNumberOfPlantsGrowingPerDay());
+        initialAnimalCountSlider.setValue(config.getInitialAnimalCount());
+        initialAnimalEnergySlider.setValue(config.getInitialAnimalEnergy());
+        readyToReproduceEnergySlider.setValue(config.getReadyToReproduceEnergy());
+        reproduceEnergyLossSlider.setValue(config.getReproduceEnergyLoss());
+        minimumMutationCountSlider.setValue(config.getMinimumMutationCount());
+        maximumMutationCountSlider.setValue(config.getMaximumMutationCount());
+        genomeLengthSlider.setValue(config.getGenomeLength());
+        dayLengthSlider.setValue(config.getDayLength());
+    }
+
+    public void onLoadConfigClicked() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Configuration File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
+        );
+
+        File file = fileChooser.showOpenDialog(contentArea.getScene().getWindow());
+
+        if (file != null) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                List<String> lines = new ArrayList<>();
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    lines.add(line);
+                }
+                reader.close();
+
+                config.fromText(lines.toArray(new String[0]));
+                updateUIWithConfig();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void onSaveConfigClicked() {
+        configureSimulation();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Configuration File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        File file = fileChooser.showSaveDialog(contentArea.getScene().getWindow());
+
+        if (file != null) {
+            try (FileWriter writer = new FileWriter(file)) {
+                String configText = config.toText();
+                writer.write(configText);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }

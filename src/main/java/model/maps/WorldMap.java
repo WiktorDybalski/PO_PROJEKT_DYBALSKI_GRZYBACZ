@@ -5,6 +5,7 @@ import model.utils.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public interface WorldMap {
     public HashMap<Vector2d, Tile> getMapTiles();
@@ -33,4 +34,5 @@ public interface WorldMap {
 
     public void addObserver(MapChangeListener observer);
     public void removeObserver(MapChangeListener observer);
+
 }

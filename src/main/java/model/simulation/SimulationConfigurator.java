@@ -46,6 +46,13 @@ public class SimulationConfigurator {
         this.dayLength = 1000;
     }
 
+    public int getMapSizeX() {
+        return mapSizeX;
+    }
+
+    public int getMapSizeY() {
+        return mapSizeY;
+    }
     public Vector2d getMapSize() {
         return new Vector2d(mapSizeX, mapSizeY);
     }
@@ -216,65 +223,47 @@ public class SimulationConfigurator {
             this.dayLength = dayLength;
         }
     }
-
-    public void toTextFile() {
-        try (FileWriter writer = new FileWriter("config.txt")) {
-            writer.write("numberOfDays: " + numberOfDays + "\n");
-            writer.write("mapSizeX: " + mapSizeX + "\n");
-            writer.write("mapSizeY: " + mapSizeY + "\n");
-            writer.write("mapType: " + mapType + "\n");
-            writer.write("initialPlantCount: " + initialPlantCount + "\n");
-            writer.write("plantEnergy: " + plantEnergy + "\n");
-            writer.write("numberOfPlantsGrowingPerDay: " + numberOfPlantsGrowingPerDay + "\n");
-            writer.write("modeOfPlantGrowing: " + modeOfPlantGrowing + "\n");
-            writer.write("initialAnimalCount: " + initialAnimalCount + "\n");
-            writer.write("initialAnimalEnergy: " + initialAnimalEnergy + "\n");
-            writer.write("readyToReproduceEnergy: " + readyToReproduceEnergy + "\n");
-            writer.write("reproduceEnergyLoss: " + reproduceEnergyLoss + "\n");
-            writer.write("minimumMutationCount: " + minimumMutationCount + "\n");
-            writer.write("maximumMutationCount: " + maximumMutationCount + "\n");
-            writer.write("mutationVariant: " + mutationVariant + "\n");
-            writer.write("genomeLength: " + genomeLength + "\n");
-            writer.write("animalBehaviourType: " + animalBehaviourType + "\n");
-            writer.write("dayLength: " + dayLength + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void fromText(String[] lines) {
+        this.numberOfDays = Integer.parseInt(lines[0].split(" ")[1]);
+        this.mapSizeX = Integer.parseInt(lines[1].split(" ")[1]);
+        this.mapSizeY = Integer.parseInt(lines[2].split(" ")[1]);
+        this.mapType = lines[3].split(" ")[1];
+        this.initialPlantCount = Integer.parseInt(lines[4].split(" ")[1]);
+        this.plantEnergy = Integer.parseInt(lines[5].split(" ")[1]);
+        this.numberOfPlantsGrowingPerDay = Integer.parseInt(lines[6].split(" ")[1]);
+        this.modeOfPlantGrowing = lines[7].split(" ")[1];
+        this.initialAnimalCount = Integer.parseInt(lines[8].split(" ")[1]);
+        this.initialAnimalEnergy = Integer.parseInt(lines[9].split(" ")[1]);
+        this.readyToReproduceEnergy = Integer.parseInt(lines[10].split(" ")[1]);
+        this.reproduceEnergyLoss = Integer.parseInt(lines[11].split(" ")[1]);
+        this.minimumMutationCount = Integer.parseInt(lines[12].split(" ")[1]);
+        this.maximumMutationCount = Integer.parseInt(lines[13].split(" ")[1]);
+        this.mutationVariant = lines[14].split(" ")[1];
+        this.genomeLength = Integer.parseInt(lines[15].split(" ")[1]);
+        this.animalBehaviourType = lines[16].split(" ")[1];
+        this.dayLength = Integer.parseInt(lines[17].split(" ")[1]);
     }
 
-    public void fromTextFile() {
-        try {
-            String[] lines = new String[20];
-            int i = 0;
-            java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader("config.txt"));
-            String line = reader.readLine();
-            while (line != null) {
-                lines[i] = line;
-                line = reader.readLine();
-                i++;
-            }
-            reader.close();
-            this.numberOfDays = Integer.parseInt(lines[0].split(" ")[1]);
-            this.mapSizeX = Integer.parseInt(lines[1].split(" ")[1]);
-            this.mapSizeY = Integer.parseInt(lines[2].split(" ")[1]);
-            this.mapType = lines[3].split(" ")[1];
-            this.initialPlantCount = Integer.parseInt(lines[4].split(" ")[1]);
-            this.plantEnergy = Integer.parseInt(lines[5].split(" ")[1]);
-            this.numberOfPlantsGrowingPerDay = Integer.parseInt(lines[6].split(" ")[1]);
-            this.modeOfPlantGrowing = lines[7].split(" ")[1];
-            this.initialAnimalCount = Integer.parseInt(lines[8].split(" ")[1]);
-            this.initialAnimalEnergy = Integer.parseInt(lines[9].split(" ")[1]);
-            this.readyToReproduceEnergy = Integer.parseInt(lines[10].split(" ")[1]);
-            this.reproduceEnergyLoss = Integer.parseInt(lines[11].split(" ")[1]);
-            this.minimumMutationCount = Integer.parseInt(lines[12].split(" ")[1]);
-            this.maximumMutationCount = Integer.parseInt(lines[13].split(" ")[1]);
-            this.mutationVariant = lines[14].split(" ")[1];
-            this.genomeLength = Integer.parseInt(lines[15].split(" ")[1]);
-            this.animalBehaviourType = lines[16].split(" ")[1];
-            this.dayLength = Integer.parseInt(lines[17].split(" ")[1]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public String toText() {
+        String sb = "numberOfDays: " + this.numberOfDays + "\n" +
+                "mapSizeX: " + this.mapSizeX + "\n" +
+                "mapSizeY: " + this.mapSizeY + "\n" +
+                "mapType: " + this.mapType + "\n" +
+                "initialPlantCount: " + this.initialPlantCount + "\n" +
+                "plantEnergy: " + this.plantEnergy + "\n" +
+                "numberOfPlantsGrowingPerDay: " + this.numberOfPlantsGrowingPerDay + "\n" +
+                "modeOfPlantGrowing: " + this.modeOfPlantGrowing + "\n" +
+                "initialAnimalCount: " + this.initialAnimalCount + "\n" +
+                "initialAnimalEnergy: " + this.initialAnimalEnergy + "\n" +
+                "readyToReproduceEnergy: " + this.readyToReproduceEnergy + "\n" +
+                "reproduceEnergyLoss: " + this.reproduceEnergyLoss + "\n" +
+                "minimumMutationCount: " + this.minimumMutationCount + "\n" +
+                "maximumMutationCount: " + this.maximumMutationCount + "\n" +
+                "mutationVariant: " + this.mutationVariant + "\n" +
+                "genomeLength: " + this.genomeLength + "\n" +
+                "animalBehaviourType: " + this.animalBehaviourType + "\n" +
+                "dayLength: " + this.dayLength;
+        return sb;
     }
 
     @Override

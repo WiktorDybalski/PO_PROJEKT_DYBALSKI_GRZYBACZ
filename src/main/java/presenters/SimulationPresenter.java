@@ -1,23 +1,24 @@
 package presenters;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import model.maps.WorldMap;
 import model.simulation.MapChangeListener;
 import model.simulation.Simulation;
 import model.simulation.SimulationEngine;
-import model.utils.Boundary;
-import model.utils.Statistics;
-import model.utils.Tile;
-import model.utils.Vector2d;
+import model.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 public class SimulationPresenter implements MapChangeListener {
@@ -44,6 +45,14 @@ public class SimulationPresenter implements MapChangeListener {
 
     @FXML
     private GridPane mapGrid;
+
+    @FXML
+    private Button showDominantGenotypeButton;
+
+    @FXML
+    private Button showPlantFieldsButton;
+
+    private boolean isSimulationRunning = false;
 
     public Simulation getSimulation() {
         return this.simulation;
@@ -86,7 +95,7 @@ public class SimulationPresenter implements MapChangeListener {
                 if (tile.getPlant() != null) {
                     string = "";
                     label = createLabelForElement(string);
-                    label.getStyleClass().add("plant-cell"); // Dodajemy klasę CSS dla komórki z rośliną
+                    label.getStyleClass().add("plant-cell");
                 } else {
                     label = createLabelForElement(string);
                 }
@@ -94,6 +103,16 @@ public class SimulationPresenter implements MapChangeListener {
         } else {
             label = createLabelForElement(string);
         }
+
+        Tooltip tooltip = new Tooltip();
+        label.setOnMouseEntered(event -> {
+            if (!isSimulationRunning) {
+                String animalInfo = tile.getStrongestAnimal().getInfo();
+                tooltip.setText(animalInfo);
+                tooltip.show(label, event.getScreenX(), event.getScreenY() + 10);
+            }
+        });
+        label.setOnMouseExited(event -> tooltip.hide());
 
         mapGrid.add(label, column, row);
     }
@@ -123,7 +142,7 @@ public class SimulationPresenter implements MapChangeListener {
             label.setMinWidth(50);
             label.setMinHeight(50);
             label.setAlignment(Pos.CENTER);
-            mapGrid.add(label, 0, boundary.rightUpperCorner().getY() - i + 1); // Dodajemy etykiety osi Y po lewej stronie siatki
+            mapGrid.add(label, 0, boundary.rightUpperCorner().getY()-i + 1);
         }
     }
 
@@ -173,21 +192,66 @@ public class SimulationPresenter implements MapChangeListener {
                 simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation))); // Użyj pola klasy
                 simulationEngine.runAsync();
                 statistics = new Statistics(worldMap);
-                Platform.runLater(() -> startStopButton.setText("Stop"));
+                Platform.runLater(() -> startStopButton.setText("Start"));
+                isSimulationRunning = false;
             } else {
                 Platform.runLater(() -> {
                     if (simulationEngine.isRunning()) {
                         simulationEngine.pauseSimulation();
-                        startStopButton.setText("Start");
+                        startStopButton.setText("Continue");
+                        isSimulationRunning = false;
+                        showDominantGenotypeButton.setVisible(true);
+                        showPlantFieldsButton.setVisible(true);
                     } else {
                         simulationEngine.resumeSimulation();
                         startStopButton.setText("Stop");
+                        isSimulationRunning = true;
+                        showDominantGenotypeButton.setVisible(false);
+                        showPlantFieldsButton.setVisible(false);
                     }
                 });
             }
         } catch (Exception e) {
             System.out.println("Wystąpił błąd: " + e.getMessage());
-            e.printStackTrace(); // Bardziej szczegółowa obsługa błędów
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onShowDominantGenotypeClicked() {
+        Set<Vector2d> dominantGenotypePositions = simulation.getDominantGenotypeAnimals();
+
+        for (Node node : mapGrid.getChildren()) {
+            Integer colIndex = GridPane.getColumnIndex(node);
+            Integer rowIndex = GridPane.getRowIndex(node);
+
+            colIndex = colIndex != null ? colIndex : 0;
+            rowIndex = rowIndex != null ? rowIndex : 0;
+
+            Vector2d position = new Vector2d(colIndex-1, worldMap.getHeight()-rowIndex);
+            if (dominantGenotypePositions.contains(position)) {
+                node.setStyle("-fx-background-color: red; -fx-border-color: black; -fx-border-width: 1;");
+            } else {
+                node.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 1;");
+            }
+        }
+    }
+
+    public void onShowPlantFieldsClicked() {
+        Set<Vector2d> plantPreferredFields = simulation.getPlantPreferredFields();
+
+        for (Node node : mapGrid.getChildren()) {
+            Integer colIndex = GridPane.getColumnIndex(node);
+            Integer rowIndex = GridPane.getRowIndex(node);
+            colIndex = colIndex != null ? colIndex : 0;
+            rowIndex = rowIndex != null ? rowIndex : 0;
+
+            Vector2d position = new Vector2d(colIndex, rowIndex);
+            if (plantPreferredFields.contains(position)) {
+                node.setStyle("-fx-background-color: red; -fx-border-color: black; -fx-border-width: 1;");
+            } else {
+                node.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 1;");
+            }
         }
     }
 }

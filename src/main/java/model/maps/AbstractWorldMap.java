@@ -342,7 +342,7 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
      * The firstDay method is responsible for the first day of the World
      */
     public void firstDay() {
-        System.out.println(this);
+        //System.out.println(this);
         this.eat();
         this.reproduce();
         this.placePlants(config.getNumberOfPlantsGrowingPerDay());
@@ -356,7 +356,7 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
      * The dailyUpdate method is responsible for the daily update of the map
      */
     public void dailyUpdate() {
-        System.out.println(this);
+        //System.out.println(this);
         this.growAnimals();
         this.removeEatenPlants();
         this.move();
