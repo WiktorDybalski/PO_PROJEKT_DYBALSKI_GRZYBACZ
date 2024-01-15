@@ -107,7 +107,7 @@ public class SimulationPresenter implements MapChangeListener {
 
         Tooltip tooltip = new Tooltip();
         label.setOnMouseEntered(event -> {
-            if (!isSimulationRunning) {
+            if (!isSimulationRunning && tile.getAnimals() != null && !tile.getAnimals().isEmpty()) {
                 String animalInfo = tile.getStrongestAnimal().getInfo();
                 tooltip.setText(animalInfo);
                 tooltip.show(label, event.getScreenX(), event.getScreenY() + 10);

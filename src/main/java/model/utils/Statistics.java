@@ -3,9 +3,12 @@ package model.utils;
 import model.maps.WorldMap;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Statistics {
     private WorldMap map;
@@ -19,6 +22,8 @@ public class Statistics {
     private int numberOfAliveAnimals;
     private int numberOfDeadAnimals;
 
+    private Set<Vector2d> dominantGenotypeAnimals;
+
     public Statistics(WorldMap map) {
         this.map = map;
         this.numberOfAnimals = 0;
@@ -30,6 +35,7 @@ public class Statistics {
         this.freeTilesCount = 0;
         this.numberOfAliveAnimals = 0;
         this.numberOfDeadAnimals = 0;
+        this.dominantGenotypeAnimals = new HashSet<>();
     }
 
     //getters
@@ -70,6 +76,10 @@ public class Statistics {
         return numberOfDeadAnimals;
     }
 
+    public Set<Vector2d> getDiminantGenotypeAnimals() {
+        return dominantGenotypeAnimals;
+    }
+
     /**
      * Method returning statistics about the map.
      * @return statistics about the map
@@ -90,8 +100,9 @@ public class Statistics {
         double averageNumberOfChildren = 0;
         double averageEnergyLevel = 0;
         int freeTilesCount = 0;
-        HashMap<Genotype, Integer> genotypeCounter = new HashMap<>();
-        for (Tile tile: map.getMapTiles().values()) {
+        HashMap<Genotype, ArrayList<Vector2d>> genotypeCounter = new HashMap<>();
+
+        for (Tile tile : map.getMapTiles().values()) {
             if (!tile.isOccupied()) {
                 freeTilesCount++;
             } else {
@@ -100,31 +111,34 @@ public class Statistics {
                 for (Animal animal : tile.getAnimals()) {
                     averageNumberOfChildren += animal.getChildren().size();
                     averageEnergyLevel += animal.getEnergy();
+
+                    if (genotypeCounter.containsKey(animal.getGenotype())) {
+                        genotypeCounter.get(animal.getGenotype()).add(animal.getPosition());
+                    } else {
+                        ArrayList<Vector2d> positions = new ArrayList<>();
+                        positions.add(animal.getPosition());
+                        genotypeCounter.put(animal.getGenotype(), positions);
+                    }
                 }
             }
         }
+
+        int maxCount = 0;
+
+        for (Genotype genotype : genotypeCounter.keySet()) {
+            if (genotypeCounter.get(genotype).size() > maxCount) {
+                maxCount = genotypeCounter.get(genotype).size();
+                this.dominantGenotype = genotype;
+                System.out.println(genotype+ " " + genotypeCounter.get(genotype).size()+ " " +maxCount);
+            }
+        }
+
+        this.dominantGenotypeAnimals = new HashSet<>(genotypeCounter.get(this.dominantGenotype));
+
         for (Animal animal : map.getAnimals()) {
             if (animal.getIsDead()) {
                 numberOfDeadAnimals++;
                 cumulativeLifeSpan += animal.getAge();
-            }
-            else {
-                Genotype genotype = animal.getGenotype();
-                if (genotypeCounter.containsKey(genotype)) {
-                    genotypeCounter.put(genotype, genotypeCounter.get(genotype) + 1);
-                } else {
-                    genotypeCounter.put(genotype, 1);
-                }
-            }
-
-
-        }
-        int max = 0;
-        Genotype dominantGenotype = null;
-        for (Genotype genotype : genotypeCounter.keySet()) {
-            if (genotypeCounter.get(genotype) > max) {
-                max = genotypeCounter.get(genotype);
-                dominantGenotype = genotype;
             }
         }
         if (numberOfDeadAnimals > 0) {
@@ -142,7 +156,6 @@ public class Statistics {
             this.averageEnergyLevel = 0;
         }
         this.numberOfPlants = numberOfPlants;
-        this.dominantGenotype = dominantGenotype;
         this.freeTilesCount = freeTilesCount;
     }
 

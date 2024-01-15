@@ -57,8 +57,11 @@ public class Genotype {
         int mutationCount = random.nextInt(genes.size()) + 1;
         for (int i = 0; i < mutationCount; i++) {
             int geneIndex = random.nextInt(genes.size());
-            int geneValue = (genes.get(geneIndex) + random.nextInt()%2 ) % 7+1; // to avoid mutation to the same value
-            genes.set(geneIndex, geneValue);
+            int newGeneValue;
+            do {
+                newGeneValue = random.nextInt(8) + 1; // Random value between 1 and 8
+            } while (newGeneValue == genes.get(geneIndex));
+            genes.set(geneIndex, newGeneValue);
         }
     }
 
@@ -67,8 +70,7 @@ public class Genotype {
         int mutationCount = random.nextInt(genes.size()) + 1;
         for (int i = 0; i < mutationCount; i++) {
             int geneIndex = random.nextInt(genes.size());
-            int geneValue = (genes.get(geneIndex) + abs(random.nextInt())) % 7+1; // to avoid mutation to the same value
-            genes.set(geneIndex, geneValue);
+            genes.set(geneIndex, random.nextInt(8) + 1); // Random value between 1 and 8
         }
     }
 
@@ -95,18 +97,18 @@ public class Genotype {
      * @param obj The object to be compared to.
      * @return True if the genotypes are equal, false otherwise.
      */
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Genotype)) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         Genotype other = (Genotype) obj;
-        String genotype1 = this.toString();
-        String genotype2 = other.toString();
-        return genotype1.equals(genotype2);
+        return genes.equals(other.genes);
     }
+
 
     /**
      * Returns a string representation of the genotype.
