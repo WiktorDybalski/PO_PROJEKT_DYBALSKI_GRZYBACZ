@@ -221,9 +221,9 @@ public class SimulationPresenter implements MapChangeListener {
                 animalInfoLabel.setVisible(false);
                 if(isCsv) {
                     String userHome = System.getProperty("user.home"); // Pobiera katalog domowy użytkownika
-                    String simulationsPath = userHome + File.separator + "Simulations"; // Ścieżka do folderu Simulations
+                    desktopPath = userHome + File.separator + "Desktop"; // Dodaje do ścieżki folder Desktop
                     simulationCSV = new SimulationCSV(statistics);
-                    simulationCSV.toCSV("Simulation", simulationsPath);
+                    simulationCSV.toCSV("Simulation", desktopPath);
                 }
             } else {
                 Platform.runLater(() -> {

@@ -56,7 +56,6 @@ public class SimulationCSV {
         Path filePath = originalPath;
 
         while (Files.exists(filePath)) {
-            // Tworzenie nowej nazwy pliku z numerem na końcu
             String fileName = String.format("%s(%d).csv", originalPath.toString().replace(".csv", ""), counter);
             filePath = Paths.get(fileName);
             counter++;
