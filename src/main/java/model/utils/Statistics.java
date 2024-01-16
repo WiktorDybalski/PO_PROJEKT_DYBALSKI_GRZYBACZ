@@ -2,15 +2,7 @@ package model.utils;
 
 import model.maps.WorldMap;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,15 +44,15 @@ public class Statistics {
     }
 
     public double getAverageLifeSpan() {
-        return (double) Math.round(averageLifeSpan * 100.0) /100;
+        return (double) Math.round(averageLifeSpan * 100.0) / 100;
     }
 
     public double getAverageNumberOfChildren() {
-        return (double) Math.round(averageNumberOfChildren * 100.0) /100;
+        return (double) Math.round(averageNumberOfChildren * 100.0) / 100;
     }
 
     public double getAverageEnergyLevel() {
-        return (double) Math.round(averageEnergyLevel * 100.0) /100;
+        return (double) Math.round(averageEnergyLevel * 100.0) / 100;
     }
 
     public Genotype getDominantGenotype() {
@@ -90,6 +82,7 @@ public class Statistics {
 
     /**
      * Method returning statistics about the map.
+     *
      * @return statistics about the map
      */
     public String getStatistics() {
@@ -108,7 +101,7 @@ public class Statistics {
         double averageNumberOfChildren = 0;
         double averageEnergyLevel = 0;
         int freeTilesCount = 0;
-        HashMap<Genotype, ArrayList<Vector2d>> genotypeCounter = new HashMap<>();
+        HashMap<Genotype, Integer> genotypeCounter = new HashMap<>();
 
         for (Tile tile : map.getMapTiles().values()) {
             if (!tile.isOccupied()) {
@@ -121,11 +114,10 @@ public class Statistics {
                     averageEnergyLevel += animal.getEnergy();
 
                     if (genotypeCounter.containsKey(animal.getGenotype())) {
-                        genotypeCounter.get(animal.getGenotype()).add(animal.getPosition());
+                        Integer temp = genotypeCounter.get(animal.getGenotype()) + 1;
+                        genotypeCounter.replace(animal.getGenotype(), temp);
                     } else {
-                        ArrayList<Vector2d> positions = new ArrayList<>();
-                        positions.add(animal.getPosition());
-                        genotypeCounter.put(animal.getGenotype(), positions);
+                        genotypeCounter.put(animal.getGenotype(), 1);
                     }
                 }
             }
@@ -134,8 +126,8 @@ public class Statistics {
         int maxCount = 0;
 
         for (Genotype genotype : genotypeCounter.keySet()) {
-            if (genotypeCounter.get(genotype).size() > maxCount) {
-                maxCount = genotypeCounter.get(genotype).size();
+            if (genotypeCounter.get(genotype) > maxCount) {
+                maxCount = genotypeCounter.get(genotype);
                 this.dominantGenotype = genotype;
             }
         }
@@ -153,11 +145,11 @@ public class Statistics {
         }
         this.numberOfAnimals = numberOfAliveAnimals + numberOfDeadAnimals;
         this.numberOfAliveAnimals = numberOfAliveAnimals;
-        this.numberOfDeadAnimals= numberOfDeadAnimals;
+        this.numberOfDeadAnimals = numberOfDeadAnimals;
 
         if (numberOfAliveAnimals > 0) {
-            this.averageNumberOfChildren = averageNumberOfChildren/numberOfAliveAnimals/2.0;
-            this.averageEnergyLevel = averageEnergyLevel/numberOfAliveAnimals;
+            this.averageNumberOfChildren = averageNumberOfChildren / numberOfAliveAnimals / 2.0;
+            this.averageEnergyLevel = averageEnergyLevel / numberOfAliveAnimals;
         } else {
             this.averageNumberOfChildren = 0;
             this.averageEnergyLevel = 0;
@@ -168,6 +160,7 @@ public class Statistics {
 
     /**
      * Method returning statistics about the map.
+     *
      * @return statistics about the map
      */
     public String toString() {

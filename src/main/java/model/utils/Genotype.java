@@ -109,6 +109,10 @@ public class Genotype {
         return genes.equals(other.genes);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(genes, genomeLength);
+    }
 
     /**
      * Returns a string representation of the genotype.

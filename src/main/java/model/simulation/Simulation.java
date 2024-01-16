@@ -85,7 +85,14 @@ public class Simulation extends Thread {
     }
 
     public Set<Vector2d> getDominantGenotypeAnimals() {
-        return this.statistics.getDominantGenotypeAnimals();
+        Set<Vector2d> dominantGenotypePositions = new HashSet<>();
+        Genotype dominantGenotype = this.statistics.getDominantGenotype();
+        for (Tile tile : this.worldMap.getMapTiles().values()) {
+            if (tile.getStrongestAnimal() != null && tile.getStrongestAnimal().getGenotype().equals(dominantGenotype)) {
+                dominantGenotypePositions.add(tile.getStrongestAnimal().getPosition());
+            }
+        }
+        return dominantGenotypePositions;
     }
 
     public Set<Vector2d> getPlantPreferredFields() {

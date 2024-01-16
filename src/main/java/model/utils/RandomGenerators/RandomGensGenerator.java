@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Math.abs;
+
 public class RandomGensGenerator {
 
     /**
@@ -75,7 +77,7 @@ public class RandomGensGenerator {
         for (int i = 0; i < genomeLength; i++) {
             // Random number between 0 and 7
             Integer digit = random.nextInt(8);
-            listOfGens.add(digit);
+            listOfGens.add(abs(digit));
         }
         return new Genotype(listOfGens, genomeLength);
     }

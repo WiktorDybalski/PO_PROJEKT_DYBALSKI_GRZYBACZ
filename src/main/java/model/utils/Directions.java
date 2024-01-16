@@ -11,6 +11,7 @@ public enum Directions {
     WEST,
     NORTH_WEST;
 
+
     /**
      * @return random direction
      */
@@ -67,7 +68,7 @@ public enum Directions {
         } else if (vector.equals(new Vector2d(-1, 1))) {
             return NORTH_WEST;
         } else {
-            return null;
+            return NORTH;
         }
     }
 }

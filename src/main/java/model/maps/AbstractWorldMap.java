@@ -281,7 +281,8 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
             Vector2d oldPosition = animal.getPosition();
             Directions oldDirection = animal.getDirection();
             int oldActualActiveGeneIndex = animal.getActualActiveGenIndex();
-            Vector2d vector = new Vector2d(Directions.toUnitVector(oldActualActiveGeneIndex).getX(), Directions.toUnitVector(oldActualActiveGeneIndex).getY());
+            int activeGene = animal.getGenotype().getGene(oldActualActiveGeneIndex);
+            Vector2d vector = Directions.toUnitVector(activeGene);
             Vector2d newPosition = oldPosition.add(vector);
             if (newPositionOutOfLeftBound(newPosition)) {
                 newPosition = new Vector2d(upperRight.getX(), newPosition.getY());
@@ -294,7 +295,8 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
                 animal.setDirection(Directions.fromUnitVector(vector));
                 mapTiles.get(newPosition).addAnimal(animal);
             }
-            animal.setActualActiveGenIndex(animal.getNextGene());
+            int newActiveGenIndex=(oldActualActiveGeneIndex+1)%this.config.getGenomeLength();
+            animal.setActualActiveGenIndex(newActiveGenIndex);
             animal.decreaseEnergy();
         }
     }

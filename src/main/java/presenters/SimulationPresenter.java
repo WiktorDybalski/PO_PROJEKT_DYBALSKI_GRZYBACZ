@@ -262,18 +262,18 @@ public class SimulationPresenter implements MapChangeListener {
         }
     }
     @FXML
-    private void onShowDominantGenotypeClicked () {
-        Set<Vector2d> dominantGenotypeAnimals = simulation.getStatistics().getDominantGenotypeAnimals();
-
+    private void onShowDominantGenotypeClicked() {
+        Set<Vector2d> dominantGenotypePositions = simulation.getDominantGenotypeAnimals();
 
         for (Node node : mapGrid.getChildren()) {
             Integer colIndex = GridPane.getColumnIndex(node);
             Integer rowIndex = GridPane.getRowIndex(node);
+
             colIndex = colIndex != null ? colIndex : 0;
             rowIndex = rowIndex != null ? rowIndex : 0;
 
-            Vector2d position = new Vector2d(colIndex + 1, this.worldMap.getHeight() - rowIndex - 2);
-            if (dominantGenotypeAnimals.contains(position)) {
+            Vector2d position = new Vector2d(colIndex-1, worldMap.getHeight()-rowIndex);
+            if (dominantGenotypePositions.contains(position)) {
                 node.setStyle("-fx-background-color: red; -fx-border-color: black; -fx-border-width: 1;");
             } else {
                 node.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 1;");
