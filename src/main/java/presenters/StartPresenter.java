@@ -187,7 +187,9 @@ public class StartPresenter {
                 simulationPresenter.setWorldMap(poisonedMap);
                 poisonedMap.addObserver(simulationPresenter);
             }
-
+            if(config.isWriteToCsv().equals("Yes")) {
+                simulationPresenter.setCsv(true);
+            }
             simulationPresenter.onSimulationStartClicked();
             Stage simulationStage = new Stage();
             simulationStage.setScene(new Scene(root));

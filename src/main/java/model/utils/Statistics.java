@@ -3,6 +3,10 @@ package model.utils;
 import model.maps.WorldMap;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.FileWriter;
@@ -78,6 +82,10 @@ public class Statistics {
 
     public Set<Vector2d> getDominantGenotypeAnimals() {
         return dominantGenotypeAnimals;
+    }
+
+    public WorldMap getMap() {
+        return map;
     }
 
     /**
@@ -174,36 +182,4 @@ public class Statistics {
                 "Dominant genotype: " + getDominantGenotype() + "\n" +
                 "Free tiles: " + getFreeTilesCount() + "\n";
     }
-
-    /**
-     * Method saving statistics about the map to the csv file.
-     * @param filePath path to the csv file
-     */
-    public void toCSV(String filePath) {
-        StringBuilder csvBuilder = new StringBuilder();
-
-        boolean fileExists = new File(filePath).exists();
-
-        if (!fileExists) {
-            csvBuilder.append("Statistic,Value\n");
-        }
-        csvBuilder.append("Day,").append(map.getCurrentDay()).append("\n");
-        csvBuilder.append("Number of Animals,").append(getNumberOfAnimals()).append("\n");
-        csvBuilder.append("Number of Alive Animals,").append(getNumberOfAliveAnimals()).append("\n");
-        csvBuilder.append("Number of Dead Animals,").append(getNumberOfDeadAnimals()).append("\n");
-        csvBuilder.append("Number of Plants,").append(getNumberOfPlants()).append("\n");
-        csvBuilder.append("Average Life Span,").append(getAverageLifeSpan()).append("\n");
-        csvBuilder.append("Average Number of Children,").append(getAverageNumberOfChildren()).append("\n");
-        csvBuilder.append("Average Energy Level,").append(getAverageEnergyLevel()).append("\n");
-        csvBuilder.append("Dominant Genotype,").append(getDominantGenotype() != null ? getDominantGenotype().toString() : "None").append("\n");
-        csvBuilder.append("Free Tiles,").append(getFreeTilesCount()).append("\n");
-        csvBuilder.append("\n");
-
-        try (FileWriter writer = new FileWriter(filePath, true)) { // 'true' to append data
-            writer.write(csvBuilder.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

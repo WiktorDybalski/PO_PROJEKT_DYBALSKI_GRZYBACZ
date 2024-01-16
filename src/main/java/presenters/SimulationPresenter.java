@@ -15,12 +15,15 @@ import model.simulation.Simulation;
 import model.simulation.SimulationEngine;
 import model.utils.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 
 public class SimulationPresenter implements MapChangeListener {
+    private String desktopPath;
+    private SimulationCSV simulationCSV;
     private static final String EMPTY_CELL = " ";
     @FXML
     public Label header;
@@ -54,6 +57,11 @@ public class SimulationPresenter implements MapChangeListener {
     private boolean isSimulationRunning = false;
 
     private double cellSize = 60;
+    private boolean isCsv;
+
+    public void setCsv(boolean csv) {
+        isCsv = csv;
+    }
 
     public Simulation getSimulation() {
         return this.simulation;
@@ -183,9 +191,11 @@ public class SimulationPresenter implements MapChangeListener {
             if(hideAnimalButton.isVisible()) {
                 showAnimalInfo(selectedAnimal);
             }
+            if(isCsv) {
+                simulationCSV.toCSV("Simulation", desktopPath);
+            }
         });
     }
-
 
     public void stopSimulation() {
         if (simulation != null) {
@@ -209,6 +219,12 @@ public class SimulationPresenter implements MapChangeListener {
                 isSimulationRunning = false;
                 animalInfoLabel.setText(Animal.getInfoForNone());
                 animalInfoLabel.setVisible(false);
+                if(isCsv) {
+                    String userHome = System.getProperty("user.home"); // Pobiera katalog domowy użytkownika
+                    String simulationsPath = userHome + File.separator + "Simulations"; // Ścieżka do folderu Simulations
+                    simulationCSV = new SimulationCSV(statistics);
+                    simulationCSV.toCSV("Simulation", simulationsPath);
+                }
             } else {
                 Platform.runLater(() -> {
                     if (simulationEngine.isRunning()) {
