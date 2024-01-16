@@ -19,6 +19,10 @@ import java.util.List;
 
 public class StartPresenter {
     @FXML
+    public Label startHeader;
+    @FXML
+    private Label infoConfigurator;
+    @FXML
     private Button loadConfigButton;
     @FXML
     private Button saveConfigButton;

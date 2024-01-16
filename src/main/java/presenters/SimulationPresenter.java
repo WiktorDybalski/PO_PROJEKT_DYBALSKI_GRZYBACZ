@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import model.maps.WorldMap;
 import model.simulation.MapChangeListener;
 import model.simulation.Simulation;
@@ -25,6 +26,8 @@ public class SimulationPresenter implements MapChangeListener {
     private String desktopPath;
     private SimulationCSV simulationCSV;
     private static final String EMPTY_CELL = " ";
+    @FXML
+    public HBox all;
     @FXML
     public Label header;
     private Animal selectedAnimal;

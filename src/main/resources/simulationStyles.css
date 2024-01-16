@@ -1,8 +1,19 @@
 .root {
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: cover;
-    -fx-background-position: center center;
+    -fx-background-color: #FFFFF0;
+    -fx-font-weight: bold;
 }
+#all {
+    -fx-background-color: #e8eff7; /* Delikatny błękitny dla świeżego wyglądu */
+    -fx-border-color: #a3b1c6; /* Lekko ciemniejszy odcień granicy */
+    -fx-border-width: 2px; /* Cienka granica */
+    -fx-border-radius: 10px; /* Zaokrąglone rogi dla nowoczesnego wyglądu */
+    -fx-padding: 20px; /* Odstęp od krawędzi wewnętrznych */
+    -fx-spacing: 10px; /* Odstępy między elementami wewnątrz kontenera */
+    -fx-alignment: center; /* Wyrównanie zawartości do środka */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 5); /* Subtelny cień dla głębi */
+    -fx-opacity: 0.95; /* Lekka przezroczystość dla nowoczesnego wyglądu */
+}
+
 .label {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
@@ -12,54 +23,67 @@
 }
 
 #header {
-    -fx-font-size: 30px;
+    -fx-font-size: 35px;
+    -fx-text-fill: #2e3b4e;
     -fx-alignment: center;
+    -fx-font-weight: bold; /* Dodanie pogrubienia */
 }
+
 #currentDayLabel {
-    -fx-font-size: 22px;
+    -fx-font-size: 25px;
+    -fx-text-fill: #2e3b4e;
     -fx-alignment: center;
 }
-.button {
-    -fx-background-color: #4CAF50;
+
+Button, .button {
+    -fx-background-color: #708090; /* Dopasowanie do tła */
     -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-alignment: center;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    -fx-margin: 25px;
 }
 
-.button:hover {
-    -fx-background-color: #45a049;
+Button:hover, .button:hover {
+    -fx-background-color: #b2c2d3; /* Jaśniejszy odcień dla efektu najechania */
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
-    -fx-margin: 5px;
 }
 
-.text-field {
+/* Ustawienia etykiet */
+Label {
     -fx-font-size: 14px;
-    -fx-border-color: #9e9e9e;
-    -fx-padding: 5px;
-    -fx-margin: 5px; /* Add margin to separate text fields */
+    -fx-font-weight: bold; /* Dodanie pogrubienia */
+}
+
+TextField, ChoiceBox {
+    -fx-font-size: 14px;
+    -fx-padding: 8;
+    -fx-background-radius: 5;
+    -fx-border-color: #a3b1c6; /* Subtelny kolor granicy */
+    -fx-border-width: 1; /* Cienka linia graniczna */
+    -fx-background-color: #e8eff7; /* Jasne tło */
 }
 
 .grid-pane {
     -fx-background-color: #f5f5f5;
     -fx-border-color: black;
-    -fx-border-width: 10px;
+    -fx-border-width: 2px;
     -fx-border-radius: 10px;
-    -fx-margin: 20px;
+    -fx-padding: 10px;
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
 }
 
 .grid-pane .label {
     -fx-background-color: #e0e0e0;
     -fx-padding: 0px;
     -fx-border-color: black;
-    -fx-border-radius: 10px;
+    -fx-border-radius: 5px;
 }
 
-/* Styl dla komórek siatki mapy */
 .map-grid-cell {
     -fx-background-color: #FFFFF0;
     -fx-alignment: center;

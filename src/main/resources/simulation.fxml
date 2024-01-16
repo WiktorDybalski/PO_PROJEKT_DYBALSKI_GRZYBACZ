@@ -10,25 +10,36 @@
     <top>
         <VBox alignment="CENTER">
             <Label fx:id="header" text="Darwin World Simulator"/>
-            <Label fx:id="currentDayLabel" text="    Day: "/>
+            <Label fx:id="currentDayLabel" text="Day: "/>
         </VBox>
     </top>
     <center>
-        <HBox>
+        <HBox fx:id="all">
             <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                 <Label fx:id="moveInfoLabel"/>
                 <Label fx:id="animalInfoLabel" visible="false"/>
-                <HBox>
-                    <Button fx:id="startStopButton" minWidth="120" text="Start" onAction="#onSimulationStartClicked"/>
+                <HBox alignment="CENTER" spacing="20">
+                    <Button fx:id="startStopButton" text="Start" onAction="#onSimulationStartClicked"
+                            minWidth="120" prefWidth="200" maxWidth="200"
+                            minHeight="40" prefHeight="45" maxHeight="60"
+                            HBox.hgrow="NEVER"/>
                     <Button fx:id="hideAnimalButton" text="Hide animal" onAction="#onNotShowAnimalClicked"
-                            visible="false"/>
+                            minWidth="120" prefWidth="200" maxWidth="200"
+                            minHeight="40" prefHeight="45" maxHeight="60"
+                            HBox.hgrow="NEVER" visible="false"/>
                 </HBox>
                 <HBox>
-                    <Button fx:id="showDominantGenotypeButton" text="Show Dominant Genotype"
-                            onAction="#onShowDominantGenotypeClicked" visible="false"/>
-                    <Button fx:id="showPlantFieldsButton" text="Highlight Plant Fields"
-                            onAction="#onShowPlantFieldsClicked"
-                            visible="false"/>
+                    <Label visible="false"/>
+                </HBox>
+                <HBox alignment="CENTER" spacing="20">
+                    <Button fx:id="showDominantGenotypeButton" text="Show Dominant Genotype" onAction="#onShowDominantGenotypeClicked"
+                            minWidth="120" prefWidth="200" maxWidth="200"
+                            minHeight="40" prefHeight="45" maxHeight="60"
+                            HBox.hgrow="NEVER" visible="false"/>
+                    <Button fx:id="showPlantFieldsButton" text="Highlight Plant Fields" onAction="#onShowPlantFieldsClicked"
+                            minWidth="120" prefWidth="200" maxWidth="200"
+                            minHeight="40" prefHeight="45" maxHeight="60"
+                            HBox.hgrow="NEVER" visible="false"/>
                 </HBox>
             </VBox>
             <Pane/>

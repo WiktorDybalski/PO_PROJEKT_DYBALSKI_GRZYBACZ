@@ -1,3 +1,4 @@
+/* Ustawienia globalne */
 * {
     -fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -5,6 +6,7 @@
 .root {
     -fx-background-color: #FFFFF0;
 }
+
 /* Ustawienia głównego kontenera */
 BorderPane {
     background-color: #f0f0f0;
@@ -15,46 +17,74 @@ BorderPane {
 .center {
     -fx-spacing: 15;
 }
+
 #contentArea {
-    -fx-background-color: #9DC88D; /* Cream color */
+    -fx-background-color: #e8eff7; /* Delikatny błękitny */
+    -fx-border-color: #a3b1c6;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-padding: 20px;
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
+    -fx-opacity: 0.95;
 }
-Button {
-    -fx-background-color: #333333; /* Ciemniejszy odcień dla tła */
+
+#startHeader, #infoConfigurator {
+    -fx-font-size: 35px;
+    -fx-text-fill: #2e3b4e;
+    -fx-alignment: center;
+    -fx-font-weight: bold; /* Dodanie pogrubienia */
+}
+#infoConfigurator {
+    -fx-font-size: 25px;
+}
+/* Ustawienia przycisków */
+Button, .button {
+    -fx-background-color: #708090; /* Dopasowanie do tła */
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-padding: 10 20;
     -fx-alignment: center;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+Button:hover, .button:hover {
+    -fx-background-color: #b2c2d3; /* Jaśniejszy odcień dla efektu najechania */
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
 }
 
 /* Ustawienia etykiet */
 Label {
     -fx-font-size: 14px;
     -fx-text-fill: black;
+    -fx-font-weight: bold; /* Dodanie pogrubienia */
 }
 
-/* Ustawienia pól tekstowych */
-TextField {
+TextField, ChoiceBox {
     -fx-font-size: 14px;
     -fx-padding: 8;
     -fx-background-radius: 5;
-    -fx-border-color: black; /* Kolor bordery */
+    -fx-border-color: #a3b1c6; /* Subtelny kolor granicy */
+    -fx-border-width: 1; /* Cienka linia graniczna */
+    -fx-background-color: #e8eff7; /* Jasne tło */
 }
-
-/* Ustawienia wyboru */
-ChoiceBox {
-    -fx-font-size: 14px;
-    -fx-padding: 8;
-    -fx-background-radius: 5;
-    -fx-border-color: black; /* Kolor bordery */
-}
-
-/* ... (inne zmiany) ... */
 
 Slider {
     -fx-pref-width: 500px;
-    -fx-border-color: black;
-    -fx-background-color: #333333; /* Ciemniejszy odcień dla tła */
+    -fx-border-color: #a3b1c6; /* Dopasowanie koloru granicy */
+    -fx-background-color: #333333; /* Ciemne tło suwaka */
+    -fx-background-radius: 5; /* Zaokrąglenie rogów suwaka */
+    -fx-control-inner-background: #e8eff7; /* Jasne tło dla wewnętrznej części suwaka */
+    -fx-fill: #4CAF50; /* Kolor wypełnienia dla aktywnej części suwaka */
+    -fx-stroke: #333333; /* Kolor obramowania dla aktywnej części suwaka */
+    -fx-stroke-width: 1; /* Szerokość obramowania */
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.3) , 5, 0.0 , 0 , 2 ); /* Subtelny efekt cienia */
 }
+
 
 /* ... (inne zmiany) ... */
 
@@ -69,9 +99,10 @@ Slider {
 }
 
 .button:hover {
-    -fx-background-color: #45a049;
+    -fx-background-color: #2F4F4F;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
+    -fx-border-width: 10px;
 }
 
 .text-field {
@@ -80,3 +111,6 @@ Slider {
     -fx-padding: 5px;
 }
 
+.slider {
+    -fx-background-color: black; /* Kolor tła i kciuka */
+}

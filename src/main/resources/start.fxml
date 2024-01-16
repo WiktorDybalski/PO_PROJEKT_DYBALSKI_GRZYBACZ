@@ -3,9 +3,15 @@
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="800.0" minWidth="1000.0"
+            minHeight="800.0" minWidth="800.0"
             fx:controller="presenters.StartPresenter"
             stylesheets="@styles.css">
+    <top>
+        <VBox alignment="CENTER">
+            <Label fx:id="startHeader" text="Darwin World Simulator"/>
+            <Label fx:id="infoConfigurator" text="Give us more information about the simulation!"/>
+        </VBox>
+    </top>
     <center>
         <GridPane fx:id="contentArea" hgap="10" vgap="10" alignment="CENTER">
             <Label text="Number of days:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
@@ -14,11 +20,11 @@
             <Label fx:id="daysCountValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
             <Label text="Width of map:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <Slider fx:id="mapWidthSlider" min="1" max="30" value="20" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Slider fx:id="mapWidthSlider" min="1" max="30" value="10" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
             <Label fx:id="mapWidthValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
             <Label text="Height of map:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <Slider fx:id="mapHeightSlider" min="1" max="30" value="20" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <Slider fx:id="mapHeightSlider" min="1" max="30" value="10" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
             <Label fx:id="mapHeightValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
             <Label text="Initial plant count:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
@@ -78,16 +84,15 @@
             <Label text="Behaviour Variant:" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
             <ChoiceBox fx:id="BehaviourVariantChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
 
-            <Label text="Save To Csv:" GridPane.columnIndex="0" GridPane.rowIndex="15"/>
+            <Label text="Save To Excel:" GridPane.columnIndex="0" GridPane.rowIndex="15"/>
             <ChoiceBox fx:id="saveToCsvChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="15"/>
-
-            <Button fx:id="startButton" text="Start Simulation" onAction="#onStartClicked" GridPane.columnIndex="0"
-                    GridPane.rowIndex="16" GridPane.columnSpan="2"/>
 
             <Button fx:id="loadConfigButton" text="Load Configuration" onAction="#onLoadConfigClicked"
                     GridPane.columnIndex="0" GridPane.rowIndex="17"/>
             <Button fx:id="saveConfigButton" text="Save Configuration" onAction="#onSaveConfigClicked"
                     GridPane.columnIndex="1" GridPane.rowIndex="17"/>
+            <Button fx:id="startButton" text="Start Simulation" onAction="#onStartClicked" GridPane.columnIndex="2"
+                    GridPane.rowIndex="17" GridPane.columnSpan="2"/>
         </GridPane>
     </center>
 </BorderPane>
