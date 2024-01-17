@@ -129,7 +129,8 @@ public class SimulationPresenter implements MapChangeListener {
             if (tile.getAnimals() != null && !tile.getAnimals().isEmpty()) {
                 selectedAnimal = tile.getStrongestAnimal();
                 showAnimalInfo(selectedAnimal);
-                hideAnimalButton.setVisible(true);
+                hideAnimalButton.setDisable(false);
+                animalInfoLabel.setVisible(true);
             }
         });
 
@@ -222,6 +223,12 @@ public class SimulationPresenter implements MapChangeListener {
                 isSimulationRunning = false;
                 animalInfoLabel.setText(Animal.getInfoForNone());
                 animalInfoLabel.setVisible(false);
+                showDominantGenotypeButton.setVisible(true);
+                showPlantFieldsButton.setVisible(true);
+                hideAnimalButton.setVisible(true);
+                showDominantGenotypeButton.setDisable(true);
+                showPlantFieldsButton.setDisable(true);
+                hideAnimalButton.setDisable(true);
                 if(isCsv) {
                     String userHome = System.getProperty("user.home"); // Pobiera katalog domowy użytkownika
                     desktopPath = userHome + File.separator + "Desktop"; // Dodaje do ścieżki folder Desktop
@@ -234,14 +241,14 @@ public class SimulationPresenter implements MapChangeListener {
                         simulationEngine.pauseSimulation();
                         startStopButton.setText("Continue");
                         isSimulationRunning = false;
-                        showDominantGenotypeButton.setVisible(true);
-                        showPlantFieldsButton.setVisible(true);
+                        showDominantGenotypeButton.setDisable(false);
+                        showPlantFieldsButton.setDisable(false);
                     } else {
                         simulationEngine.resumeSimulation();
                         startStopButton.setText("Stop");
                         isSimulationRunning = true;
-                        showDominantGenotypeButton.setVisible(false);
-                        showPlantFieldsButton.setVisible(false);
+                        showDominantGenotypeButton.setDisable(true);
+                        showPlantFieldsButton.setDisable(true);
                     }
                 });
             }
@@ -254,14 +261,13 @@ public class SimulationPresenter implements MapChangeListener {
     private void onNotShowAnimalClicked() {
         if (animalInfoLabel != null && animalInfoLabel.isVisible()) {
             animalInfoLabel.setVisible(false);
-            hideAnimalButton.setVisible(false);
+            hideAnimalButton.setDisable(true);
         }
     }
 
     private void showAnimalInfo(Animal animal) {
         if (animal != null) {
             animalInfoLabel.setText(animal.getInfo());
-            animalInfoLabel.setVisible(true);
         }
     }
     @FXML
