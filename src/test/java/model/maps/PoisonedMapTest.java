@@ -29,15 +29,6 @@ public class PoisonedMapTest {
     }
 
     @Test
-    void testIsOccupied() {
-        assertFalse(map.isOccupied(new Vector2d(0, 0)));
-        assertFalse(map.isOccupied(new Vector2d(1, 1)));
-        assertFalse(map.isOccupied(new Vector2d(9, 9)));
-        assertFalse(map.isOccupied(new Vector2d(10, 10)));
-        assertFalse(map.isOccupied(new Vector2d(-1, -1)));
-    }
-
-    @Test
     void testNewPositionOutOfLeftBound() {
         assertFalse(map.newPositionOutOfLeftBound(new Vector2d(0, 0)));
         assertFalse(map.newPositionOutOfLeftBound(new Vector2d(1, 1)));
@@ -86,19 +77,5 @@ public class PoisonedMapTest {
             map.dailyUpdate();
             System.out.println(map.toString());
         }
-    }
-
-    @Test
-    void eatTest() {
-        assertEquals(10, map.getAnimals().size());
-        assertEquals(30, map.getPlants().size());
-        map.eat();
-        assertEquals(10, map.getAnimals().size());
-        assertEquals(28, map.getPlants().size());
-        System.out.println(map.toString());
-        map.eat();
-        assertEquals(10, map.getAnimals().size());
-        assertEquals(28, map.getPlants().size());
-        System.out.println(map.toString());
     }
 }

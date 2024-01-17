@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Statistics {
-    private WorldMap map;
+    private final WorldMap map;
     private int numberOfAnimals;
     private int numberOfPlants;
     private double averageLifeSpan;
@@ -70,10 +70,6 @@ public class Statistics {
 
     public int getNumberOfDeadAnimals() {
         return numberOfDeadAnimals;
-    }
-
-    public Set<Vector2d> getDominantGenotypeAnimals() {
-        return dominantGenotypeAnimals;
     }
 
     public WorldMap getMap() {

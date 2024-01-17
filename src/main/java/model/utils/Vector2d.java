@@ -3,7 +3,6 @@ package model.utils;
 
 import java.util.Objects;
 
-//done for now.
 /**
  * The Vector2d class represents a vector in 2D space.
  * It is used to represent positions on the map.
@@ -22,6 +21,7 @@ public class Vector2d {
 
     /**
      * The Vector2d constructor.
+     *
      * @param x The x coordinate of the vector.
      * @param y The y coordinate of the vector.
      */
@@ -41,6 +41,7 @@ public class Vector2d {
 
     /**
      * The add method adds two vectors.
+     *
      * @param other The vector to be added.
      * @return The sum of the two vectors.
      */
@@ -50,6 +51,7 @@ public class Vector2d {
 
     /**
      * The subtract method subtracts two vectors.
+     *
      * @param other The vector to be subtracted.
      * @return The difference of the two vectors.
      */
@@ -60,8 +62,9 @@ public class Vector2d {
     /**
      * The upperRight method returns the upper right corner of the rectangle
      * created by the two vectors.
+     *
      * @param other The vector to be compared to.
-     * The upper right corner of the rectangle created by the two vectors.
+     *              The upper right corner of the rectangle created by the two vectors.
      */
     public Vector2d upperRight(Vector2d other) {
         return new Vector2d(Math.max(this.x, other.x), Math.max(this.y, other.y));
@@ -70,6 +73,7 @@ public class Vector2d {
     /**
      * The lowerLeft method returns the lower left corner of the rectangle
      * created by the two vectors.
+     *
      * @param other The vector to be compared to.
      * @return The lower left corner of the rectangle created by the two vectors.
      */
@@ -79,8 +83,6 @@ public class Vector2d {
 
     /**
      * preceeds method checks if the vector preceeds another vector.
-     * @param position
-     * @return
      */
     public boolean precedes(Vector2d position) {
         return this.x <= position.x && this.y <= position.y;
@@ -88,8 +90,6 @@ public class Vector2d {
 
     /**
      * follows method checks if the vector follows another vector.
-     * @param position
-     * @return
      */
     public boolean follows(Vector2d position) {
         return this.x >= position.x && this.y >= position.y;
@@ -104,6 +104,7 @@ public class Vector2d {
 
     /**
      * The equals method checks if the vector is equal to another object.
+     *
      * @param other The object to be compared to.
      * @return True if the vector is equal to the other object, false otherwise.
      */
@@ -116,6 +117,7 @@ public class Vector2d {
 
     /**
      * The toString method.
+     *
      * @return The string representation of the vector.
      */
     public String toString() {

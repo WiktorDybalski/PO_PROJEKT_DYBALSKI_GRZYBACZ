@@ -2,6 +2,7 @@ package model.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class representing a single tile on the map.
@@ -140,8 +141,9 @@ public class Tile {
      * @return hash code of the tile
      * Nessessary for the implementation of the equals method.
      */
+    @Override
     public int hashCode() {
-        return this.hashCode();
+        return Objects.hash(position, objects);
     }
 
     /**
@@ -153,7 +155,7 @@ public class Tile {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof Tile that)) {
+        if (!(other instanceof Tile)) {
             return false;
         }
         return this.equals(other);
@@ -166,7 +168,7 @@ public class Tile {
     public String toString() {
         String s = "Tile: " +
                 "position: " + position.toString() +
-                ", objects: " + objects.toString();
+                ", objects: " + objects;
         return s;
     }
 

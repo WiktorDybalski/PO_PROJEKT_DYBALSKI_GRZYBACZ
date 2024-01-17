@@ -4,7 +4,6 @@ import model.maps.WorldMap;
 import model.simulation.MapChangeListener;
 
 public class ConsoleMapDisplay implements MapChangeListener {
-    private int operationsCounter = 0;
 
     @Override
     public synchronized void mapChanged(WorldMap worldMap, String message) {
@@ -16,6 +15,5 @@ public class ConsoleMapDisplay implements MapChangeListener {
 //            System.out.println(message);
 //            System.out.println(worldMap);
 //        }
-        return;
     }
 }

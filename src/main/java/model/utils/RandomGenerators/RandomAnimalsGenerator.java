@@ -7,49 +7,38 @@ import model.utils.Vector2d;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class RandomAnimalsGenerator {
+    /**
+     * The birthday of each animal, set to a constant value.
+     */
+    private static final int BIRTHDAY = 0;
+    /**
+     * The energy value each animal starts with.
+     */
+    private final int animalEnergy;
+    /**
+     * The minimum energy required for an animal to reproduce.
+     */
+    private final int minimalReproductionEnergy;
+    /**
+     * The map where the animals will be placed.
+     */
+    private final WorldMap map;
     /**
      * List to store the generated animals.
      */
     private List<Animal> animals;
 
     /**
-     * Random object for generating random numbers.
-     */
-    private Random random;
-
-    /**
-     * The energy value each animal starts with.
-     */
-    private final int animalEnergy;
-
-    /**
-     * The birthday of each animal, set to a constant value.
-     */
-    private static final int BIRTHDAY = 0;
-
-    /**
-     * The minimum energy required for an animal to reproduce.
-     */
-    private final int minimalReproductionEnergy;
-
-    /**
-     * The map where the animals will be placed.
-     */
-    private final WorldMap map;
-
-    /**
      * Constructor for RandomAnimalsGenerator.
      * Initializes the generator and creates an initial set of animals.
      *
      * @param minimalReproductionEnergy The minimal energy required for animals to reproduce.
-     * @param map The map where the animals are to be placed.
+     * @param map                       The map where the animals are to be placed.
      */
     public RandomAnimalsGenerator(int initialAnimalEnergy, int minimalReproductionEnergy, WorldMap map) {
         animals = new ArrayList<>();
-        random = new Random();
         this.minimalReproductionEnergy = minimalReproductionEnergy;
         this.animalEnergy = initialAnimalEnergy;
         this.map = map;

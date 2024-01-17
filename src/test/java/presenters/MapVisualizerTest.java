@@ -7,11 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MapVisualizerTest {
-
-    private MapVisualizer mapVisualiser;
 
     private GlobeMap map;
 
@@ -22,13 +19,13 @@ public class MapVisualizerTest {
         for (int i = 0; i < 8; i++) {
             genes.add(i);
         }
-        Genotype genotype = new Genotype(genes,8);
+        Genotype genotype = new Genotype(genes, 8);
 
-        map.placeAnimal(new Animal(new Vector2d(5, 5), 1,  genotype, 0, 10), new Vector2d(5, 5));
-        map.placeAnimal(new Animal(new Vector2d(5, 5), 2,  genotype, 0, 10), new Vector2d(5, 6));
-        map.placeAnimal(new Animal(new Vector2d(5, 5), 3,  genotype, 0, 10), new Vector2d(5, 5));
+        map.placeAnimal(new Animal(new Vector2d(5, 5), 1, genotype, 0, 10), new Vector2d(5, 5));
+        map.placeAnimal(new Animal(new Vector2d(5, 5), 2, genotype, 0, 10), new Vector2d(5, 6));
+        map.placeAnimal(new Animal(new Vector2d(5, 5), 3, genotype, 0, 10), new Vector2d(5, 5));
 
-        map.placePlant(new Plant( new Vector2d(5, 5), 1, false,0), new Vector2d(5, 7));
+        map.placePlant(new Plant(new Vector2d(5, 5), 1, false, 0), new Vector2d(5, 7));
 
     }
 

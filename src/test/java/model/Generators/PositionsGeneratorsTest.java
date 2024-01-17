@@ -1,17 +1,17 @@
 package model.Generators;
 
-import model.utils.RandomGenerators.RandomPositionsGenerator;
 import model.maps.GlobeMap;
 import model.maps.PoisonedMap;
 import model.maps.WorldMap;
 import model.simulation.SimulationConfigurator;
+import model.utils.RandomGenerators.RandomPositionsGenerator;
 import model.utils.Vector2d;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PositionsGeneratorsTest {
     PoisonedMap poisonedMap = new PoisonedMap(new SimulationConfigurator());
@@ -26,6 +26,7 @@ public class PositionsGeneratorsTest {
         }
         return positions;
     }
+
     @Test
     void plantsInPoisonedPositionsGeneratorTest() {
         List<Vector2d> allPositions = generateAllPositions(poisonedMap);

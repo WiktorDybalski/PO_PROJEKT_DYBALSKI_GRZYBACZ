@@ -8,12 +8,23 @@ import java.util.Random;
 
 public class PoisonedMap extends AbstractWorldMap {
     /**
-     * Constructor of the Map
+     * Lower-left corner of the poisoned area on the map.
      */
     private Vector2d leftDownPoisonedCorner;
+
+    /**
+     * Upper-right corner of the poisoned area on the map.
+     */
     private Vector2d rightUpperPoisonedCorner;
+
+    /**
+     * Random number generator.
+     */
     private Random random;
 
+    /**
+     * Constructor of the Map
+     */
     public PoisonedMap(SimulationConfigurator config) {
         super(config);
     }

@@ -1,49 +1,36 @@
 package model.utils;
 
-import javafx.scene.control.skin.TextInputControlSkin;
-
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
-
-//done for now.
 
 /**
  * Represents an animal on a map with characteristics like position, energy, and genotype.
  */
 public class Animal implements MapElement {
 
-    // Current position of the animal in a two-dimensional map.
-    private Vector2d position;
-
-    // Current energy level of the animal, influencing its survival and reproduction.
-    private int energy;
-
-    // Current direction in which the animal is moving.
-    private Directions direction;
-
     // Genotype of the animal, inherited and affecting its hereditary traits.
     private final Genotype genotype;
-
-    // List of the animal's offspring.
-    private ArrayList<Animal> children;
-
-    // Number of plants eaten by the animal.
-    private int eatenPlantCount;
-
     // Day of birth for the animal.
     private final int birthDay;
-
-    // Age of the animal.
-    private int age;
-
-    // Flag indicating whether the animal is dead.
-    private boolean isDead;
-
-    // Index of the currently active gene in the genotype.
-    private int actualActiveGenIndex;
-
     // Minimal energy required for reproduction.
     private final int minimalReproductionEnergy;
+    // Current position of the animal in a two-dimensional map.
+    private Vector2d position;
+    // Current energy level of the animal, influencing its survival and reproduction.
+    private int energy;
+    // Current direction in which the animal is moving.
+    private Directions direction;
+    // List of the animal's offspring.
+    private ArrayList<Animal> children;
+    // Number of plants eaten by the animal.
+    private int eatenPlantCount;
+    // Age of the animal.
+    private int age;
+    // Flag indicating whether the animal is dead.
+    private boolean isDead;
+    // Index of the currently active gene in the genotype.
+    private int actualActiveGenIndex;
 
     /**
      * Constructor to initialize an Animal object with specified attributes.
@@ -59,13 +46,28 @@ public class Animal implements MapElement {
         this.energy = energy;
         this.direction = Directions.getRandomDirection();
         this.genotype = genotype;
-        this.children = new ArrayList<Animal>();
+        this.children = new ArrayList<>();
         this.eatenPlantCount = 0;
         this.birthDay = birthDay;
         this.age = 0;
         this.isDead = false;
         this.actualActiveGenIndex = (new Random()).nextInt(genotype.getGenomeLength());
         this.minimalReproductionEnergy = minimalReproductionEnergy;
+    }
+
+    public static String getInfoForNone() {
+        return """
+                Animal info:\s
+                Position:\s
+                Energy:\s
+                Direction:\s
+                Genotype:\s
+                Children:\s
+                Eaten plant count:\s
+                Birth day:\s
+                Age:\s
+                Is dead:\s
+                """;
     }
 
     //getters and setters
@@ -90,6 +92,10 @@ public class Animal implements MapElement {
 
     public Directions getDirection() {
         return direction;
+    }
+
+    public void setDirection(Directions direction) {
+        this.direction = direction;
     }
 
     public int getEatenPlantCount() {
@@ -130,23 +136,9 @@ public class Animal implements MapElement {
         return actualActiveGenIndex;
     }
 
-    public int getMinimalReproductionEnergy() {
-        return minimalReproductionEnergy;
-    }
-
-    public int getNextGene() {
-        this.actualActiveGenIndex = (this.actualActiveGenIndex + 1) % this.genotype.getGenomeLength();
-        return this.genotype.getGene(this.actualActiveGenIndex);
-    }
-
     public void setActualActiveGenIndex(int actualActiveGenIndex) {
         this.actualActiveGenIndex = actualActiveGenIndex;
     }
-
-    public void setDirection(Directions direction) {
-        this.direction = direction;
-    }
-
 
     public void decreaseEnergy() {
         if (!this.isDead)
@@ -243,10 +235,6 @@ public class Animal implements MapElement {
         age++;
     }
 
-    //overridden methods
-    public int hashCode() {
-        return this.hashCode();
-    }
 
     public boolean equals(Object other) {
         if (this == other)
@@ -257,12 +245,17 @@ public class Animal implements MapElement {
         return this.position.equals(that.position) && this.energy == that.energy && this.direction.equals(that.direction) && this.genotype.equals(that.genotype) && this.children.equals(that.children) && this.eatenPlantCount == that.eatenPlantCount && this.birthDay == that.birthDay && this.isDead == that.isDead && this.age == that.age;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(genotype, birthDay, minimalReproductionEnergy, position, energy, direction, children, eatenPlantCount, age, isDead, actualActiveGenIndex);
+    }
+
     public String toString() {
         return String.valueOf(getEnergy());
     }
 
     public String getInfo() {
-        String info = "Animal info: " + "\n" +
+        return "Animal info: " + "\n" +
                 "Position: " + this.position.toString() + "\n" +
                 "Energy: " + this.energy + "\n" +
                 "Direction: " + this.direction.toString() + "\n" +
@@ -272,20 +265,5 @@ public class Animal implements MapElement {
                 "Birth day: " + this.birthDay + "\n" +
                 "Age: " + this.age + "\n" +
                 "Is dead: " + this.isDead + "\n";
-        return info;
-    }
-    public static String getInfoForNone() {
-        return """
-                Animal info:\s
-                Position:\s
-                Energy:\s
-                Direction:\s
-                Genotype:\s
-                Children:\s
-                Eaten plant count:\s
-                Birth day:\s
-                Age:\s
-                Is dead:\s
-                """;
     }
 }

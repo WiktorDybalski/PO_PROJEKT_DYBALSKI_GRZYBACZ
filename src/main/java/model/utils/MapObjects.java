@@ -1,10 +1,9 @@
 package model.utils;
 
 
-import java.lang.reflect.Array;
 import java.util.*;
 
-//done for now.
+
 /**
  * Represents the objects which can be placed on a tile.
  */
@@ -27,9 +26,11 @@ public class MapObjects {
     public Plant getPlant() {
         return plant;
     }
+
     public List<Animal> getAnimals() {
         return animals;
     }
+
     public List<MapElement> getObjects() {
         ArrayList<MapElement> objects = new ArrayList<>();
         objects.add(plant);
@@ -42,7 +43,7 @@ public class MapObjects {
      */
     public ArrayList<Animal> getSortedAnimals() {
         if (animals.isEmpty()) {
-            return new ArrayList<Animal>();
+            return new ArrayList<>();
         }
         ArrayList<Animal> sortedAnimals = new ArrayList<>(animals);
         sortedAnimals.sort(Comparator.comparingInt(Animal::getEnergy).reversed());
@@ -57,8 +58,10 @@ public class MapObjects {
         });
         return sortedAnimals;
     }
+
     /**
      * Returns the strongest animal on the tile.
+     *
      * @return The strongest animal on the tile.
      */
     public Animal getStrongestAnimal() {
@@ -70,10 +73,11 @@ public class MapObjects {
 
     /**
      * Returns the two strongest animals on the tile.
+     *
      * @return The two strongest animals on the tile.
      */
     public ArrayList<Animal> getStrongestAnimals() {
-        if (animals.size()<2) {
+        if (animals.size() < 2) {
             return new ArrayList<>();
         }
         ArrayList<Animal> sortedAnimals = this.getSortedAnimals();
@@ -87,11 +91,10 @@ public class MapObjects {
                 break;
             }
         }
-        if (strongestAnimals.size() >=2) {
+        if (strongestAnimals.size() >= 2) {
             Collections.shuffle(strongestAnimals);
             return new ArrayList<>(strongestAnimals.subList(0, 2));
-        }
-        else{
+        } else {
             ArrayList<Animal> strongestAnimals2 = new ArrayList<>();
             int secondMaxEnergy = sortedAnimals.get(1).getEnergy();
             for (Animal animal : sortedAnimals) {
@@ -108,6 +111,7 @@ public class MapObjects {
 
     /**
      * Adds a plant to the tile.
+     *
      * @param plant The plant to be added.
      */
     public void addPlant(Plant plant) {
@@ -123,6 +127,7 @@ public class MapObjects {
 
     /**
      * Adds an animal to the tile.
+     *
      * @param animal The animal to be added.
      */
     public void addAnimal(Animal animal) {
@@ -131,6 +136,7 @@ public class MapObjects {
 
     /**
      * Removes an animal from the tile.
+     *
      * @param animal The animal to be removed.
      */
     public void removeAnimal(Animal animal) {
@@ -153,6 +159,7 @@ public class MapObjects {
 
     /**
      * Checks if the tile is occupied by any object.
+     *
      * @return True if the tile is occupied, false otherwise.
      */
     public boolean isOccupied() {
@@ -179,6 +186,7 @@ public class MapObjects {
 
     /**
      * Returns a string representation of the map objects.
+     *
      * @return A string representation of the map objects.
      */
     public String toString() {

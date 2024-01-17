@@ -18,20 +18,14 @@ public class SimulationCSV {
 
     public void toCSV(String baseFileName, String directoryPath) {
         try {
-            // 1. Sprawdź, czy folder 'Simulations' istnieje na pulpicie
             Path simulationsFolderPath = Paths.get(directoryPath, "Simulations");
             if (!Files.exists(simulationsFolderPath)) {
-                // 2. Jeśli nie istnieje, utwórz go
                 Files.createDirectory(simulationsFolderPath);
             }
-
-            // Zmodyfikuj ścieżkę zapisu plików CSV
             if (currentFilePath == null) {
                 Path baseFilePath = simulationsFolderPath.resolve(baseFileName + ".csv");
                 currentFilePath = createUniqueFilePath(baseFilePath);
             }
-
-            // ... (reszta twojego kodu bez zmian) ...
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,12 +39,10 @@ public class SimulationCSV {
 
         StringBuilder csvBuilder = new StringBuilder();
 
-        // Dodajemy nagłówek tylko jeśli plik jest nowo utworzony
         if (!Files.exists(currentFilePath)) {
-            csvBuilder.append("Statistic,Value\n"); // Nagłówek pliku
+            csvBuilder.append("Statistic,Value\n");
         }
 
-        // Dodajemy dane do pliku CSV
         csvBuilder.append("Day,").append(s.getMap().getCurrentDay()).append("\n");
         csvBuilder.append("Number of Animals,").append(s.getNumberOfAnimals()).append("\n");
         csvBuilder.append("Number of Alive Animals,").append(s.getNumberOfAliveAnimals()).append("\n");
@@ -63,7 +55,6 @@ public class SimulationCSV {
         csvBuilder.append("Free Tiles,").append(s.getFreeTilesCount()).append("\n");
         csvBuilder.append("\n");
 
-        // Zapis do pliku
         try {
             Files.write(currentFilePath, csvBuilder.toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } catch (IOException e) {

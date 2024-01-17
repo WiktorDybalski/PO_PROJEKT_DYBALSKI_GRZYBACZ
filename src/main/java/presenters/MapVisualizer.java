@@ -14,8 +14,6 @@ public class MapVisualizer {
 
     /**
      * Initializes the MapVisualizer with an instance of map to visualize.
-     *
-     * @param map
      */
     public MapVisualizer(WorldMap map) {
         this.map = map;
@@ -36,7 +34,7 @@ public class MapVisualizer {
         } else if (map instanceof PoisonedMap) {
             System.out.println("PoisonedMap.");
         } else {
-            System.out.println("To jest inny rodzaj WorldMap.");
+            System.out.println("Different type of the map");
         }
         StringBuilder builder = new StringBuilder();
         for (int i = upperRight.getY() + 1; i >= lowerLeft.getY() - 1; i--) {
@@ -78,12 +76,11 @@ public class MapVisualizer {
     }
 
     private String drawObject(Vector2d currentPosition) {
-        Tile tile=this.map.getTile(currentPosition);
+        Tile tile = this.map.getTile(currentPosition);
         if (tile.isOccupied()) {
-            if(!tile.getAnimals().isEmpty()){
+            if (!tile.getAnimals().isEmpty()) {
                 return tile.getStrongestAnimal().getEnergy() + "";
-            }
-            else{
+            } else {
                 return "*";
             }
         }

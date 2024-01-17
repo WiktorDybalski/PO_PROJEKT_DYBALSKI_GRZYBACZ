@@ -21,24 +21,20 @@ public class StartPresenter {
     @FXML
     public Label startHeader;
     @FXML
-    private Label infoConfigurator;
-    @FXML
-    private Button loadConfigButton;
-    @FXML
-    private Button saveConfigButton;
-    @FXML
-    private Button startButton;
-    @FXML
     public ChoiceBox<String> saveToCsvChoiceBox;
-    @FXML
-    public ChoiceBox<String> BehaviourVariant;
     @FXML
     public Slider dayLengthSlider;
     @FXML
     public Label dayLengthValueLabel;
-    private SimulationPresenter simulationPresenter;
     @FXML
-    private ChoiceBox<String> MapVariant;
+    public Label infoConfigurator;
+    @FXML
+    public Button loadConfigButton;
+    @FXML
+    public Button saveConfigButton;
+    @FXML
+    public Button startButton;
+    private SimulationPresenter simulationPresenter;
     @FXML
     private Slider daysCountSlider;
     @FXML
@@ -191,7 +187,7 @@ public class StartPresenter {
                 simulationPresenter.setWorldMap(poisonedMap);
                 poisonedMap.addObserver(simulationPresenter);
             }
-            if(config.isWriteToCsv().equals("Yes")) {
+            if (config.isWriteToCsv().equals("Yes")) {
                 simulationPresenter.setCsv(true);
             }
             simulationPresenter.onSimulationStartClicked();
@@ -202,10 +198,6 @@ public class StartPresenter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public SimulationConfigurator getConfig() {
-        return config;
     }
 
     private void configureSimulation() {

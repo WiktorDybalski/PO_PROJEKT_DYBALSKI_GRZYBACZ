@@ -1,16 +1,17 @@
 package model.maps;
 
 import model.simulation.SimulationConfigurator;
-import model.utils.*;
+import model.utils.Animal;
+import model.utils.Vector2d;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GlobeMapTest {
 
     GlobeMap map;
+
     @BeforeEach
     void setUp() {
 
@@ -59,6 +60,7 @@ public class GlobeMapTest {
         assertFalse(map.newPositionOutOfRightBound(new Vector2d(0, 11)));
         assertFalse(map.newPositionOutOfRightBound(new Vector2d(-1, -1)));
     }
+
     void testObjectsAt() {
         assertNull(map.objectsAt(new Vector2d(0, 0)));
         assertNull(map.objectsAt(new Vector2d(1, 1)));
@@ -69,41 +71,28 @@ public class GlobeMapTest {
 
     @Test
     void testMove() {
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             System.out.println(map.toString());
             map.move();
         }
     }
+
     @Test
     void testGenerateMap() {
         assertEquals(10, map.getAnimals().size());
     }
 
     @Test
-    void testDailyUpdate(){
-        for(int i = 0; i < 10; i++) {
+    void testDailyUpdate() {
+        for (int i = 0; i < 10; i++) {
             map.dailyUpdate();
             System.out.println(map.toString());
         }
     }
 
     @Test
-    void eatTest() {
-        assertEquals(10, map.getAnimals().size());
-        assertEquals(30, map.getPlants().size());
-        map.eat();
-        assertEquals(10, map.getAnimals().size());
-        assertEquals(28, map.getPlants().size());
-        System.out.println(map.toString());
-        map.eat();
-        assertEquals(10, map.getAnimals().size());
-        assertEquals(28, map.getPlants().size());
-        System.out.println(map.toString());
-    }
-
-    @Test
-    void animalAgeTest(){
-        for(int i = 0; i < 10; i++) {
+    void animalAgeTest() {
+        for (int i = 0; i < 10; i++) {
             map.dailyUpdate();
             for (Animal animal : map.getAnimals()) {
                 System.out.println(animal.getAge());

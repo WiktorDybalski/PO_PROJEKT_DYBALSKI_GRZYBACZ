@@ -12,42 +12,33 @@ import static java.lang.Math.min;
 
 public class RandomPlantsGenerator {
     /**
-     * The energy value each plant starts with.
-     */
-    private int plantEnergy;
-
-    /**
      * The day on which the plant starts growing.
      */
     private static final int DAY_OF_GROWTH = 2;
-
+    /**
+     * The map where the plants will be placed.
+     */
+    private final WorldMap map;
+    /**
+     * The energy value each plant starts with.
+     */
+    private final int plantEnergy;
     /**
      * List to store the generated plants.
      */
     private List<Plant> plants;
 
     /**
-     * Random object for generating random numbers.
-     */
-    private Random random;
-
-    /**
-     * The map where the plants will be placed.
-     */
-    private final WorldMap map;
-
-    /**
      * Constructor for RandomPlantsGenerator.
      * Generates an initial number of plants on the given map.
      *
      * @param plantEnergy
-     * @param map           The map where the plants are to be placed.
+     * @param map         The map where the plants are to be placed.
      */
     public RandomPlantsGenerator(int plantEnergy, WorldMap map) {
         plants = new ArrayList<>();
-        random = new Random();
-        this.map = map;
         this.plantEnergy = plantEnergy;
+        this.map = map;
     }
 
     /**
@@ -79,7 +70,7 @@ public class RandomPlantsGenerator {
     public void generatePlants(int amount, List<Vector2d> freePositions) {
         RandomPositionsGenerator positionsGenerator = new RandomPositionsGenerator(map, amount);
         List<Vector2d> positions = positionsGenerator.generatePlants(freePositions);
-        for (int i = 0; i < min(amount,freePositions.size()); i++) {
+        for (int i = 0; i < min(amount, freePositions.size()); i++) {
             plants.add(generateRandomPlant(positions.get(i)));
 
         }

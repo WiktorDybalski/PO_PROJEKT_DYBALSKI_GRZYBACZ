@@ -1,31 +1,50 @@
 package model.simulation;
 
 import model.maps.WorldMap;
-import model.utils.*;
+import model.utils.Genotype;
+import model.utils.Statistics;
+import model.utils.Tile;
+import model.utils.Vector2d;
 import presenters.ConsoleMapDisplay;
 
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 
 public class Simulation extends Thread {
+
+    /**
+     * The map of the world where the simulation occurs.
+     */
     private final WorldMap worldMap;
 
+    /**
+     * Configuration settings for the simulation.
+     */
     private final SimulationConfigurator config;
-    private Statistics statistics;
+
+    /**
+     * Lock object for thread synchronization.
+     */
     private final Object lock = new Object();
 
-    private volatile boolean running = false;
+    /**
+     * Statistics tracker for the simulation.
+     */
+    private Statistics statistics;
 
-    public boolean isRunning() {
-        return running;
-    }
+    /**
+     * Flag to control the simulation's running state.
+     */
+    private volatile boolean running = false;
 
     public Simulation(WorldMap worldmap, SimulationConfigurator config) {
         this.worldMap = worldmap;
         this.config = config;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     public WorldMap getWorldMap() {
@@ -34,10 +53,6 @@ public class Simulation extends Thread {
 
     public void setStatistics(Statistics statistics) {
         this.statistics = statistics;
-    }
-
-    public Statistics getStatistics() {
-        return statistics;
     }
 
     public void run() {
@@ -67,6 +82,7 @@ public class Simulation extends Thread {
             }
         }
     }
+
     public void pauseSimulation() {
         synchronized (lock) {
             running = false;
@@ -100,13 +116,13 @@ public class Simulation extends Thread {
     }
 
     public Set<Vector2d> getPlantPreferredFields() {
-        int mapHeight= this.worldMap.getConfig().getMapSizeY();
-        int equatorialStart = (mapHeight-mapHeight%3) / 3;
-        int equatorialEnd = mapHeight - equatorialStart+1;
+        int mapHeight = this.worldMap.getConfig().getMapSizeY();
+        int equatorialStart = (mapHeight - mapHeight % 3) / 3;
+        int equatorialEnd = mapHeight - equatorialStart + 1;
 
         Set<Vector2d> plantPreferredFields = new HashSet<>();
-        for (int i = 1; i <= this.worldMap.getConfig().getMapSizeX()+1; i++) {
-            for (int j = equatorialStart+1; j < equatorialEnd; j++) {
+        for (int i = 1; i <= this.worldMap.getConfig().getMapSizeX() + 1; i++) {
+            for (int j = equatorialStart + 1; j < equatorialEnd; j++) {
                 plantPreferredFields.add(new Vector2d(i, j));
             }
         }

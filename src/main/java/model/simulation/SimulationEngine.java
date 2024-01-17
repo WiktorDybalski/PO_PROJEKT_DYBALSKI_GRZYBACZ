@@ -21,7 +21,7 @@ public class SimulationEngine implements Runnable {
      */
     public void runSync() {
         for (Simulation simulation : simulations) {
-            simulation.run();
+            simulation.start();
         }
     }
 

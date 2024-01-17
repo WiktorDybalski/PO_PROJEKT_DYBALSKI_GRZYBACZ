@@ -1,6 +1,5 @@
 package model.utils;
 
-//done for now.
 public enum Directions {
     NORTH,
     NORTH_EAST,
@@ -36,7 +35,7 @@ public enum Directions {
     /**
      * @return direction as unit vector
      */
-    public static Vector2d toUnitVector(int index){
+    public static Vector2d toUnitVector(int index) {
         return switch (index) {
             case 0 -> new Vector2d(0, 1); //north
             case 1 -> new Vector2d(1, 1); //north-east

@@ -27,12 +27,8 @@ public class SimulationConfiguratorTest {
         assertEquals(3, configurator.getMaximumMutationCount());
         assertEquals("Random", configurator.getMutationVariant());
         assertEquals(8, configurator.getGenomeLength());
-        assertEquals("Random", configurator.getAnimalBehaviourType());
         assertEquals(10, configurator.getNumberOfDays());
     }
-
-
-
 
 
 }

@@ -1,8 +1,6 @@
 package model.simulation;
-import model.utils.Vector2d;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import model.utils.Vector2d;
 
 public class SimulationConfigurator {
     private String writeToCsv;
@@ -54,15 +52,9 @@ public class SimulationConfigurator {
     public int getMapSizeY() {
         return mapSizeY;
     }
+
     public Vector2d getMapSize() {
         return new Vector2d(mapSizeX, mapSizeY);
-    }
-
-    public void setMapSize(int x, int y) {
-        if (x > 0 && y > 0) {
-            this.mapSizeX = x;
-            this.mapSizeY = y;
-        }
     }
 
     public String getMapType() {
@@ -73,14 +65,6 @@ public class SimulationConfigurator {
         if (mapType != null && !mapType.isEmpty()) {
             this.mapType = mapType;
         }
-    }
-
-    public String isWriteToCsv() {
-        return writeToCsv;
-    }
-
-    public void setWriteToCsv(String writeToCsv) {
-        this.writeToCsv = writeToCsv;
     }
 
     public int getInitialPlantCount() {
@@ -97,12 +81,6 @@ public class SimulationConfigurator {
         return plantEnergy;
     }
 
-    public void setPlantEnergy(int plantEnergy) {
-        if(plantEnergy > 0) {
-            this.plantEnergy = plantEnergy;
-        }
-    }
-
     public int getNumberOfPlantsGrowingPerDay() {
         return numberOfPlantsGrowingPerDay;
     }
@@ -115,12 +93,6 @@ public class SimulationConfigurator {
 
     public String getModeOfPlantGrowing() {
         return modeOfPlantGrowing;
-    }
-
-    public void setModeOfPlantGrowing(String modeOfPlantGrowing) {
-        if (modeOfPlantGrowing != null && !modeOfPlantGrowing.isEmpty()) {
-            this.modeOfPlantGrowing = modeOfPlantGrowing;
-        }
     }
 
     public int getInitialAnimalCount() {
@@ -183,6 +155,21 @@ public class SimulationConfigurator {
         }
     }
 
+    public void setMapSize(int x, int y) {
+        if (x > 0 && y > 0) {
+            this.mapSizeX = x;
+            this.mapSizeY = y;
+        }
+    }
+
+    public String isWriteToCsv() {
+        return writeToCsv;
+    }
+
+    public void setWriteToCsv(String writeToCsv) {
+        this.writeToCsv = writeToCsv;
+    }
+
     public String getMutationVariant() {
         return mutationVariant;
     }
@@ -200,12 +187,6 @@ public class SimulationConfigurator {
     public void setGenomeLength(int genomeLength) {
         if (genomeLength > 0) {
             this.genomeLength = genomeLength;
-        }
-    }
-
-    public void setAnimalBehaviourType(String animalBehaviourType) {
-        if (animalBehaviourType != null && !animalBehaviourType.isEmpty()) {
-            this.animalBehaviourType = animalBehaviourType;
         }
     }
 
@@ -228,6 +209,7 @@ public class SimulationConfigurator {
             this.dayLength = dayLength;
         }
     }
+
     public void fromText(String[] lines) {
         this.numberOfDays = Integer.parseInt(lines[0].split(" ")[1]);
         this.mapSizeX = Integer.parseInt(lines[1].split(" ")[1]);
@@ -250,7 +232,7 @@ public class SimulationConfigurator {
     }
 
     public String toText() {
-        String sb = "numberOfDays: " + this.numberOfDays + "\n" +
+        return "numberOfDays: " + this.numberOfDays + "\n" +
                 "mapSizeX: " + this.mapSizeX + "\n" +
                 "mapSizeY: " + this.mapSizeY + "\n" +
                 "mapType: " + this.mapType + "\n" +
@@ -268,12 +250,11 @@ public class SimulationConfigurator {
                 "genomeLength: " + this.genomeLength + "\n" +
                 "animalBehaviourType: " + this.animalBehaviourType + "\n" +
                 "dayLength: " + this.dayLength;
-        return sb;
     }
 
     @Override
     public String toString() {
-        String sb = "SimulationConfigurator: " +
+        return "SimulationConfigurator: " +
                 "mapSizeX: " + this.mapSizeX +
                 ", mapSizeY: " + this.mapSizeY +
                 ", mapType: " + this.mapType +
@@ -290,7 +271,6 @@ public class SimulationConfigurator {
                 ", mutationVariant: " + this.mutationVariant +
                 ", genomeLength: " + this.genomeLength +
                 ", animalBehaviourType: " + this.animalBehaviourType;
-        return sb;
     }
 }
 

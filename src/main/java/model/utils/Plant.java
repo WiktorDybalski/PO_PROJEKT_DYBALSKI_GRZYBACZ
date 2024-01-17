@@ -1,17 +1,15 @@
 package model.utils;
 
-
-//done for now. TODO: add comments, tests
 /**
  * Class representing a plant on the map.
  */
 public class Plant implements MapElement {
     // position of the plant
-    private Vector2d position;
+    private final Vector2d position;
+    // day of growth of the plant
+    private final int dayOfGrowth;
     // energy of the plant
     private int energy;
-    // day of growth of the plant
-    private int dayOfGrowth;
     // is the plant poisoned
     private boolean isPoisoned;
     // is the plant eaten
@@ -19,9 +17,10 @@ public class Plant implements MapElement {
 
     /**
      * Constructor of the plant.
-     * @param position position of the plant
-     * @param energy energy of the plant
-     * @param isPoisoned is the plant poisoned
+     *
+     * @param position    position of the plant
+     * @param energy      energy of the plant
+     * @param isPoisoned  is the plant poisoned
      * @param dayOfGrowth day of growth of the plant
      */
     public Plant(Vector2d position, int energy, boolean isPoisoned, int dayOfGrowth) {
@@ -36,27 +35,33 @@ public class Plant implements MapElement {
     public int getEnergy() {
         return energy;
     }
+
+    public void setEnergy(int newEnergy) {
+        this.energy = newEnergy;
+    }
+
     public int getDayOfGrowth() {
         return dayOfGrowth;
     }
+
     public Vector2d getPosition() {
         return position;
     }
+
     public boolean getIsPoisoned() {
         return isPoisoned;
     }
+
     public boolean getIsEaten() {
         return isEaten;
     }
+
     public void setIsEaten() {
         isEaten = true;
     }
 
     public void setPoison() {
         isPoisoned = true;
-    }
-    public void setEnergy(int newEnergy) {
-        this.energy = newEnergy;
     }
 
     /**
@@ -67,12 +72,14 @@ public class Plant implements MapElement {
             energy++;
         }
     }
+
     public int hashCode() {
         return position.hashCode() + energy + dayOfGrowth + (isPoisoned ? 1 : 0) + (isEaten ? 1 : 0);
     }
 
     /**
      * Method checks if two plants are equal.
+     *
      * @param other other plant
      * @return true if plants are equal, false otherwise
      */
@@ -87,6 +94,7 @@ public class Plant implements MapElement {
 
     /**
      * Method ovverides toString method.
+     *
      * @return string representation of the plant
      */
     public String toString() {

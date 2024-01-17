@@ -16,7 +16,7 @@ public class AnimalTest {
 
     @BeforeEach
     public void setUp() {
-        Vector2d position = new Vector2d(1,1);
+        Vector2d position = new Vector2d(1, 1);
         int energy = 10;
         ArrayList<Integer> genes1;
         ArrayList<Integer> genes2;
@@ -25,11 +25,11 @@ public class AnimalTest {
 
         for (int i = 0; i < 8; i++) {
             genes1.add(i);
-            genes2.add(7-i);
+            genes2.add(7 - i);
         }
 
-        genotype1 = new Genotype(genes1,8);
-        genotype2 = new Genotype(genes2,8);
+        genotype1 = new Genotype(genes1, 8);
+        genotype2 = new Genotype(genes2, 8);
 
         int birthDay = 0;
         int minimal_reproduction_energy = 5;
@@ -54,8 +54,9 @@ public class AnimalTest {
 
     @Test
     public void testGetPosition() {
-        assertEquals(animal1.getPosition(), new Vector2d(1,1));
+        assertEquals(animal1.getPosition(), new Vector2d(1, 1));
     }
+
     @Test
     public void testGetEatenPlantCount() {
         assertEquals(animal1.getEatenPlantCount(), 0);
@@ -72,7 +73,8 @@ public class AnimalTest {
     }
 
     @Test
-    public void testGetChildren() {assertEquals(new ArrayList<>(), animal1.getChildren());
+    public void testGetChildren() {
+        assertEquals(new ArrayList<>(), animal1.getChildren());
     }
 
     @Test
@@ -93,23 +95,23 @@ public class AnimalTest {
 
     @Test
     public void testMove() {
-        animal1.move(Directions.NORTH, new Vector2d(1,2));
-        assertEquals(animal1.getPosition(), new Vector2d(1,2));
+        animal1.move(Directions.NORTH, new Vector2d(1, 2));
+        assertEquals(animal1.getPosition(), new Vector2d(1, 2));
 
-        animal1.move(Directions.EAST, new Vector2d(2,2));
-        assertEquals(animal1.getPosition(), new Vector2d(2,2));
+        animal1.move(Directions.EAST, new Vector2d(2, 2));
+        assertEquals(animal1.getPosition(), new Vector2d(2, 2));
 
-        animal1.move(Directions.SOUTH_WEST, new Vector2d(1,1));
-        assertEquals(animal1.getPosition(), new Vector2d(1,1));
+        animal1.move(Directions.SOUTH_WEST, new Vector2d(1, 1));
+        assertEquals(animal1.getPosition(), new Vector2d(1, 1));
 
-        animal1.move(Directions.NORTH_WEST, new Vector2d(0,2));
-        assertEquals(animal1.getPosition(), new Vector2d(0,2));
+        animal1.move(Directions.NORTH_WEST, new Vector2d(0, 2));
+        assertEquals(animal1.getPosition(), new Vector2d(0, 2));
 
-        animal1.move(Directions.SOUTH_EAST, new Vector2d(1,1));
-        assertEquals(animal1.getPosition(), new Vector2d(1,1));
+        animal1.move(Directions.SOUTH_EAST, new Vector2d(1, 1));
+        assertEquals(animal1.getPosition(), new Vector2d(1, 1));
 
-        animal1.move(Directions.NORTH_EAST, new Vector2d(2,2));
-        assertEquals(animal1.getPosition(), new Vector2d(2,2));
+        animal1.move(Directions.NORTH_EAST, new Vector2d(2, 2));
+        assertEquals(animal1.getPosition(), new Vector2d(2, 2));
     }
 
     @Test
@@ -123,7 +125,7 @@ public class AnimalTest {
 
     @Test
     public void reproduce() {
-        Animal animal3=animal1.reproduce(animal2, 0,10,true);
+        Animal animal3 = animal1.reproduce(animal2, 0, 10, "Random");
         assertEquals(animal1.getChildrenCount(), 1);
         assertEquals(animal2.getChildrenCount(), 1);
         assertEquals(animal1.getEnergy(), 5);
@@ -139,7 +141,7 @@ public class AnimalTest {
     public void testEat() {
         assertEquals(animal1.getEatenPlantCount(), 0);
         assertEquals(animal1.getEnergy(), 10);
-        Plant plant= new Plant (new Vector2d(2,2), 10,false,0);
+        Plant plant = new Plant(new Vector2d(2, 2), 10, false, 0);
         animal1.eat(plant);
         assertEquals(animal1.getEatenPlantCount(), 1);
         assertEquals(animal1.getEnergy(), 20);

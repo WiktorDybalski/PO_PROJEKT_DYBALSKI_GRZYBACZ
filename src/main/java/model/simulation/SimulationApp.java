@@ -5,9 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import presenters.SimulationPresenter;
 
 public class SimulationApp extends Application {
+    /**
+     * Starts the application by setting up the primary stage using an FXML loader.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
@@ -17,6 +19,9 @@ public class SimulationApp extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Configures the primary stage with scene, title, and size constraints.
+     */
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
         var scene = new Scene(viewRoot);
         primaryStage.setScene(scene);

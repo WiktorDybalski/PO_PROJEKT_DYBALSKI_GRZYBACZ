@@ -2,16 +2,17 @@
     -fx-background-color: #FFFFF0;
     -fx-font-weight: bold;
 }
+
 #all {
-    -fx-background-color: #e8eff7; /* Delikatny błękitny dla świeżego wyglądu */
-    -fx-border-color: #a3b1c6; /* Lekko ciemniejszy odcień granicy */
-    -fx-border-width: 2px; /* Cienka granica */
-    -fx-border-radius: 10px; /* Zaokrąglone rogi dla nowoczesnego wyglądu */
-    -fx-padding: 20px; /* Odstęp od krawędzi wewnętrznych */
-    -fx-spacing: 10px; /* Odstępy między elementami wewnątrz kontenera */
-    -fx-alignment: center; /* Wyrównanie zawartości do środka */
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 5); /* Subtelny cień dla głębi */
-    -fx-opacity: 0.95; /* Lekka przezroczystość dla nowoczesnego wyglądu */
+    -fx-background-color: #e8eff7;
+    -fx-border-color: #a3b1c6;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-padding: 20px;
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
+    -fx-opacity: 0.95;
 }
 
 .label {
@@ -26,7 +27,7 @@
     -fx-font-size: 35px;
     -fx-text-fill: #2e3b4e;
     -fx-alignment: center;
-    -fx-font-weight: bold; /* Dodanie pogrubienia */
+    -fx-font-weight: bold;
 }
 
 #currentDayLabel {
@@ -36,35 +37,34 @@
 }
 
 Button, .button {
-    -fx-background-color: #708090; /* Dopasowanie do tła */
+    -fx-background-color: #708090;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-padding: 10 20;
     -fx-alignment: center;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
 }
 
 Button:hover, .button:hover {
-    -fx-background-color: #b2c2d3; /* Jaśniejszy odcień dla efektu najechania */
+    -fx-background-color: #b2c2d3;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
 
-/* Ustawienia etykiet */
 Label {
     -fx-font-size: 14px;
-    -fx-font-weight: bold; /* Dodanie pogrubienia */
+    -fx-font-weight: bold;
 }
 
 TextField, ChoiceBox {
     -fx-font-size: 14px;
     -fx-padding: 8;
     -fx-background-radius: 5;
-    -fx-border-color: #a3b1c6; /* Subtelny kolor granicy */
-    -fx-border-width: 1; /* Cienka linia graniczna */
-    -fx-background-color: #e8eff7; /* Jasne tło */
+    -fx-border-color: #a3b1c6;
+    -fx-border-width: 1;
+    -fx-background-color: #e8eff7;
 }
 
 .grid-pane {
@@ -94,6 +94,7 @@ TextField, ChoiceBox {
     -fx-background-color: green;
     -fx-border-color: black;
 }
+
 .poisonedPlantCell {
     -fx-background-color: black;
     -fx-border-color: black;

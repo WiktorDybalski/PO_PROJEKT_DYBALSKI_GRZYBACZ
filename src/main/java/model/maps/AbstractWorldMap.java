@@ -120,16 +120,6 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
         listeners.add(observer);
     }
 
-    @Override
-    public void removeObserver(MapChangeListener observer) {
-
-        listeners.remove(observer);
-    }
-
-    @Override
-    public void mapChanged(WorldMap worldMap, String message) {
-
-    }
 
     protected synchronized void mapChanged(String message) {
         for (MapChangeListener observer : listeners) {
@@ -256,11 +246,20 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
         this.removeEatenPlants();
     }
 
+    /**
+     * The removeDeadAnimals method is responsible for removing all dead animals from the map.
+     * It iterates through each tile on the map and invokes a method to remove any animals that are dead.
+     */
     public void removeDeadAnimals() {
         for (Tile tile : mapTiles.values()) {
             tile.removeDeadAnimalsFromTile();
         }
     }
+
+    /**
+     * The growAnimals method is responsible for the growth of all living animals on the map.
+     * It iterates through each animal, and if the animal is not dead, it triggers the animal's growth process.
+     */
     private void growAnimals() {
         for (Animal animal : animals) {
             if (animal.getIsDead()) {
@@ -295,7 +294,7 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
                 animal.setDirection(Directions.fromUnitVector(vector));
                 mapTiles.get(newPosition).addAnimal(animal);
             }
-            int newActiveGenIndex=(oldActualActiveGeneIndex+1)%this.config.getGenomeLength();
+            int newActiveGenIndex = (oldActualActiveGeneIndex + 1) % this.config.getGenomeLength();
             animal.setActualActiveGenIndex(newActiveGenIndex);
             animal.decreaseEnergy();
         }
@@ -308,6 +307,14 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
     public void removeEatenPlants() {
         plants.removeIf(Plant::getIsEaten);
     }
+
+    /**
+     * The reproduce method is responsible for handling the reproduction of animals on the map.
+     * It iterates through each tile, identifying the two strongest animals on that tile. If these animals
+     * are both capable of reproduction, they will produce a child. This child is then placed on the map
+     * and added to the list of animals. Reproduction depends on specific conditions like energy levels and
+     * potentially other configured parameters.
+     */
 
     public void reproduce() {
         for (Tile tile : mapTiles.values()) {
@@ -369,6 +376,9 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
         mapChanged(currentDay + " day left");
     }
 
+    @Override
+    public void mapChanged(WorldMap worldMap, String message) {
+    }
     /**
      * The toString method draw the Map using mapVisualizer
      */

@@ -10,17 +10,15 @@ import static java.lang.Math.abs;
 
 public class RandomGensGenerator {
 
+    private final int genomeLength;
     /**
      * List to store the generated genotypes.
      */
     private List<Genotype> gens;
-
-    private final int genomeLength;
-
     /**
      * Random object for generating random numbers.
      */
-    private Random random;
+    private final Random random;
 
     /**
      * Constructor for RandomGensGenerator.
@@ -31,7 +29,7 @@ public class RandomGensGenerator {
     public RandomGensGenerator(int initialNumberOfGens, int genomeLength) {
         this.gens = new ArrayList<>();
         this.random = new Random();
-        this.genomeLength=genomeLength;
+        this.genomeLength = genomeLength;
         generateGens(initialNumberOfGens);
     }
 
@@ -44,16 +42,6 @@ public class RandomGensGenerator {
         return gens;
     }
 
-    /**
-     * Adds additional genotypes to the list.
-     *
-     * @param numberOfGens The number of additional genotypes to generate.
-     */
-    public void addGens(int numberOfGens) {
-        for (int i = 0; i < numberOfGens; i++) {
-            gens.add(generateRandomGen());
-        }
-    }
 
     /**
      * Generates a specified number of genotypes.

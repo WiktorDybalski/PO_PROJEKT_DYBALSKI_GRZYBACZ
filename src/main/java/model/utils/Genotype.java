@@ -1,14 +1,10 @@
 package model.utils;
 
 
-//done for now.
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-
-import static java.lang.Math.abs;
 
 /**
  * Represents the genetic makeup of an animal. This class provides functionalities to manipulate
@@ -16,27 +12,29 @@ import static java.lang.Math.abs;
  */
 public class Genotype {
 
+    private final int genomeLength;
     // List to store the genes which make up the genotype.
     private ArrayList<Integer> genes;
 
-    private final int genomeLength;
-
     /**
      * Constructor to initialize a Genotype with a given set of genes.
+     *
      * @param genes The list of genes to be assigned to the genotype.
      */
     public Genotype(ArrayList<Integer> genes, int genomeLength) {
         this.genes = new ArrayList<>(genes);
-        this.genomeLength=genomeLength;
+        this.genomeLength = genomeLength;
     }
 
     //getters and setters
     public List<Integer> getGenes() {
         return new ArrayList<>(genes);
     }
+
     public int getGenomeLength() {
         return genes.size();
     }
+
     public int getGene(int index) {
         return genes.get(index);
     }
@@ -76,8 +74,9 @@ public class Genotype {
 
     /**
      * Combines two genotypes by randomly mixing their genes.
+     *
      * @param genotype The genotype to be mixed with.
-     * @param ratio The ratio of genes to be taken from the other genotype.
+     * @param ratio    The ratio of genes to be taken from the other genotype.
      * @return The new genotype created by mixing the two genotypes.
      */
     public Genotype mixGenotypes(Genotype genotype, double ratio) {
@@ -89,11 +88,12 @@ public class Genotype {
                 newGenes.add(genotype.genes.get(i));
             }
         }
-        return new Genotype(newGenes,genomeLength);
+        return new Genotype(newGenes, genomeLength);
     }
 
     /**
      * Checks if two genotypes are equal.
+     *
      * @param obj The object to be compared to.
      * @return True if the genotypes are equal, false otherwise.
      */
@@ -116,6 +116,7 @@ public class Genotype {
 
     /**
      * Returns a string representation of the genotype.
+     *
      * @return The string representation of the genotype.
      */
     public String toString() {

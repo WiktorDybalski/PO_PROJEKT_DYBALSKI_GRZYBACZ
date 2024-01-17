@@ -27,13 +27,6 @@ public class SimulationPresenter implements MapChangeListener {
     public HBox all;
     @FXML
     public Label header;
-    private String desktopPath;
-    private SimulationCSV simulationCSV;
-    private Animal selectedAnimal;
-    private Statistics statistics;
-    private int day;
-    private Simulation simulation;
-    private SimulationEngine simulationEngine;
     private WorldMap worldMap;
     @FXML
     private Label animalInfoLabel;
@@ -43,18 +36,20 @@ public class SimulationPresenter implements MapChangeListener {
     private Label currentDayLabel;
     @FXML
     private Label moveInfoLabel;
-
     @FXML
     private Button startStopButton;
-
     @FXML
     private GridPane mapGrid;
-
     @FXML
     private Button showDominantGenotypeButton;
-
     @FXML
     private Button showPlantFieldsButton;
+    private String desktopPath;
+    private SimulationCSV simulationCSV;
+    private Animal selectedAnimal;
+    private Statistics statistics;
+    private Simulation simulation;
+    private SimulationEngine simulationEngine;
 
     private boolean isSimulationRunning = false;
 
