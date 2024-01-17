@@ -17,6 +17,26 @@ public class SimulationCSV {
     }
 
     public void toCSV(String baseFileName, String directoryPath) {
+        try {
+            // 1. Sprawdź, czy folder 'Simulations' istnieje na pulpicie
+            Path simulationsFolderPath = Paths.get(directoryPath, "Simulations");
+            if (!Files.exists(simulationsFolderPath)) {
+                // 2. Jeśli nie istnieje, utwórz go
+                Files.createDirectory(simulationsFolderPath);
+            }
+
+            // Zmodyfikuj ścieżkę zapisu plików CSV
+            if (currentFilePath == null) {
+                Path baseFilePath = simulationsFolderPath.resolve(baseFileName + ".csv");
+                currentFilePath = createUniqueFilePath(baseFilePath);
+            }
+
+            // ... (reszta twojego kodu bez zmian) ...
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if (currentFilePath == null) {
             Path directory = Paths.get(directoryPath);
             Path baseFilePath = directory.resolve(baseFileName + ".csv");

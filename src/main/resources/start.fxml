@@ -15,41 +15,41 @@
     <center>
         <GridPane fx:id="contentArea" hgap="10" vgap="10" alignment="CENTER">
             <Label text="Number of days:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <Slider fx:id="daysCountSlider" min="1" max="10000" value="200" GridPane.columnIndex="1"
+            <Slider fx:id="daysCountSlider" min="1" max="10000" value="500" GridPane.columnIndex="1"
                     GridPane.rowIndex="0"/>
             <Label fx:id="daysCountValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
             <Label text="Width of map:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <Slider fx:id="mapWidthSlider" min="1" max="30" value="10" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Slider fx:id="mapWidthSlider" min="1" max="24" value="20" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
             <Label fx:id="mapWidthValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
             <Label text="Height of map:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <Slider fx:id="mapHeightSlider" min="1" max="30" value="10" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <Slider fx:id="mapHeightSlider" min="1" max="24" value="20" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
             <Label fx:id="mapHeightValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
             <Label text="Initial plant count:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-            <Slider fx:id="initialPlantCountSlider" min="1" max="100" value="40" GridPane.columnIndex="1"
+            <Slider fx:id="initialPlantCountSlider" min="1" value="60" GridPane.columnIndex="1"
                     GridPane.rowIndex="3"/>
             <Label fx:id="initialPlantCountValueLabel" text="2" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
             <Label text="Plants Growing Per Day:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-            <Slider fx:id="numberOfPlantsGrowingPerDaySlider" min="1" max="100" value="40" GridPane.columnIndex="1"
+            <Slider fx:id="numberOfPlantsGrowingPerDaySlider" min="1" value="60" GridPane.columnIndex="1"
                     GridPane.rowIndex="4"/>
             <Label fx:id="numberOfPlantsGrowingPerDayValueLabel" text="10" GridPane.columnIndex="2"
                    GridPane.rowIndex="4"/>
 
             <Label text="Initial Animal Count:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-            <Slider fx:id="initialAnimalCountSlider" min="1" max="100" value="40" GridPane.columnIndex="1"
+            <Slider fx:id="initialAnimalCountSlider" min="1" value="40" GridPane.columnIndex="1"
                     GridPane.rowIndex="5"/>
             <Label fx:id="initialAnimalCountValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
 
             <Label text="Initial Animal Energy:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
-            <Slider fx:id="initialAnimalEnergySlider" min="1" max="100" value="50" GridPane.columnIndex="1"
+            <Slider fx:id="initialAnimalEnergySlider" min="1" value="50" GridPane.columnIndex="1"
                     GridPane.rowIndex="6"/>
             <Label fx:id="initialAnimalEnergyValueLabel" text="30" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
 
             <Label text="Ready To Reproduce Energy:" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
-            <Slider fx:id="readyToReproduceEnergySlider" min="1" max="100" value="10" GridPane.columnIndex="1"
+            <Slider fx:id="readyToReproduceEnergySlider" min="1" value="10" GridPane.columnIndex="1"
                     GridPane.rowIndex="7"/>
             <Label fx:id="readyToReproduceEnergyValueLabel" text="50" GridPane.columnIndex="2" GridPane.rowIndex="7"/>
 
@@ -69,7 +69,7 @@
             <Label fx:id="maximumMutationCountValueLabel" text="3" GridPane.columnIndex="2" GridPane.rowIndex="10"/>
 
             <Label text="Genome Length:" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
-            <Slider fx:id="genomeLengthSlider" min="4" max="20" value="20" GridPane.columnIndex="1"
+            <Slider fx:id="genomeLengthSlider" min="2" max="20" value="20" GridPane.columnIndex="1"
                     GridPane.rowIndex="11"/>
             <Label fx:id="genomeLengthValueLabel" text="8" GridPane.columnIndex="2" GridPane.rowIndex="11"/>
 
@@ -81,8 +81,8 @@
             <Label text="Map Type:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
             <ChoiceBox fx:id="mapTypeChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
 
-            <Label text="Behaviour Variant:" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
-            <ChoiceBox fx:id="BehaviourVariantChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
+            <Label text="Mutation Variant:" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
+            <ChoiceBox fx:id="mutationVariantChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
 
             <Label text="Save To Excel:" GridPane.columnIndex="0" GridPane.rowIndex="15"/>
             <ChoiceBox fx:id="saveToCsvChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="15"/>

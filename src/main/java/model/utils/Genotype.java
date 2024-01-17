@@ -44,8 +44,8 @@ public class Genotype {
     /**
      * Mutates the genotype by randomly changing a specified number of genes.
      */
-    public void mutate(boolean mutationType) {
-        if (mutationType) {
+    public void mutate(String mutationType) {
+        if (mutationType.equals("Random")) {
             fullyRandomMutate();
         } else {
             littleMutate();

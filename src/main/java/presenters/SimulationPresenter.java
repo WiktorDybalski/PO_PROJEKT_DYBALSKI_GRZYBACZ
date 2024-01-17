@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -23,13 +22,13 @@ import java.util.Set;
 
 
 public class SimulationPresenter implements MapChangeListener {
-    private String desktopPath;
-    private SimulationCSV simulationCSV;
     private static final String EMPTY_CELL = " ";
     @FXML
     public HBox all;
     @FXML
     public Label header;
+    private String desktopPath;
+    private SimulationCSV simulationCSV;
     private Animal selectedAnimal;
     private Statistics statistics;
     private int day;
@@ -94,19 +93,38 @@ public class SimulationPresenter implements MapChangeListener {
         return label;
     }
 
+    private String getColorByEnergy(int energy, int maxEnergy) {
+        if (maxEnergy == 0) {
+            maxEnergy = 1;
+        }
+        int intensity = (int) ((double) energy / maxEnergy * 255);
+        intensity = Math.min(255, Math.max(0, intensity));
+
+        return String.format("#%02x%02x%02x", 200, 255 - intensity, 10);
+    }
+
     private void drawGridCell(Vector2d position, int column, int row) {
         Tile tile = worldMap.getTile(position);
         String string = EMPTY_CELL;
         Label label;
         if (tile.isOccupied()) {
             if (!tile.getAnimals().isEmpty()) {
-                string = tile.getStrongestAnimal().getEnergy() + "";
+                Animal strongestAnimal = tile.getStrongestAnimal();
+                string = "";
                 label = createLabelForElement(string);
+
+                int maxEnergy = simulation.getWorldMap().getConfig().getNumberOfDays() * simulation.getWorldMap().getConfig().getPlantEnergy() / 5;
+                String color = getColorByEnergy(strongestAnimal.getEnergy(), maxEnergy);
+                label.setStyle("-fx-background-color: " + color + ";");
             } else {
                 if (tile.getPlant() != null) {
                     string = "";
                     label = createLabelForElement(string);
-                    label.getStyleClass().add("plant-cell");
+                    if (tile.getPlant().getIsPoisoned()) {
+                        label.getStyleClass().add("poisonedPlantCell");
+                    } else {
+                        label.getStyleClass().add("plantCell");
+                    }
                 } else {
                     label = createLabelForElement(string);
                 }
@@ -192,10 +210,10 @@ public class SimulationPresenter implements MapChangeListener {
             moveInfoLabel.setText(statistics.getStatistics());
             this.drawMap();
             moveInfoLabel.setText(statistics.getStatistics());
-            if(hideAnimalButton.isVisible()) {
+            if (hideAnimalButton.isVisible()) {
                 showAnimalInfo(selectedAnimal);
             }
-            if(isCsv) {
+            if (isCsv) {
                 simulationCSV.toCSV("Simulation", desktopPath);
             }
         });
@@ -229,7 +247,7 @@ public class SimulationPresenter implements MapChangeListener {
                 showDominantGenotypeButton.setDisable(true);
                 showPlantFieldsButton.setDisable(true);
                 hideAnimalButton.setDisable(true);
-                if(isCsv) {
+                if (isCsv) {
                     String userHome = System.getProperty("user.home"); // Pobiera katalog domowy użytkownika
                     desktopPath = userHome + File.separator + "Desktop"; // Dodaje do ścieżki folder Desktop
                     simulationCSV = new SimulationCSV(statistics);
@@ -270,6 +288,7 @@ public class SimulationPresenter implements MapChangeListener {
             animalInfoLabel.setText(animal.getInfo());
         }
     }
+
     @FXML
     private void onShowDominantGenotypeClicked() {
         Set<Vector2d> dominantGenotypePositions = simulation.getDominantGenotypeAnimals();
@@ -281,7 +300,7 @@ public class SimulationPresenter implements MapChangeListener {
             colIndex = colIndex != null ? colIndex : 0;
             rowIndex = rowIndex != null ? rowIndex : 0;
 
-            Vector2d position = new Vector2d(colIndex-1, worldMap.getHeight()-rowIndex);
+            Vector2d position = new Vector2d(colIndex - 1, worldMap.getHeight() - rowIndex);
             if (dominantGenotypePositions.contains(position)) {
                 node.setStyle("-fx-background-color: red; -fx-border-color: black; -fx-border-width: 1;");
             } else {
@@ -291,22 +310,21 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
 
+    public void onShowPlantFieldsClicked() {
+        Set<Vector2d> plantPreferredFields = simulation.getPlantPreferredFields();
 
-        public void onShowPlantFieldsClicked () {
-            Set<Vector2d> plantPreferredFields = simulation.getPlantPreferredFields();
+        for (Node node : mapGrid.getChildren()) {
+            Integer colIndex = GridPane.getColumnIndex(node);
+            Integer rowIndex = GridPane.getRowIndex(node);
+            colIndex = colIndex != null ? colIndex : 0;
+            rowIndex = rowIndex != null ? rowIndex : 0;
 
-            for (Node node : mapGrid.getChildren()) {
-                Integer colIndex = GridPane.getColumnIndex(node);
-                Integer rowIndex = GridPane.getRowIndex(node);
-                colIndex = colIndex != null ? colIndex : 0;
-                rowIndex = rowIndex != null ? rowIndex : 0;
-
-                Vector2d position = new Vector2d(colIndex, rowIndex);
-                if (plantPreferredFields.contains(position)) {
-                    node.setStyle("-fx-background-color: red; -fx-border-color: black; -fx-border-width: 1;");
-                } else {
-                    node.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 1;");
-                }
+            Vector2d position = new Vector2d(colIndex, rowIndex);
+            if (plantPreferredFields.contains(position)) {
+                node.setStyle("-fx-background-color: red; -fx-border-color: black; -fx-border-width: 1;");
+            } else {
+                node.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 1;");
             }
         }
     }
+}

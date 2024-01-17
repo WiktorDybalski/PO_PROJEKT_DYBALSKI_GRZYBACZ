@@ -165,6 +165,8 @@ public class Statistics {
      */
     public String toString() {
         return "Statistics:" + "\n" +
+                "MapType: " + getMap().getConfig().getMapType() + "\n" +
+                "MutationType: " + getMap().getConfig().getMutationVariant() + "\n" +
                 "Number of animals: " + getNumberOfAnimals() + "\n" +
                 "Number of alive animals: " + getNumberOfAliveAnimals() + "\n" +
                 "Number of dead animals: " + getNumberOfDeadAnimals() + "\n" +

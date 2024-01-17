@@ -42,7 +42,6 @@ public class SimulationConfigurator {
         this.maximumMutationCount = 3;
         this.mutationVariant = "Random";
         this.genomeLength = 8;
-        this.animalBehaviourType = "Random";
         this.numberOfDays = 100;
         this.dayLength = 1000;
         this.writeToCsv = "No";
@@ -202,10 +201,6 @@ public class SimulationConfigurator {
         if (genomeLength > 0) {
             this.genomeLength = genomeLength;
         }
-    }
-
-    public String getAnimalBehaviourType() {
-        return animalBehaviourType;
     }
 
     public void setAnimalBehaviourType(String animalBehaviourType) {

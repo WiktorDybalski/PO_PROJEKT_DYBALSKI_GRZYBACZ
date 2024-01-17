@@ -28,6 +28,10 @@ public class Simulation extends Thread {
         this.config = config;
     }
 
+    public WorldMap getWorldMap() {
+        return worldMap;
+    }
+
     public void setStatistics(Statistics statistics) {
         this.statistics = statistics;
     }

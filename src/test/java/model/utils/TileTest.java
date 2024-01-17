@@ -156,16 +156,16 @@ public class TileTest {
         tile.addAnimal(animal1);
         tile.addAnimal(animal2);
         assertEquals(tile.getAnimals().size(),2);
-        tile.reproduceAnimals(10, 10,true);
+        tile.reproduceAnimals(10, 10,"Random");
         assertEquals(tile.getAnimals().size(),3);
-        tile.reproduceAnimals(10, 10,true);
+        tile.reproduceAnimals(10, 10,"Random");
         assertEquals(tile.getAnimals().size(),3);
-        tile.reproduceAnimals(10, 10,true);
+        tile.reproduceAnimals(10, 10,"Random");
         Animal animal3 = new Animal(new Vector2d(0,0), 10, genotype2 , 10, 10);
         tile.addAnimal(animal3);
         Animal animal4 = new Animal(new Vector2d(0,0), 10, genotype2 , 10, 10);
         tile.addAnimal(animal4);
-        tile.reproduceAnimals(10, 10,true);
+        tile.reproduceAnimals(10, 10,"Random");
         assertEquals(tile.getAnimals().size(),6);
     }
 

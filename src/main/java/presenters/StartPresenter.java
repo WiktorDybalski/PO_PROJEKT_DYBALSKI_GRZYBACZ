@@ -93,7 +93,7 @@ public class StartPresenter {
     @FXML
     private ChoiceBox<String> mapTypeChoiceBox;
     @FXML
-    private ChoiceBox<String> BehaviourVariantChoiceBox;
+    private ChoiceBox<String> mutationVariantChoiceBox;
 
     private SimulationConfigurator config = new SimulationConfigurator();
 
@@ -141,13 +141,13 @@ public class StartPresenter {
         );
 
         mapTypeChoiceBox.setItems(FXCollections.observableArrayList("GlobeMap", "PoisonedMap"));
-        BehaviourVariantChoiceBox.setItems(FXCollections.observableArrayList("Random", "LittleRandom"));
+        mutationVariantChoiceBox.setItems(FXCollections.observableArrayList("Random", "LittleRandom"));
         saveToCsvChoiceBox.setItems(FXCollections.observableArrayList("Yes", "No"));
         saveToCsvChoiceBox.setValue("No");
     }
 
     private boolean isChoiceBoxValid() {
-        return mapTypeChoiceBox.getValue() != null && BehaviourVariantChoiceBox.getValue() != null && saveToCsvChoiceBox.getValue() != null;
+        return mapTypeChoiceBox.getValue() != null && mutationVariantChoiceBox.getValue() != null && saveToCsvChoiceBox.getValue() != null;
     }
 
     private void showAlert() {
@@ -225,7 +225,7 @@ public class StartPresenter {
         config.setDayLength((int) dayLengthSlider.getValue());
 
         config.setMapType(mapTypeChoiceBox.getValue());
-        config.setAnimalBehaviourType(BehaviourVariantChoiceBox.getValue());
+        config.setMutationVariant(mutationVariantChoiceBox.getValue());
         config.setWriteToCsv(saveToCsvChoiceBox.getValue());
     }
 

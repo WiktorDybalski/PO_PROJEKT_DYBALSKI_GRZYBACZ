@@ -90,7 +90,11 @@ TextField, ChoiceBox {
     -fx-border-color: black;
 }
 
-.plant-cell {
+.plantCell {
     -fx-background-color: green;
+    -fx-border-color: black;
+}
+.poisonedPlantCell {
+    -fx-background-color: black;
     -fx-border-color: black;
 }

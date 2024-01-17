@@ -208,7 +208,7 @@ public class Animal implements MapElement {
      * @param energyToTransfer The energy transferred to the new animal.
      * @return The new offspring animal.
      */
-    public Animal reproduce(Animal partner, int currentDay, int energyToTransfer, boolean mutation_type) {
+    public Animal reproduce(Animal partner, int currentDay, int energyToTransfer, String mutation_type) {
         double ratio = (double) this.getEnergy() / (this.getEnergy() + partner.getEnergy());
         Random random = new Random();
         //if 0 then left, if 1 then right

@@ -110,7 +110,7 @@ public class Tile {
      * @param currentDay current day of the simulation
      * @param energyToTransfer energy to be transferred from the parents to child
      */
-    public void reproduceAnimals(int currentDay, int energyToTransfer, boolean mutationType) {
+    public void reproduceAnimals(int currentDay, int energyToTransfer, String mutationType) {
         if (objects.getAnimals().size() < 2) {
             return;
         }

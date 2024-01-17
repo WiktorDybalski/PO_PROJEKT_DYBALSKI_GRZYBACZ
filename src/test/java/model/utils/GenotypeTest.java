@@ -34,7 +34,7 @@ public class GenotypeTest {
     @Test
     public void testMutate() {
         Genotype genotypeCopy = new Genotype(new ArrayList<>(genes),8);
-        genotype.mutate(true);
+        genotype.mutate("Random");
         assertEquals(genotype.getGenomeLength(), genotypeCopy.getGenomeLength());
         //due to uncontrollable nature of random, we can't test if the genotype has changed
     }
