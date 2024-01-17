@@ -28,18 +28,18 @@
             <Label fx:id="mapHeightValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
             <Label text="Initial plant count:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-            <Slider fx:id="initialPlantCountSlider" min="1" value="60" GridPane.columnIndex="1"
+            <Slider fx:id="initialPlantCountSlider" min="1" value="30" GridPane.columnIndex="1"
                     GridPane.rowIndex="3"/>
             <Label fx:id="initialPlantCountValueLabel" text="2" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
             <Label text="Plants Growing Per Day:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-            <Slider fx:id="numberOfPlantsGrowingPerDaySlider" min="1" value="60" GridPane.columnIndex="1"
+            <Slider fx:id="numberOfPlantsGrowingPerDaySlider" min="1" value="15" GridPane.columnIndex="1"
                     GridPane.rowIndex="4"/>
             <Label fx:id="numberOfPlantsGrowingPerDayValueLabel" text="10" GridPane.columnIndex="2"
                    GridPane.rowIndex="4"/>
 
             <Label text="Initial Animal Count:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-            <Slider fx:id="initialAnimalCountSlider" min="1" value="40" GridPane.columnIndex="1"
+            <Slider fx:id="initialAnimalCountSlider" min="1" value="30" GridPane.columnIndex="1"
                     GridPane.rowIndex="5"/>
             <Label fx:id="initialAnimalCountValueLabel" text="10" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
 
@@ -74,7 +74,7 @@
             <Label fx:id="genomeLengthValueLabel" text="8" GridPane.columnIndex="2" GridPane.rowIndex="11"/>
 
             <Label text="Day Length(ms):" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
-            <Slider fx:id="dayLengthSlider" min="10" max="1000" value="100" GridPane.columnIndex="1"
+            <Slider fx:id="dayLengthSlider" min="35" max="1000" value="100" GridPane.columnIndex="1"
                     GridPane.rowIndex="12"/>
             <Label fx:id="dayLengthValueLabel" text="8" GridPane.columnIndex="2" GridPane.rowIndex="12"/>
 

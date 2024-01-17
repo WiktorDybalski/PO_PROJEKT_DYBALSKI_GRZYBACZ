@@ -49,7 +49,7 @@ public class RandomAnimalsGenerator {
      */
     public RandomAnimalsGenerator(int initialAnimalEnergy, int minimalReproductionEnergy, WorldMap map) {
         animals = new ArrayList<>();
-        random = new Random(1111);
+        random = new Random();
         this.minimalReproductionEnergy = minimalReproductionEnergy;
         this.animalEnergy = initialAnimalEnergy;
         this.map = map;

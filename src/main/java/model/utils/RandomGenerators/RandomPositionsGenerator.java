@@ -99,7 +99,7 @@ public class RandomPositionsGenerator {
      */
 
     public List<Vector2d> generateAnimals() {
-        Random random = new Random(1111);
+        Random random = new Random();
         for (int i = 0; i < objectCount; i++) {
             int randomIndex = abs(random.nextInt(allPositions.size()));
             animalResult.add(allPositions.get(randomIndex));
@@ -109,7 +109,7 @@ public class RandomPositionsGenerator {
 
     public List<Vector2d> generatePlants(List<Vector2d> freePositions) {
         List<Vector2d> tempAllPosition = new ArrayList<>(freePositions);
-        Random random = new Random(1111);
+        Random random = new Random();
         // Start of the equatorial band
         int equatorStart = (maxHeight-maxHeight%3) / 3;
         // End of the equatorial band

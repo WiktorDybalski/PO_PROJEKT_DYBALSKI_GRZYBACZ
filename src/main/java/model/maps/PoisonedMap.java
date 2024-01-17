@@ -27,7 +27,7 @@ public class PoisonedMap extends AbstractWorldMap {
      */
 
     private Vector2d generateLeftDownCornerPoisonedSquare() {
-        this.random = new Random(1115);
+        this.random = new Random();
         int x = random.nextInt((int) (0.8 * this.getWidth()));
         int y = random.nextInt((int) (0.8 * this.getHeight()));
         return new Vector2d(x, y);

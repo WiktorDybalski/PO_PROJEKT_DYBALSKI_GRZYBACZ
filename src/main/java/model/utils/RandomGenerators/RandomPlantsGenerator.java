@@ -45,7 +45,7 @@ public class RandomPlantsGenerator {
      */
     public RandomPlantsGenerator(int plantEnergy, WorldMap map) {
         plants = new ArrayList<>();
-        random = new Random(1112);
+        random = new Random();
         this.map = map;
         this.plantEnergy = plantEnergy;
     }

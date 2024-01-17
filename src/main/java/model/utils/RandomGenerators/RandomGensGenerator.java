@@ -30,7 +30,7 @@ public class RandomGensGenerator {
      */
     public RandomGensGenerator(int initialNumberOfGens, int genomeLength) {
         this.gens = new ArrayList<>();
-        this.random = new Random(1111);
+        this.random = new Random();
         this.genomeLength=genomeLength;
         generateGens(initialNumberOfGens);
     }
@@ -76,7 +76,7 @@ public class RandomGensGenerator {
         ArrayList<Integer> listOfGens = new ArrayList<>();
         for (int i = 0; i < genomeLength; i++) {
             // Random number between 0 and 7
-            Integer digit = random.nextInt(8);
+            int digit = random.nextInt(8);
             listOfGens.add(abs(digit));
         }
         return new Genotype(listOfGens, genomeLength);
