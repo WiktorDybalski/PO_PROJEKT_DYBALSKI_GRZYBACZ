@@ -91,6 +91,8 @@ public class Genotype {
         return new Genotype(newGenes, genomeLength);
     }
 
+
+
     /**
      * Checks if two genotypes are equal.
      *

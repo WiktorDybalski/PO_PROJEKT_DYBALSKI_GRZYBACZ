@@ -3,453 +3,451 @@
 package model.utils {
     package model.utils.RandomGenerators {
         class RandomAnimalsGenerator {
-            - private animals: List<Animal>
-            - private random: Random
-            - private final animalEnergy: int
-            - private static final BIRTHDAY: int
-            - private final minimalReproductionEnergy: int
-            - private final map: WorldMap
-
-            + public RandomAnimalsGenerator(initialAnimalEnergy: int, minimalReproductionEnergy: int, map: WorldMap)
-            + public getAnimals(): List<Animal>
-            - private generateRandomAnimal(position: Vector2d, genotype: Genotype): Animal
-            + private generateAnimals(amount: int): void
+            - animalEnergy: int
+            - minimalReproductionEnergy: int
+            - map: WorldMap
+            - animals: List<Animal>
+            + RandomAnimalsGenerator(initialAnimalEnergy: int, minimalReproductionEnergy: int, map: WorldMap)
+            + getAnimals(): List<Animal>
+            - generateRandomAnimal(position: Vector2d, genotype: Genotype): Animal
+            + generateAnimals(amount: int): void
         }
 
         class RandomGensGenerator {
-            - private static final GEN_LENGTH: int
-            - private gens: List<Genotype>
-            - private random: Random
-
-            + public RandomGensGenerator(initialNumberOfGens: int)
-            + public getGens(): List<Genotype>
-            + public addGens(numberOfGens: int): void
-            + private generateGens(numberOfGens: int): void
-            + private generateRandomGen(): Genotype
+            - genomeLength: int
+            - gens: List<Genotype>
+            - random: Random
+            + RandomGensGenerator(initialNumberOfGens: int, genomeLength: int)
+            + getGens(): List<Genotype>
+            - generateGens(numberOfGens: int): void
+            - generateRandomGen(): Genotype
         }
 
         class RandomPositionsGenerator {
-           - private maxWidth: int
-           - private maxHeight: int
-           - private objectCount: int
-           - private allPositions: List<Vector2d>
-           - private animalResult: List<Vector2d>
-           - private plantResult: List<Vector2d>
-           - private plantInPoisonedResult: List<Vector2d>
-
-           + public RandomPositionsGenerator(map: WorldMap, objectCount: int)
-           + public getAnimalResult(): List<Vector2d>
-           + public getPlantResult(): List<Vector2d>
-           - private generateAllPositions(): List<Vector2d>
-           'TODO: maybe private?'
-           + public generateAnimals(): List<Vector2d>
-           'TODO: maybe private?'
-           + public generatePlants(freePositions: List<Vector2d>): List<Vector2d>
+            - maxWidth: int
+            - maxHeight: int
+            - objectCount: int
+            - allPositions: List<Vector2d>
+            - random: Random
+            - animalResult: List<Vector2d>
+            - plantResult: List<Vector2d>
+            + RandomPositionsGenerator(map: WorldMap, objectCount: int)
+            + generateAnimals(): List<Vector2d>
+            + generatePlants(freePositions: List<Vector2d>): List<Vector2d>
+            - generateAllPositions(): List<Vector2d>
         }
 
         class RandomPlantsGenerator {
-            - private plantEnergy: int
-            'TODO: maybe unnecessary?'
-            - private static final DAY_OF_GROWTH: int
-            - private plants: List<Plant>
-            - private random: Random
-            - private final map: WorldMap
-
-            + public RandomPlantsGenerator(plantEnergy: int, map: WorldMap)
-            + public getPlants(): List<Plant>
-            - private generateRandomPlant(position: Vector2d): Plant
-            'TODO: maybe private?'
-            + public generatePlants(amount: int, freePositions: List<Vector2d>): void
+            - map: WorldMap
+            - plantEnergy: int
+            - plants: List<Plant>
+            + RandomPlantsGenerator(plantEnergy: int, map: WorldMap)
+            + getPlants(): List<Plant>
+            - generateRandomPlant(position: Vector2d): Plant
+            + generatePlants(amount: int, freePositions: List<Vector2d>): void
         }
     }
+
     interface MapElement {
         + public getPosition(): Vector2d
     }
 
-    enum Direction {
-        NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST
-        + public static getRandomDirection(): Direction
-        + public static getDirectionName(int): Direction
-        + public static getDirectionIndex(Direction): int
-        + public static toUnitVector(): Vector2d
-        + public static fromUnitVector(Vector2d): Direction
+    class Boundary {
+        - leftDownCorner: Vector2d
+        - rightUpperCorner: Vector2d
+
+        + Boundary(leftDownCorner: Vector2d, rightUpperCorner: Vector2d)
+    }
+
+    enum Directions {
+        NORTH,
+        NORTH_EAST,
+        EAST,
+        SOUTH_EAST,
+        SOUTH,
+        SOUTH_WEST,
+        WEST,
+        NORTH_WEST;
+
+        + getRandomDirection(): Directions
+        + getDirectionName(index: int): Directions
+        + getDirectionIndex(direction: Directions): int
+        + toUnitVector(index: int): Vector2d
+        + fromUnitVector(vector: Vector2d): Directions
     }
 
     class Vector2d {
-        - private final x: int
-        - private final y: int
-
-        + public Vector2d(int, int)
-
-        + public getX(): int
-        + public getY(): int
-
-        + public add(Vector2d): Vector2d
-        + public subtract(Vector2d): Vector2d
-        + public upperRight(Vector2d): Vector2d
-        + public lowerLeft(Vector2d): Vector2d
-        + public precedes(Vector2d): boolean
-        + public follows(Vector2d): boolean
-
-        + public hashCode(): int
-        + public equals(Object): boolean
-        + public toString(): String
+        - x: int
+        - y: int
+        + Vector2d(x: int, y: int)
+        + getX(): int
+        + getY(): int
+        + add(other: Vector2d): Vector2d
+        + subtract(other: Vector2d): Vector2d
+        + upperRight(other: Vector2d): Vector2d
+        + lowerLeft(other: Vector2d): Vector2d
+        + precedes(position: Vector2d): boolean
+        + follows(position: Vector2d): boolean
+        + hashCode(): int
+        + equals(other: Object): boolean
+        + toString(): String
     }
 
     class MapObjects {
-        - private plant: Plant
-        - private animals: ArrayList<Animal>
+        - plant: Plant
+        - animals: ArrayList<Animal>
+        + MapObjects()
+        + getPlant(): Plant
+        + getAnimals(): List<Animal>
+        + getObjects(): List<MapElement>
+        + getSortedAnimals(): ArrayList<Animal>
+        + getStrongestAnimal(): Animal
+        + getStrongestAnimals(): ArrayList<Animal>
+        + addPlant(plant: Plant): void
+        + removePlant(): void
+        + addAnimal(animal: Animal): void
+        + removeAnimal(animal: Animal): void
+        + removeDeadAnimalsFromMapObjects(): void
+        + isOccupied(): boolean
+        + growPlant(): void
+        + growAnimals(): void
+        + toString(): String
+    }
 
-        + public MapObjects()
+    class Genotype {
+        - genomeLength: int
+        - genes: ArrayList<Integer>
+        + Genotype(genes: ArrayList<Integer>, genomeLength: int)
+        + getGenes(): List<Integer>
+        + getGenomeLength(): int
+        + getGene(index: int): int
+        + mutate(mutationType: String): void
+        - littleMutate(): void
+        - fullyRandomMutate(): void
+        + mixGenotypes(genotype: Genotype, ratio: double): Genotype
+        + equals(obj: Object): boolean
+        + hashCode(): int
+        + toString(): String
+    }
 
-        + public getPlant(): Plant
-        + public getAnimals(): List<Animal>
-        + public getObjects(): List<MapElement>
-        + public getSortedAnimals(): ArrayList<Animal>
-        + public getStrongestAnimal(): Animal
-        + public getStrongestAnimals(): ArrayList<Animal>
+    class Animal {
+        - genotype: Genotype
+        - birthDay: int
+        - minimalReproductionEnergy: int
+        - position: Vector2d
+        - energy: int
+        - direction: Directions
+        - children: ArrayList<Animal>
+        - eatenPlantCount: int
+        - age: int
+        - isDead: boolean
+        - actualActiveGenIndex: int
 
-        + public addPlant(plant: Plant): void
-        + public removePlant(): void
-        + public addAnimal(animal: Animal): void
-        + public removeAnimal(animal: Animal): void
-        + public removeDeadAnimalsFromMapObjects(): void
-        + public isOccupied(): boolean
-        + public growPlant(): void
-        + public growAnimals(): void
+        + Animal(position: Vector2d, energy: int, genotype: Genotype, birthDay: int, minimalReproductionEnergy: int)
+        + getInfoForNone(): String
+        + getEnergy(): int
+        + getChildrenCount(): int
+        + getGenotype(): Genotype
+        + getPosition(): Vector2d
+        + getDirection(): Directions
+        + setDirection(direction: Directions): void
+        + getEatenPlantCount(): int
+        + getBirthDay(): int
+        + getIsDead(): boolean
+        + getChildren(): ArrayList<Animal>
+        + getDescendantCount(): int
+        + getAge(): int
+        + getActualActiveGenIndex(): int
+        + setActualActiveGenIndex(actualActiveGenIndex: int): void
+        + decreaseEnergy(): void
+        + canReproduce(): boolean
+        + move(newDirection: Directions, newPosition: Vector2d): void
+        + eat(plant: Plant): void
+        + addChild(child: Animal): void
+        + reproduce(partner: Animal, currentDay: int, energyToTransfer: int, mutation_type: String): Animal
+        + die(): void
+        + grow(): void
+        + equals(other: Object): boolean
+        + hashCode(): int
+        + toString(): String
+        + getInfo(): String
+    }
 
-        + public toString(): String
-      }
-
-      class Genotype {
-        - private genes: ArrayList<Integer>
-
-        + public Genotype(genes: ArrayList<Integer>)
-
-        + public getGenes(): List<Integer>
-        + public getGenomeLength(): int
-        + public getGene(index: int): int
-        'TODO: maybe private?'
-        + public mutate(): void
-        + public mixGenotypes(genotype: Genotype, ratio: double): Genotype
-
-        + public hashCode(): int
-        + public equals(obj: Object): boolean
-        + public toString(): String
-      }
-
-      class Animal implements MapElement {
-        - private position: Vector2d
-        - private energy: int
-        - private direction: Directions
-        - private genotype: Genotype
-        - private children: ArrayList<Animal>
-        - private eatenPlantCount: int
-        - private birthDay: int
-        - private age: int
-        - private isDead: boolean
-        - private actualActiveGenIndex: int
-        - private minimalReproductionEnergy: int
-
-        + public Animal(position: Vector2d, energy: int, genotype: Genotype, birthDay: int, minimalReproductionEnergy: int)
-
-        + public getEnergy(): int
-        + public getChildrenCount(): int
-        + public getGenotype(): Genotype
-        + public getPosition(): Vector2d
-        + public getDirection(): Directions
-        + public getEatenPlantCount(): int
-        + public getBirthDay(): int
-        + public getIsDead(): boolean
-        + public getChildren(): ArrayList<Animal>
-        + public getDescendantCount(): int
-        + public getAge(): int
-        + public getActualActiveGenIndex(): int
-        + public getMinimalReproductionEnergy(): int
-        + public getNextGene(): int
-        + public setActualActiveGenIndex(actualActiveGenIndex: int): void
-        + public setDirection(direction: Directions): void
-
-        + public decreaseEnergy(): void
-        + public move(newDirection: Directions, newPosition: Vector2d): void
-        + public eat(plant: Plant): void
-        + public addChild(child: Animal): void
-        + public reproduce(partner: Animal, currentDay: int, energyToTransfer: int): Animal
-        + public die(): void
-        + public grow(): void
-        + public hashCode(): int
-        + public equals(other: Object): boolean
-        + public toString(): String
-      }
-
-    class Plant implements MapElement {
-        - private position: Vector2d
-        - private energy: int
-        - private dayOfGrowth: int
-        - private isPoisoned: boolean
-        - private isEaten: boolean
-
-        + public Plant(position: Vector2d, energy: int, isPoisoned: boolean, dayOfGrowth: int)
-
-        + public getEnergy(): int
-        + public getDayOfGrowth(): int
-        + public getPosition(): Vector2d
-        + public getIsPoisoned(): boolean
-        + public getIsEaten(): boolean
-        + public setIsEaten(): void
-        + public setPoison(): void
-        + public setEnergy(newEnergy: int): void
-        + public grow(): void
-        + public hashCode(): int
-        + public equals(other: Object): boolean
-        + public toString(): String
+    class Plant {
+        - position: Vector2d
+        - dayOfGrowth: int
+        - energy: int
+        - isPoisoned: boolean
+        - isEaten: boolean
+        + Plant(position: Vector2d, energy: int, isPoisoned: boolean, dayOfGrowth: int)
+        + getEnergy(): int
+        + setEnergy(newEnergy: int): void
+        + getDayOfGrowth(): int
+        + getPosition(): Vector2d
+        + getIsPoisoned(): boolean
+        + getIsEaten(): boolean
+        + setIsEaten(): void
+        + setPoison(): void
+        + grow(): void
+        + hashCode(): int
+        + equals(other: Object): boolean
+        + toString(): String
     }
 
     class Statistics {
-        - private map: WorldMap
-        - private numberOfAnimals: int
-        - private numberOfPlants: int
-        - private averageLifeSpan: double
-        - private averageNumberOfChildren: double
-        - private averageEnergyLevel: double
-        - private dominantGenotype: Genotype
-        - private freeTilesCount: int
-        - private numberOfAliveAnimals: int
-        - private numberOfDeadAnimals: int
+        - map: WorldMap
+        - numberOfAnimals: int
+        - numberOfPlants: int
+        - averageLifeSpan: double
+        - averageNumberOfChildren: double
+        - averageEnergyLevel: double
+        - dominantGenotype: Genotype
+        - freeTilesCount: int
+        - numberOfAliveAnimals: int
+        - numberOfDeadAnimals: int
+        - dominantGenotypeAnimals: Set<Vector2d>
 
-        + public Statistics(map: WorldMap)
-
-        + public getNumberOfAnimals(): int
-        + public getNumberOfPlants(): int
-        + public getAverageLifeSpan(): double
-        + public getAverageNumberOfChildren(): double
-        + public getAverageEnergyLevel(): double
-        + public getDominantGenotype(): Genotype
-        + public getFreeTilesCount(): int
-        + public getNumberOfAliveAnimals(): int
-        + public getNumberOfDeadAnimals(): int
-        + public getStatistics(): String
-        + public updateStatistics(): void
-        + public toString(): String
-        + public toCSV(filePath: String): void
+        + Statistics(map: WorldMap)
+        + getNumberOfAnimals(): int
+        + getNumberOfPlants(): int
+        + getAverageLifeSpan(): double
+        + getAverageNumberOfChildren(): double
+        + getAverageEnergyLevel(): double
+        + getDominantGenotype(): Genotype
+        + getFreeTilesCount(): int
+        + getNumberOfAliveAnimals(): int
+        + getNumberOfDeadAnimals(): int
+        + getMap(): WorldMap
+        + getStatistics(): String
+        + updateStatistics(): void
+        + toString(): String
     }
 
     class Tile {
-        - private position: Vector2d
-        - private objects: MapObjects
-
-        + public Tile(position: Vector2d)
-
-        + public getPosition(): Vector2d
-        + public getAnimals(): List<Animal>
-        + public getPlant(): Plant
-        + public getObjects(): MapObjects
-        + public setPlant(plant: Plant): void
-        + public addAnimal(animal: Animal): void
-        + public removeAnimal(animal: Animal): void
-        + public isOccupied(): boolean
-        + public getStrongestAnimal(): Animal
-        + public getStrongestAnimals(): ArrayList<Animal>
-        + public removeDeadAnimalsFromTile(): void
-        + public eatPlant(): void
-        + public reproduceAnimals(currentDay: int, energyToTransfer: int): void
-        + public grow(): void
-        + public removePlant(): void
-
-        + public hashCode(): int
-        + public equals(other: Object): boolean
-        + public toString(): String
+        - position: Vector2d
+        - objects: MapObjects
+        + Tile(position: Vector2d)
+        + getPosition(): Vector2d
+        + getAnimals(): List<Animal>
+        + getPlant(): Plant
+        + getObjects(): MapObjects
+        + setPlant(plant: Plant): void
+        + addAnimal(animal: Animal): void
+        + removeAnimal(animal: Animal): void
+        + isOccupied(): boolean
+        + getStrongestAnimal(): Animal
+        + getStrongestAnimals(): ArrayList<Animal>
+        + removeDeadAnimalsFromTile(): void
+        + eatPlant(): void
+        + reproduceAnimals(currentDay: int, energyToTransfer: int, mutationType: String): void
+        + grow(): void
+        + removePlant(): void
+        + hashCode(): int
+        + equals(other: Object): boolean
+        + toString(): String
     }
 
-    class Statistics {
-        - private map: WorldMap
-
-        + Statistics()
-        + getAnimalCount(): int
-        + getPlantCount(): int
-        + getAverageLifespan(): float
-        + getAverageChildrenCount(): float
-        + getAverageEnergyLevel(): float
-        + getMostPopularGenotype(): Genotype
-        + getFreeTilesCount(): int
+    class SimulationCSV {
+        - currentFilePath: Path
+        - statistics: Statistics
+        + SimulationCSV(s: Statistics)
+        + toCSV(baseFileName: String, directoryPath: String): void
+        - createUniqueFilePath(originalPath: Path): Path
     }
 }
 
 
 package model.maps {
     interface WorldMap {
-       + public getMapTiles(): HashMap<Vector2d, Tile>
-       + public getCurrentDay(): int
-       + public getAnimals(): List<Animal>
-       + public getPlants(): List<Plant>
-       + public getLowerLeft(): Vector2d
-       + public getUpperRight(): Vector2d
-       + public getWidth(): int
-       + public getHeight(): int
-       + public getElements(): List<MapElement>
-       + public canMoveTo(Vector2d): boolean
-       + public move(List<Animal>): void
-       + public placeAnimal(Animal, Vector2d): boolean
-       + public objectsAt(Vector2d): MapObjects
-       + public isOccupied(Vector2d): boolean
-       + public placePlant(Plant, Vector2d): boolean
-       'TODO: why default?'
-       + public default generateMap(List<Plant>, List<Animal>): void
-       + public toString(): String
-       + public getTile(Vector2d): Tile
-       + public firstDay(): void
-       + public dailyUpdate(): void
+        + getMapTiles(): HashMap<Vector2d, Tile>
+        + getCurrentDay(): int
+        + getAnimals(): List<Animal>
+        + getPlants(): List<Plant>
+        + getWidth(): int
+        + getHeight(): int
+        + canMoveTo(position: Vector2d): boolean
+        + move(): void
+        + placeAnimal(animal: Animal, position: Vector2d): void
+        + objectsAt(position: Vector2d): MapObjects
+        + isOccupied(position: Vector2d): boolean
+        + placePlant(plant: Plant, position: Vector2d): void
+        + generateMap(): void
+        + toString(): String
+        + getTile(currentPosition: Vector2d): Tile
+        + firstDay(): void
+        + dailyUpdate(): void
+        + getCurrentBounds(): Boundary
+        + getConfig(): SimulationConfigurator
+        + addObserver(observer: MapChangeListener): void
     }
 
-    abstract class AbstractWorldMap implements WorldMap{
-        - protected SimulationConfigurator: config
-        - private currentDay: int
-        - private lowerLeft: Vector2d
-        - private upperRight: Vector2d
-        - private animals: List<Animal>
-        - private plants: List<Plant>
-        - private mapTiles: HashMap<Vector2d, Tile>
-        - protected freePositions: List<Vector2d>
-        - protected mapVisualizer: MapVisualizer
+    abstract class AbstractWorldMap {
+        - lowerLeft: Vector2d
+        - upperRight: Vector2d
+        - config: SimulationConfigurator
+        - animals: List<Animal>
+        - plants: List<Plant>
+        - mapTiles: HashMap<Vector2d, Tile>
+        - freePositions: List<Vector2d>
+        - mapVisualizer: MapVisualizer
+        - listeners: List<MapChangeListener>
+        - currentDay: int
 
-        + AbstractWorldMap(Vector2d, Vector2d)
-
-        + public getConfig(): SimulationConfigurator
-        + public getCurrentDay(): int
-        + public getMapTiles(): HashMap<Vector2d, Tile>
-        + public getAnimals(): List<Animal>
-        + public getPlants(): List<Plant>
-        + public getLowerLeft(): Vector2d
-        + public getUpperRight(): Vector2d
-        + public getWidth(): int
-        + public getHeight(): int
-        + public getElements(): List<MapElement>
-        + public getTile(Vector2d): Tile
-
-        + public canMoveTo(Vector2d): boolean
-        + public newPositionOutOfLeftBound(Vector2d): Vector2d
-        + public newPositionOutOfRightBound(Vector2d): Vector2d
-        + public objectsAt(Vector2d): MapObjects
-        + public isOccupied(Vector2d): boolean
-        + public placeAnimal(Animal): void
-        + public placeAnimals(int): void
-        + public placePlant(Plant): voif
-        + public placePlants(int): void
-        'TODO: maybe private?'
-        + public eat(): void
-        'TODO: maybe private?'
-        + public removeDeadAnimals(): void
-        'TODO: maybe private?'
-        + public move(Animal): void
-        'TODO: maybe private?'
-        + public removeEatenPlants(): void
-        'TODO: maybe private?'
-        + public reproduce(): void
-        'TODO: maybe private?'
-        + public generateMap(): void
-        + public firstDay(): void
-        + public dailyUpdate(): void
-        + public toString(): String
+        + AbstractWorldMap(config: SimulationConfigurator)
+        + getCurrentBounds(): Boundary
+        + getConfig(): SimulationConfigurator
+        + getCurrentDay(): int
+        + getMapTiles(): HashMap<Vector2d, Tile>
+        + getAnimals(): List<Animal>
+        + getPlants(): List<Plant>
+        + getLowerLeft(): Vector2d
+        + getUpperRight(): Vector2d
+        + getWidth(): int
+        + getHeight(): int
+        + getElements(): List<MapElement>
+        + getTile(position: Vector2d): Tile
+        + addObserver(observer: MapChangeListener): void
+        + canMoveTo(position: Vector2d): boolean
+        + newPositionOutOfLeftBound(position: Vector2d): boolean
+        + newPositionOutOfRightBound(position: Vector2d): boolean
+        + objectsAt(position: Vector2d): MapObjects
+        + isOccupied(position: Vector2d): boolean
+        + placeAnimal(animal: Animal, position: Vector2d): void
+        + placeAnimals(amountOfAnimals: int): void
+        + placePlant(plant: Plant, position: Vector2d): void
+        + placePlants(amountOfPlants: int): void
+        + eat(): void
+        + removeDeadAnimals(): void
+        + growAnimals(): void
+        + move(): void
+        + removeEatenPlants(): void
+        + removeDeadAnimals(): void
+        + generateMap(): void
+        + firstDay(): void
+        + dailyUpdate(): void
+        + mapChanged(message: String): void
+        + toString(): String
     }
 
     class GlobeMap extends AbstractWorldMap {
-        + public GlobeMap()
-        + public move(): void
+        + public GlobeMap(config: SimulationConfigurator)
     }
 
-    class PoisonedMap extends AbstractWorldMap {
-        - private poisonedAreaLowerLeft: Vector2d
-        - private poisonedAreaUpperRight: Vector2d
+    class PoisonedMap {
+        - leftDownPoisonedCorner: Vector2d
+        - rightUpperPoisonedCorner: Vector2d
+        - random: Random
 
-        + public PoisonedMap(config:SimulationConfigurator)
-
-        + private generateLeftDownCornerPoisonedSquare(): Vector2d
-        + private generateRightUpCornerPoisonedSquare(): Vector2d
-        + private isPoisonous(): boolean
-        + public placePlant(Plant,Vector2d): void
-        + public move(List<Animal>): void
-        'TODO: maybe private?'
-        + public generateMap(): void
+        + PoisonedMap(config: SimulationConfigurator)
+        - generateLeftDownCornerPoisonedSquare(): Vector2d
+        - isPoisonous(): boolean
+        + placePlant(plant: Plant, position: Vector2d): void
+        + generateMap(): void
     }
 }
 
 package model.simulation {
-    class Simulation extends Thread {
-        - private final worldMap: WorldMap
-        - private final config: SimulationConfigurator
-        - private statistics: Statistics
 
-        + Simulator(WorldMap, SimulationConfigurator)
-        + public run(): void
+    interface MapChangeListener {
+        + mapChanged(worldMap: WorldMap, message: String): void
     }
 
-    class SimulationEngine {
-        - private simulations: List<Simulation>
-        - private final threads: List<Thread>
-        + public SimulationEngine(simulations: List<Simulation>)
-        + public runSync(): void
-        + public runAsync(): void
-        + awaitSimulationsEnd(): void
-        + public unAsyncInThreadPool(): void
-        + public run(): void
-      }
+    class Simulation extends Thread {
+        - worldMap: WorldMap
+        - config: SimulationConfigurator
+        - lock: Object
+        - statistics: Statistics
+        - running: boolean
+        + Simulation(worldMap: WorldMap, config: SimulationConfigurator)
+        + isRunning(): boolean
+        + getWorldMap(): WorldMap
+        + setStatistics(statistics: Statistics): void
+        + run(): void
+        + pauseSimulation(): void
+        + resumeSimulation(): void
+        + stopSimulation(): void
+        + getDominantGenotypeAnimals(): Set<Vector2d>
+        + getPlantPreferredFields(): Set<Vector2d>
+    }
 
-    class SimulationApp {
-        + public start: void
+    class SimulationEngine implements Runnable{
+        - simulations: List<Simulation>
+        - threads: List<Thread>
+        + SimulationEngine(simulations: List<Simulation>)
+        + runSync(): void
+        + runAsync(): void
+        + awaitSimulationsEnd(): void
+        + runAsyncInThreadPool(): void
+        + isRunning(): boolean
+        + pauseSimulation(): void
+        + resumeSimulation(): void
+        + run(): void
+    }
+
+
+    class SimulationApp extends Application {
+        + start(primaryStage: Stage): void
+        - configureStage(primaryStage: Stage, viewRoot: BorderPane): void
     }
 
     class SimulationConfigurator {
-        - private mapSizeX: int
-        - private mapSizeY: int
-        - private mapType: String
-        - private initialPlantCount: int
-        - private plantEnergy: int
-        - private numberOfPlantsGrowingPerDay: int
-        - private modeOfPlantGrowing: String
-        - private initialAnimalCount: int
-        - private initialAnimalEnergy: int
-        - private readyToReproduceEnergy: int
-        - private reproduceEnergyLoss: int
-        - private minimumMutationCount: int
-        - private maximumMutationCount: int
-        - private mutationVariant: String
-        - private genomeLength: int
-        - private animalBehaviourType: String
-        - private finalnumberOfDays: int
-
-        + public SimulationConfigurator()
-        + public getMapSize(): Vector2d
-        + public getMapType(): String
-        + public getInitialPlantCount(): int
-        + public getPlantEnergy(): int
-        + public getNumberOfPlantsGrowingPerDay(): int
-        + public getModeOfPlantGrowing(): String
-        + public getInitialAnimalCount(): int
-        + public getInitialAnimalEnergy(): int
-        + public getReadyToReproduceEnergy(): int
-        + public getReproduceEnergyLoss(): int
-        + public getMinimumMutationCount(): int
-        + public getMaximumMutationCount(): int
-        + public getMutationVariant(): String
-        + public getGenomeLength(): int
-        + public getAnimalBehaviourType(): String
-        + public getNumberOfDays(): int
-        + public setMapSize(x: int, y: int): void
-        + public setMapType(mapType: String): void
-        + public setInitialPlantCount(initialPlantCount: int): void
-        + public setPlantEnergy(plantEnergy: int): void
-        + public setNumberOfPlantsGrowingPerDay(numberOfPlantsGrowingPerDay: int): void
-        + public setModeOfPlantGrowing(modeOfPlantGrowing: String): void
-        + public setInitialAnimalCount(initialAnimalCount: int): void
-        + public setInitialAnimalEnergy(initialAnimalEnergy: int): void
-        + public setReadyToReproduceEnergy(readyToReproduceEnergy: int): void
-        + public setReproduceEnergyLoss(reproduceEnergyLoss: int): void
-        + public setMinimumMutationCount(minimumMutationCount: int): void
-        + public setMaximumMutationCount(maximumMutationCount: int): void
-        + public setMutationVariant(mutationVariant: String): void
-        + public setGenomeLength(genomeLength: int): void
-        + public setAnimalBehaviourType(animalBehaviourType: String): void
-        + public toString(): String
+        - writeToCsv: String
+        - numberOfDays: int
+        - mapSizeX: int
+        - mapSizeY: int
+        - mapType: String
+        - initialPlantCount: int
+        - plantEnergy: int
+        - numberOfPlantsGrowingPerDay: int
+        - modeOfPlantGrowing: String
+        - initialAnimalCount: int
+        - initialAnimalEnergy: int
+        - readyToReproduceEnergy: int
+        - reproduceEnergyLoss: int
+        - minimumMutationCount: int
+        - maximumMutationCount: int
+        - mutationVariant: String
+        - genomeLength: int
+        - animalBehaviourType: String
+        - dayLength: int
+        + SimulationConfigurator()
+        + getMapSizeX(): int
+        + getMapSizeY(): int
+        + getMapSize(): Vector2d
+        + getMapType(): String
+        + setMapType(mapType: String): void
+        + getInitialPlantCount(): int
+        + setInitialPlantCount(initialPlantCount: int): void
+        + getPlantEnergy(): int
+        + getNumberOfPlantsGrowingPerDay(): int
+        + setNumberOfPlantsGrowingPerDay(numberOfPlantsGrowingPerDay: int): void
+        + getModeOfPlantGrowing(): String
+        + getInitialAnimalCount(): int
+        + setInitialAnimalCount(initialAnimalCount: int): void
+        + getInitialAnimalEnergy(): int
+        + setInitialAnimalEnergy(initialAnimalEnergy: int): void
+        + getReadyToReproduceEnergy(): int
+        + setReadyToReproduceEnergy(readyToReproduceEnergy: int): void
+        + getReproduceEnergyLoss(): int
+        + setReproduceEnergyLoss(reproduceEnergyLoss: int): void
+        + getMinimumMutationCount(): int
+        + setMinimumMutationCount(minimumMutationCount: int): void
+        + getMaximumMutationCount(): int
+        + setMaximumMutationCount(maximumMutationCount: int): void
+        + setMapSize(x: int, y: int): void
+        + isWriteToCsv(): String
+        + setWriteToCsv(writeToCsv: String): void
+        + getMutationVariant(): String
+        + setMutationVariant(mutationVariant: String): void
+        + getGenomeLength(): int
+        + setGenomeLength(genomeLength: int): void
+        + getNumberOfDays(): int
+        + setNumberOfDays(numberOfDays: int): void
+        + getDayLength(): int
+        + setDayLength(dayLength: int): void
+        + fromText(lines: String[]): void
+        + toText(): String
+        + toString(): String
     }
 }
 
@@ -463,38 +461,166 @@ class WorldGUI {
 }
 
 package model.presenters {
-    class MapVisualizer {
-       - private static final EMPTY_CELL: String
-       - private static final FRAME_SEGMENT: String
-       - private static final CELL_SEGMENT: String
-       - private final map: WorldMap
 
-       + public MapVisualizer(map: WorldMap)
-       + public draw(lowerLeft: Vector2d, upperRight: Vector2d): String
-       - private drawFrame(innerSegment: boolean): String
-       - private drawHeader(lowerLeft: Vector2d, upperRight: Vector2d): String
-       - private drawObject(currentPosition: Vector2d): String
+    class ConsoleMapDisplay {
+        + mapChanged(worldMap: WorldMap, message: String): void
     }
 
-'TODO: relations between classes'
-Genotype <- RandomGensGenerator
-RandomPositionsGenerator <- RandomPlantsGenerator
-RandomPositionsGenerator <- RandomAnimalsGenerator
-Animal <- Genotype
-Animal <- Vector2d
-Plant <-  Vector2d
-Tile <-  MapObjects
-Vector2d -> Tile
-Statistics <- WorldMap
-AbstractWorldMap <- SimulationConfigurator
-AbstractWorldMap -> WorldMap
-AbstractWorldMap <- MapVisualizer
-GlobeMap -> AbstractWorldMap
-PoisonedMap -> AbstractWorldMap
-Simulation <- WorldMap
-Simulation <- SimulationConfigurator
-Simulation <- Statistics
-SimulationEngine <- Simulation
-SimulationApp <- SimulationEngine
-WorldGUI <-> SimulationConfigurator
+    class MapVisualizer {
+        - EMPTY_CELL: String
+        - FRAME_SEGMENT: String
+        - CELL_SEGMENT: String
+        - map: WorldMap
+        + MapVisualizer(map: WorldMap)
+        + draw(lowerLeft: Vector2d, upperRight: Vector2d): String
+        - drawFrame(innerSegment: boolean): String
+        - drawHeader(lowerLeft: Vector2d, upperRight: Vector2d): String
+        - drawObject(currentPosition: Vector2d): String
+    }
+
+    class SimulationPresenter {
+        - worldMap: WorldMap
+        - animalInfoLabel: Label
+        - hideAnimalButton: Button
+        - currentDayLabel: Label
+        - moveInfoLabel: Label
+        - startStopButton: Button
+        - mapGrid: GridPane
+        - showDominantGenotypeButton: Button
+        - showPlantFieldsButton: Button
+        - desktopPath: String
+        - simulationCSV: SimulationCSV
+        - selectedAnimal: Animal
+        - statistics: Statistics
+        - simulation: Simulation
+        - simulationEngine: SimulationEngine
+        - isSimulationRunning: boolean
+        - cellSize: double
+        - isCsv: boolean
+        + setCsv(csv: boolean): void
+        + getSimulation(): Simulation
+        + setWorldMap(worldMap: WorldMap): void
+        - clearGrid(): void
+        - createLabelForElement(element: Object): Label
+        - getColorByEnergy(energy: int, maxEnergy: int): String
+        - drawGridCell(position: Vector2d, column: int, row: int): void
+        - drawGrid(boundary: Boundary): void
+        - drawXAxis(boundary: Boundary): void
+        - drawYAxis(boundary: Boundary): void
+        - drawAxes(boundary: Boundary): void
+        + drawMap(): void
+        + mapChanged(worldMap: WorldMap, message: String): void
+        + stopSimulation(): void
+        + onSimulationStartClicked(): void
+        + onNotShowAnimalClicked(): void
+        + showAnimalInfo(animal: Animal): void
+        + onShowDominantGenotypeClicked(): void
+        + onShowPlantFieldsClicked(): void
+    }
+
+    class StartPresenter {
+        - startHeader: Label
+        - saveToCsvChoiceBox: ChoiceBox<String>
+        - dayLengthSlider: Slider
+        - dayLengthValueLabel: Label
+        - infoConfigurator: Label
+        - loadConfigButton: Button
+        - saveConfigButton: Button
+        - startButton: Button
+        - simulationPresenter: SimulationPresenter
+        - daysCountSlider: Slider
+        - contentArea: GridPane
+        - daysCountValueLabel: Label
+        - mapWidthSlider: Slider
+        - mapWidthValueLabel: Label
+        - mapHeightSlider: Slider
+        - mapHeightValueLabel: Label
+        - initialPlantCountSlider: Slider
+        - initialPlantCountValueLabel: Label
+        - numberOfPlantsGrowingPerDaySlider: Slider
+        - numberOfPlantsGrowingPerDayValueLabel: Label
+        - initialAnimalCountSlider: Slider
+        - initialAnimalCountValueLabel: Label
+        - initialAnimalEnergySlider: Slider
+        - initialAnimalEnergyValueLabel: Label
+        - readyToReproduceEnergySlider: Slider
+        - readyToReproduceEnergyValueLabel: Label
+        - reproduceEnergyLossSlider: Slider
+        - reproduceEnergyLossValueLabel: Label
+        - minimumMutationCountSlider: Slider
+        - minimumMutationCountValueLabel: Label
+        - maximumMutationCountSlider: Slider
+        - maximumMutationCountValueLabel: Label
+        - genomeLengthSlider: Slider
+        - genomeLengthValueLabel: Label
+        - mapTypeChoiceBox: ChoiceBox<String>
+        - mutationVariantChoiceBox: ChoiceBox<String>
+        + initialize()
+        - isChoiceBoxValid(): boolean
+        - showAlert(): void
+        - stopSimulation(): void
+        + onStartClicked(): void
+        - configureSimulation(): void
+        - updateUIWithConfig(): void
+        + onLoadConfigClicked(): void
+        + onSaveConfigClicked(): void
+    }
+}
+
+WorldGUI -- SimulationConfigurator : uses
+WorldGUI -- Simulation : uses
+
+Simulation -- SimulationConfigurator : uses
+Simulation -- WorldMap : uses
+Simulation -- Statistics : uses
+
+SimulationEngine -- Simulation : uses
+SimulationEngine -- Thread : uses
+
+SimulationPresenter -- WorldMap : uses
+SimulationPresenter -- Simulation : uses
+
+StartPresenter -- Simulation : uses
+StartPresenter -- SimulationConfigurator : uses
+
+ConsoleMapDisplay -- WorldMap : uses
+MapVisualizer -- WorldMap : uses
+
+RandomAnimalsGenerator -- WorldMap : uses
+RandomAnimalsGenerator -- Animal : uses
+RandomAnimalsGenerator -- Genotype : uses
+
+RandomGensGenerator -- Genotype : uses
+
+RandomPositionsGenerator -- WorldMap : uses
+RandomPositionsGenerator -- Vector2d : uses
+
+RandomPlantsGenerator -- WorldMap : uses
+RandomPlantsGenerator -- Plant : uses
+
+MapElement <|.. Boundary
+Directions <-- Vector2d
+MapObjects -- Plant : contains
+MapObjects -- Animal : contains
+Genotype -- Animal : contains
+Animal -- Vector2d : contains
+Animal -- Genotype : contains
+Plant -- Vector2d : contains
+Statistics -- WorldMap : uses
+Tile -- MapObjects : contains
+SimulationCSV -- Statistics : uses
+
+WorldMap <|-- AbstractWorldMap
+AbstractWorldMap -- SimulationConfigurator : uses
+AbstractWorldMap -- Tile : contains
+AbstractWorldMap -- Simulation : uses
+AbstractWorldMap -- MapVisualizer : uses
+
+WorldMap <|-- GlobeMap
+WorldMap <|-- PoisonedMap
+GlobeMap -- SimulationConfigurator : uses
+PoisonedMap -- SimulationConfigurator : uses
+
+MapChangeListener <|.. Simulation
+MapChangeListener <|.. ConsoleMapDisplay
 @enduml

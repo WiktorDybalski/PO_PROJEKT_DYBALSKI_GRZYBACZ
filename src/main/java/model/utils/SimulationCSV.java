@@ -10,10 +10,10 @@ public class SimulationCSV {
 
     private Path currentFilePath;
 
-    private Statistics s;
+    private Statistics statistics;
 
-    public SimulationCSV(Statistics s) {
-        this.s = s;
+    public SimulationCSV(Statistics statistics) {
+        this.statistics = statistics;
     }
 
     public void toCSV(String baseFileName, String directoryPath) {
@@ -43,16 +43,16 @@ public class SimulationCSV {
             csvBuilder.append("Statistic,Value\n");
         }
 
-        csvBuilder.append("Day,").append(s.getMap().getCurrentDay()).append("\n");
-        csvBuilder.append("Number of Animals,").append(s.getNumberOfAnimals()).append("\n");
-        csvBuilder.append("Number of Alive Animals,").append(s.getNumberOfAliveAnimals()).append("\n");
-        csvBuilder.append("Number of Dead Animals,").append(s.getNumberOfDeadAnimals()).append("\n");
-        csvBuilder.append("Number of Plants,").append(s.getNumberOfPlants()).append("\n");
-        csvBuilder.append("Average Life Span,").append(s.getAverageLifeSpan()).append("\n");
-        csvBuilder.append("Average Number of Children,").append(s.getAverageNumberOfChildren()).append("\n");
-        csvBuilder.append("Average Energy Level,").append(s.getAverageEnergyLevel()).append("\n");
-        csvBuilder.append("Dominant Genotype,").append(s.getDominantGenotype() != null ? s.getDominantGenotype().toString() : "None").append("\n");
-        csvBuilder.append("Free Tiles,").append(s.getFreeTilesCount()).append("\n");
+        csvBuilder.append("Day,").append(statistics.getMap().getCurrentDay()).append("\n");
+        csvBuilder.append("Number of Animals,").append(statistics.getNumberOfAnimals()).append("\n");
+        csvBuilder.append("Number of Alive Animals,").append(statistics.getNumberOfAliveAnimals()).append("\n");
+        csvBuilder.append("Number of Dead Animals,").append(statistics.getNumberOfDeadAnimals()).append("\n");
+        csvBuilder.append("Number of Plants,").append(statistics.getNumberOfPlants()).append("\n");
+        csvBuilder.append("Average Life Span,").append(statistics.getAverageLifeSpan()).append("\n");
+        csvBuilder.append("Average Number of Children,").append(statistics.getAverageNumberOfChildren()).append("\n");
+        csvBuilder.append("Average Energy Level,").append(statistics.getAverageEnergyLevel()).append("\n");
+        csvBuilder.append("Dominant Genotype,").append(statistics.getDominantGenotype() != null ? statistics.getDominantGenotype().toString() : "None").append("\n");
+        csvBuilder.append("Free Tiles,").append(statistics.getFreeTilesCount()).append("\n");
         csvBuilder.append("\n");
 
         try {

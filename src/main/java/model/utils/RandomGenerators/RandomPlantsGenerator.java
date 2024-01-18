@@ -12,10 +12,6 @@ import static java.lang.Math.min;
 
 public class RandomPlantsGenerator {
     /**
-     * The day on which the plant starts growing.
-     */
-    private static final int DAY_OF_GROWTH = 2;
-    /**
      * The map where the plants will be placed.
      */
     private final WorldMap map;
@@ -58,7 +54,7 @@ public class RandomPlantsGenerator {
      * @return A new Plant object.
      */
     private Plant generateRandomPlant(Vector2d position) {
-        return new Plant(position, plantEnergy, false, DAY_OF_GROWTH);
+        return new Plant(position, plantEnergy, false, map.getCurrentDay());
     }
 
     /**
