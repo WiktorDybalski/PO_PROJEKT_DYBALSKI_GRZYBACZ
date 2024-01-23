@@ -19,6 +19,9 @@ javafx {
     modules = ['javafx.base', 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.media', 'javafx.swing', 'javafx.web']
 }
 
+apply plugin: 'application'
+
+mainClassName = 'WorldGUI'
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
