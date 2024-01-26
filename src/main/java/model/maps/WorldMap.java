@@ -7,7 +7,7 @@ import model.utils.*;
 import java.util.HashMap;
 import java.util.List;
 
-public interface WorldMap {
+public interface WorldMap { // czy ten interfejs coś wnosi?
     HashMap<Vector2d, Tile> getMapTiles();
 
     int getCurrentDay();

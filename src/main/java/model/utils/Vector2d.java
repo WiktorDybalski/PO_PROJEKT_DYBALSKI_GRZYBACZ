@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Vector2d {
 
     /**
-     * The x coordinate of the vector.
+     * The x coordinate of the vector. // komentarz tłumaczący rzecz oczywistą
      */
     private final int x;
 

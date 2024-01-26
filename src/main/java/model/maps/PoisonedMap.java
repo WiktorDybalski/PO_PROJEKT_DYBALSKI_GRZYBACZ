@@ -20,7 +20,7 @@ public class PoisonedMap extends AbstractWorldMap {
     /**
      * Random number generator.
      */
-    private Random random;
+    private static Random random;
 
     /**
      * Constructor of the Map

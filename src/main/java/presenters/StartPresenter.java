@@ -19,7 +19,7 @@ import java.util.List;
 
 public class StartPresenter {
     @FXML
-    public Label startHeader;
+    public Label startHeader; // public?
     @FXML
     public ChoiceBox<String> saveToCsvChoiceBox;
     @FXML
@@ -196,7 +196,7 @@ public class StartPresenter {
             simulationStage.setOnCloseRequest(event -> stopSimulation());
             simulationStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // czy to jest dobra obsługa?
         }
     }
 
@@ -284,4 +284,4 @@ public class StartPresenter {
             }
         }
     }
-}
+} // przerośnięta klasa

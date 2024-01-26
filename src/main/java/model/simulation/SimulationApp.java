@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class SimulationApp extends Application {
+public class SimulationApp extends Application { // to na pewno część modelu?
     /**
      * Starts the application by setting up the primary stage using an FXML loader.
      */

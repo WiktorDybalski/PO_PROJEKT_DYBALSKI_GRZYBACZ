@@ -23,7 +23,7 @@ public class Genotype {
      */
     public Genotype(ArrayList<Integer> genes, int genomeLength) {
         this.genes = new ArrayList<>(genes);
-        this.genomeLength = genomeLength;
+        this.genomeLength = genomeLength; // czy jest sens przekazywać genomeLength, jak mamy genes.size()?
     }
 
     //getters and setters
@@ -79,7 +79,7 @@ public class Genotype {
      * @param ratio    The ratio of genes to be taken from the other genotype.
      * @return The new genotype created by mixing the two genotypes.
      */
-    public Genotype mixGenotypes(Genotype genotype, double ratio) {
+    public Genotype mixGenotypes(Genotype genotype, double ratio) { // w takiej sytuacji nazwałbym parametr other nie genotype
         ArrayList<Integer> newGenes = new ArrayList<>();
         for (int i = 0; i < genes.size(); i++) {
             if (i < ratio * genes.size()) {

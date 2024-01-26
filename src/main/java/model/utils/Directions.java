@@ -35,9 +35,9 @@ public enum Directions {
     /**
      * @return direction as unit vector
      */
-    public static Vector2d toUnitVector(int index) {
+    public static Vector2d toUnitVector(int index) { // static?
         return switch (index) {
-            case 0 -> new Vector2d(0, 1); //north
+            case 0 -> new Vector2d(0, 1); //north // to się prosi o załatwienie parametrem konstruktora
             case 1 -> new Vector2d(1, 1); //north-east
             case 2 -> new Vector2d(1, 0); //east
             case 3 -> new Vector2d(1, -1); //south-east
@@ -45,7 +45,7 @@ public enum Directions {
             case 5 -> new Vector2d(-1, -1); //south-west
             case 6 -> new Vector2d(-1, 0); //west
             case 7 -> new Vector2d(-1, 1); //north-west
-            default -> new Vector2d(0, 0); //should never happen but better safe than sorry
+            default -> new Vector2d(0, 0); //should never happen but better safe than sorry // safe to by było rzucenie wyjątku
         };
     }
 

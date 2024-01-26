@@ -30,7 +30,7 @@ public class Animal implements MapElement {
     // Flag indicating whether the animal is dead.
     private boolean isDead;
     // Index of the currently active gene in the genotype.
-    private int actualActiveGenIndex;
+    private int actualActiveGenIndex; // czemu to nie jest w klasie Genotype?
 
     /**
      * Constructor to initialize an Animal object with specified attributes.
@@ -202,7 +202,7 @@ public class Animal implements MapElement {
      */
     public Animal reproduce(Animal partner, int currentDay, int energyToTransfer, String mutation_type) {
         double ratio = (double) this.getEnergy() / (this.getEnergy() + partner.getEnergy());
-        Random random = new Random();
+        Random random = new Random(); // co wywołanie?
         //if 0 then left, if 1 then right
         int side = random.nextInt(2);
         Genotype childgenotype;

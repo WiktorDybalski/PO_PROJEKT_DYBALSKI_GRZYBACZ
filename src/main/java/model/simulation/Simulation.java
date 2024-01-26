@@ -61,7 +61,7 @@ public class Simulation extends Thread {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // czemu nie po prostu return?
         }
         for (int i = 1; i < config.getNumberOfDays(); i++) {
             synchronized (lock) {

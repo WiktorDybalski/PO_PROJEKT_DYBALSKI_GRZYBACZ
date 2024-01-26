@@ -81,11 +81,11 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
     }
 
     public List<Animal> getAnimals() {
-        return animals;
+        return animals; // dehermetyzacja
     }
 
     public List<Plant> getPlants() {
-        return plants;
+        return plants; // jw.
     }
 
     public Vector2d getLowerLeft() {
@@ -144,7 +144,7 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
      * @return bool value is it possible to move there
      */
 
-    public boolean newPositionOutOfLeftBound(Vector2d position) {
+    public boolean newPositionOutOfLeftBound(Vector2d position) { // public?
         return position.getX() < lowerLeft.getX() && canMoveTo(position);
     }
 
@@ -304,7 +304,7 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
      * The removeEatenPlants method delete plants that has been eaten
      */
 
-    public void removeEatenPlants() {
+    public void removeEatenPlants() { // public?
         plants.removeIf(Plant::getIsEaten);
     }
 
@@ -335,7 +335,7 @@ public abstract class AbstractWorldMap implements WorldMap, MapChangeListener {
     /**
      * The generateMap method is using in Map constructor to set all objects on the map
      */
-    public void generateMap() {
+    public void generateMap() { // mapa generuje mapę?
         for (int i = lowerLeft.getX(); i <= upperRight.getX(); i++) {
             for (int j = lowerLeft.getY(); j <= upperRight.getY(); j++) {
                 Tile tile = new Tile(new Vector2d(i, j));

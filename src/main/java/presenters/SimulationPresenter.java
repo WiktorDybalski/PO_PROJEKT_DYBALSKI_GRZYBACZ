@@ -24,7 +24,7 @@ import java.util.Set;
 public class SimulationPresenter implements MapChangeListener {
     private static final String EMPTY_CELL = " ";
     @FXML
-    public HBox all;
+    public HBox all; // public?
     @FXML
     public Label header;
     private WorldMap worldMap;
@@ -56,7 +56,7 @@ public class SimulationPresenter implements MapChangeListener {
     private double cellSize = 60;
     private boolean isCsv;
 
-    public void setCsv(boolean csv) {
+    public void setCsv(boolean csv) { // niejasna nazwa
         isCsv = csv;
     }
 
@@ -265,7 +265,7 @@ public class SimulationPresenter implements MapChangeListener {
                     }
                 });
             }
-        } catch (Exception e) {
+        } catch (Exception e) { // Exception?
             e.printStackTrace();
         }
     }
@@ -322,4 +322,4 @@ public class SimulationPresenter implements MapChangeListener {
             }
         }
     }
-}
+} // przerośnięta ta klasa

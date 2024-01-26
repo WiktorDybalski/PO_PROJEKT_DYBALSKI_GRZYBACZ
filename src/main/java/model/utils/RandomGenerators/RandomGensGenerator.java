@@ -18,7 +18,7 @@ public class RandomGensGenerator {
     /**
      * Random object for generating random numbers.
      */
-    private final Random random;
+    private static final Random random;
 
     /**
      * Constructor for RandomGensGenerator.

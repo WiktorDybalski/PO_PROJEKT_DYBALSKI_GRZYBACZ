@@ -3,7 +3,7 @@ package presenters;
 import model.maps.WorldMap;
 import model.simulation.MapChangeListener;
 
-public class ConsoleMapDisplay implements MapChangeListener {
+public class ConsoleMapDisplay implements MapChangeListener { // ta klasa nie wydaje się zbyt użyteczna
 
     @Override
     public synchronized void mapChanged(WorldMap worldMap, String message) {

@@ -88,7 +88,7 @@ public class SimulationConfigurator {
     public void setNumberOfPlantsGrowingPerDay(int numberOfPlantsGrowingPerDay) {
         if (numberOfPlantsGrowingPerDay > 0) {
             this.numberOfPlantsGrowingPerDay = numberOfPlantsGrowingPerDay;
-        }
+        }  // warto rzucać wyjątkiem, jeśli ignorujemy polecenie ustawienia atrybutu
     }
 
     public String getModeOfPlantGrowing() {
