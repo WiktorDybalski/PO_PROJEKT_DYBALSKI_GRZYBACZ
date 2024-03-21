@@ -1,6 +1,6 @@
 # Darwin World Simulator
 
-```The Darwin World Simulator project is an ecosystem simulation that allows users to delve into the complexity of natural evolutionary processes through interactive experimentation. ```
+``The "Darwin World Simulator" project is a simulation of an ecosystem that lets users explore how evolution works in nature by doing interactive experiments and adjusting the world's parameters```
 
 
 ## Start Panel:
